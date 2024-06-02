@@ -10,7 +10,7 @@ LIBFT_DIR = libft
 SRCS_DIR = src
 OBJ_DIR = obj
 
-SRCS_MINISHELL = $(addprefix src/, main.c)
+SRCS_MINISHELL = $(addprefix src/, main.c error.c path.c)
 OBJ_MINISHELL := $(patsubst $(SRCS_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS_MINISHELL))
 
 all: $(NAME)
