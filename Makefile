@@ -16,7 +16,7 @@ OBJ_MINISHELL := $(patsubst $(SRCS_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS_MINISHELL))
 all: $(NAME)
 
 $(NAME): $(OBJ_MINISHELL) $(LIBFT_NAME)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJ_DIR)
 	mkdir -p $(@D)
