@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/02 13:56:49 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/05 10:43:15 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,10 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		if (*line)
 			add_history(line);
-		ft_interpret(line, env);
+		my_func(line);
+		// ft_interpret(line, env);
 		free(line);
 	}
+	(void)env;
 	exit(0);
 }
