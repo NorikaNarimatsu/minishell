@@ -1,0 +1,7 @@
+
+
+compile:
+
+cd src/buildins
+cc -Wall -Wextra -Werror -o buildin echo_built.c env_built.c main_built.c pwd_built.c libft.a && clear
+./test echo -n Norika

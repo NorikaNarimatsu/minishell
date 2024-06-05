@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 16:37:40 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/02 16:37:52 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:13:34 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*search_path(char *filename)
 	char	*end;
 	char	*dup;
 
-	value = getenv("PATH"); // todo
+	value = getenv("PATH");
 	while (*value)
 	{
 		ft_bzero(path, PATH_MAX);
