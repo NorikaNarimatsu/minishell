@@ -6,81 +6,30 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:38:07 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/05 22:19:46 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:34:36 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_valid_envkey_idx(t_data *data, char *envkey)
-{
-	int	i;
-	int	index;
-	int	len;
 
-	i = 0;
-	while (envkey[i])
-	{
-		if (!(('A' <= envkey[i] && envkey[i] <= 'Z') || envkey[i] == '_'))
-			return (-1);
-		i++;
-	}
-	index = 0;
-	len = ft_strlen(envkey);
-	while (data->env[index])
-	{
-		if (strncmp(data->env[index], envkey, len) == 0)
-			return (index);
-		index ++;
-	}
-	return (-1);
-}
+// bool	is_valid_env_var_key(char *var)
+// {
+// 	int	i;
 
-int	unset_builtin(char **args, t_data *data)
-{
-	int	index;
+// 	i = 0;
+// 	if (ft_isalpha(var[i]) == 0 && var[i] != '_')
+// 		return (false);
+// 	i++;
+// 	while (var[i] && var[i] != '=')
+// 	{
+// 		if (ft_isalnum(var[i]) == 0 && var[i] != '_')
+// 			return (false);
+// 		i++;
+// 	}
+// 	return (true);
+// }
 
-	if (!args[2])
-	{
-		printf("not enough arguments\n");
-		return (EXIT_FAILURE);
-	}
-	index = is_valid_envkey_idx(data, args[2]);
-	printf("path to delete is %s\n", data->env[index]);
-	if (index < 0)
-	{
-		printf("not a valid identifier\n");
-		return (EXIT_FAILURE);
-	}
-	else
-	{
-		if (remove_env_var(data, index))
-			return (EXIT_SUCCESS);
-		else
-			return (EXIT_FAILURE);
-	}
-}
-https://github.com/fraqioui/minishell?tab=readme-ov-file#Builtins
-
-
-
-
-
-// /* realloc_env_vars:
-// *	Reallocates memory for the global variable g_env_vars.
-// *
-// *	Returns a pointer to the new environment variables
-// *	or NULL in case of a memory allocation error.
-// */
-
-
-// /* remove_env_var:
-// *	Removes the variable at the given index from the
-// *	environment variables.
-// *
-// *	Returns 1 if the removal was successful, 0 if case
-// *	of an invalid index or a memory allocation error.
-// */
 
 // static char	**realloc_env_vars(t_data *data, int size)
 // {
@@ -94,28 +43,56 @@ https://github.com/fraqioui/minishell?tab=readme-ov-file#Builtins
 // 	while (data->env[i] && i < size)
 // 	{
 // 		new_env[i] = ft_strdup(data->env[i]);
-// 		free(data->env[i]);
+// 		free_ptr(data->env[i]);
 // 		i++;
 // 	}
 // 	free(data->env);
 // 	return (new_env);
 // }
 
-// bool	remove_env_var(t_data *data, int index)
+// bool	remove_env_var(t_data *data, int idx)
 // {
+// 	int	i;
 // 	int	count;
 
-// 	free(data->env[index]);
-// 	count = index;
-// 	while (data->env[index + 1])
+// 	if (idx > env_var_count(data->env))
+// 		return (false);
+// 	free_ptr(data->env[idx]);
+// 	i = idx;
+// 	count = idx;
+// 	while (data->env[i + 1])
 // 	{
-// 		data->env[index] = ft_strdup(data->env[index + 1]);
-// 		free(data->env[index + 1]);
+// 		data->env[i] = ft_strdup(data->env[i + 1]);
+// 		free_ptr(data->env[i + 1]);
 // 		count++;
-// 		index++;
+// 		i++;
 // 	}
 // 	data->env = realloc_env_vars(data, count);
 // 	if (!data->env)
 // 		return (false);
 // 	return (true);
+// }
+
+// int	get_env_var_index(t_env *env, char *key)
+// {
+// 	while (data)
+// }
+
+// int	unset_builtin(char **args, t_data *data)
+// {
+// 	int	i;
+// 	int	idx;
+// 	int	ret;
+
+// 	ret = EXIT_SUCCESS;
+// 	i = 2;
+// 	while (args[i])
+// 	{
+// 			idx = get_env_var_index(data->env_copy, args[i]);
+// 			if (idx != -1)
+// 				remove_env_var(data, idx);
+// 		}
+// 		i++;
+// 	}
+// 	return (ret);
 // }

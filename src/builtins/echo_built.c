@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:50:35 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/05 18:26:18 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:37:07 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ void	echo_print_args(char **args, bool n_flag, int i)
 	}
 }
 
-int	echo_builtin(char **args)
+int	echo_builtin(char **args, t_data *data)
 {
 	bool	n_flag;
 
+	if (!args[2])
+		return (printf("\n"), EXIT_SUCCESS);
+	(void) data;
 	n_flag = is_n_flag(args[2]);
-	// printf("argv[2] is %s\n", args[2]);
 	if (n_flag == true)
 		echo_print_args(args, n_flag, 3);
 	else
