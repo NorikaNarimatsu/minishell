@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/05 22:01:08 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/06 16:03:58 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <readline/history.h>
 # include <limits.h>
 # include <string.h>
+# include <error.h>
 
 enum e_token
 {
@@ -41,6 +42,19 @@ typedef struct s_token
 	struct s_token	*prev;
 }	t_token;
 
+
+typedef struct s_shell
+{
+	int		token_flag;
+	t_token	*ll_token;
+}	t_shell;
+
+
+enum e_errno
+{
+	MALERR = -1,
+	SYNERR = -2,
+};
 
 
 /*		Martijn						*/
@@ -76,6 +90,10 @@ int		ft_double_quote(char *str, t_token *token, int flag);
 /*		ft_print					*/
 void	ft_print_linked_list(t_token *token);
 
-void	my_func(char *str);
+/*		ft_print					*/
+void	get_errdescr(enum e_errno error);
+void	ft_free_t_token(t_token	*ll_token);
+
+void	my_func(char *str, t_shell *shell);
 
 #endif

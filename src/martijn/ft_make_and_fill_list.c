@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_token.c                                         :+:    :+:            */
+/*   ft_make_and_fill_list.c                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:09:13 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/05 16:26:25 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/06 16:00:03 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_fill_type_and_next(t_token *token, enum e_token type)
 	if (ft_create_token_list(token) == -1)
 		return (-1);
 	token->type = type;
-	token = token->next;
+	token = token->next;		// TO_DO: This is not saved!
 	return (0);
 }
 

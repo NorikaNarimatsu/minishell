@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/05 10:43:15 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/06 14:04:35 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ int	ft_interpret(char *line, char **env)
 	}
 }
 
-int	main(int argc, char **argv, char **env)
+int	ft_minishell(int argc, char **argv, char **env)
 {
+	t_shell	shell;
 	char	*line;
 
 	(void) argc;
@@ -95,15 +96,22 @@ int	main(int argc, char **argv, char **env)
 	rl_outstream = stderr;
 	while (1)
 	{
+		ft_bzero(&shell, sizeof(shell));
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
 		if (*line)
 			add_history(line);
-		my_func(line);
+		my_func(line, &shell);
 		// ft_interpret(line, env);
 		free(line);
 	}
 	(void)env;
 	exit(0);
+}
+
+
+int	main(int argc, char **argv, char **env)
+{
+	return (ft_minishell(argc, argv, env));
 }
