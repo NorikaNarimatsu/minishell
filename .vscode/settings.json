@@ -4,6 +4,8 @@
 		"readline.h": "c",
 		"ranges": "c",
 		"history.h": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"libft.h": "c",
+		"types.h": "c"
 	}
 }

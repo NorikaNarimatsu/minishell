@@ -6,11 +6,11 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:09:13 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/06 16:00:03 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/10 17:43:41 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 t_token	*ft_create_token(void)
 {
@@ -21,6 +21,17 @@ t_token	*ft_create_token(void)
 		return (NULL);
 	ft_bzero(token, sizeof(t_token));
 	return (token);
+}
+
+t_exec	*ft_create_exec(void)
+{
+	t_exec	*execution;
+
+	execution = ft_calloc(1, sizeof(t_exec));
+	if (!execution)
+		return (NULL);
+	ft_bzero(execution, sizeof(t_exec));
+	return (execution);
 }
 
 int	ft_create_token_list(t_token *token)

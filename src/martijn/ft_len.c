@@ -6,11 +6,11 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:11:18 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/05 19:19:10 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/10 12:18:49 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	ft_lenword(char *str)
 {

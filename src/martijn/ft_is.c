@@ -6,11 +6,11 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:01:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/05 18:37:16 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/10 12:18:51 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	ft_isword(char c)
 {

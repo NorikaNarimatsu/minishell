@@ -6,11 +6,11 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/06 16:39:06 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/10 20:57:26 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	ft_token(char *str, t_token *token, int flag)
 {
@@ -61,22 +61,21 @@ void	ft_check_str(char *str, t_shell *shell)
 
 void	my_func(char *str, t_shell *shell)
 {
-	// t_token	*head;
-
 	shell->ll_token = ft_create_token();
 	if (!shell->ll_token)
 		return ;	// TO_DO: Error & free
-	// head = shell->ll_token;
 	ft_check_str(str, shell);
+	shell->ll_token->type = T_EOF;
 	while (shell->ll_token->prev != NULL)
-	{
 		shell->ll_token = shell->ll_token->prev;
-	}
-	// shell->ll_token->word = NULL;
-	// shell->ll_token->type = T_EOF;
-	ft_print_linked_list(shell->ll_token);
-	// shell->ll_token = head;
-	ft_free_t_token(shell->ll_token);
+	ft_print_token_list(shell->ll_token);
+	shell->execution = ft_create_exec();
+	if (!shell->execution)
+		return ;	// TO_DO: Error & free
+	if (ft_transfer_for_exec(shell->ll_token, shell->execution) != 0)
+		return ;	// TO_DO: Error & free
+	ft_print_exec_list(shell->execution);
+	ft_free_t_token(&(shell->ll_token));
 }
 
 /*
