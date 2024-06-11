@@ -6,6 +6,8 @@
 		"history.h": "c",
 		"string.h": "c",
 		"libft.h": "c",
-		"types.h": "c"
+		"types.h": "c",
+		"unistd.h": "c",
+		"fcntl.h": "c"
 	}
 }

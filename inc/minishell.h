@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/10 20:55:38 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/11 17:59:52 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@
 
 enum e_token
 {
-    T_WORD,
+	T_WORD,
 	T_INPUT,
 	T_OUTPUT,
 	T_HEREDOC,
 	T_APPEND,
 	T_PIPE,
 	T_ENV,
-    T_EOF
+	T_EOF
 };
 
 typedef struct s_token
@@ -95,7 +95,7 @@ int		ft_lendquote(char *str);
 t_token	*ft_create_token(void);
 t_exec	*ft_create_exec(void);
 int		ft_create_token_list(t_token *token);
-int		ft_fill_type_and_next(t_token *token, enum e_token type);
+int		ft_create_new_and_fill_type(t_token *token, enum e_token type);
 int		ft_fill_word(char *str, t_token *token, int (*strlen_func)(char *));
 
 /*		ft_token					*/

@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/10 20:57:26 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/11 17:56:05 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	my_func(char *str, t_shell *shell)
 		shell->ll_token = shell->ll_token->prev;
 	ft_print_token_list(shell->ll_token);
 	shell->execution = ft_create_exec();
+	printf("\n\n");
 	if (!shell->execution)
 		return ;	// TO_DO: Error & free
 	if (ft_transfer_for_exec(shell->ll_token, shell->execution) != 0)

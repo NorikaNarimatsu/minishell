@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:38:08 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/10 20:53:34 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/11 17:36:00 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,20 @@ void	ft_print_exec_list(t_exec *exec)
 	head = exec;
 	while (exec)
 	{
-		printf("current address:\t%p\n", exec);	
+		printf("current address:\t%p\n", exec);
 		if (exec->word)
 		{
 			i = 0;
 			while (exec->word[i])
+			{
 				printf("Word[%d]:\t%s\n", i, exec->word[i]);
+				i++;
+			}
 		}
-		printf("infile:\t%s [%d]\n", exec->infile, exec->fd_infile);
+		printf("infile:\t\t%s [%d]\n", exec->infile, exec->fd_infile);
 		printf("outfile:\t%s [%d]\n", exec->outfile, exec->fd_outfile);
 		printf("heredoc:\t%s\n", exec->heredoc);
-		printf("pipe address:\t%p\n\n", exec->pipe);		
+		printf("pipe address:\t%p\n\n", exec->pipe);
 		exec = exec->pipe;
 	}
 	exec = head;

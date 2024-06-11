@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 21:54:23 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/10 12:18:44 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/11 18:12:14 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_word(char *str, t_token *token)
 	len = ft_fill_word(str, token, ft_lenword);
 	if (len < 0)
 		return (len);
-	if (ft_fill_type_and_next(token, T_WORD) == -1)
+	if (ft_create_new_and_fill_type(token, T_WORD) == -1)
 		return (-1);
 	return (len);
 }
@@ -29,12 +29,23 @@ int	ft_word(char *str, t_token *token)
 int	ft_redirection(char *str, t_token *token)
 {
 	int	len;
+	int	error;
 
 	len = ft_fill_word(str, token, ft_lenredirection);
 	if (len < 0)
 		return (len);
-	if (ft_fill_type_and_next(token, T_OPERATER) == -1)
-		return (-1);
+	if (str[0] == '<' && len == 1)
+		error = ft_create_new_and_fill_type(token, T_INPUT);
+	else if (str[0] == '<' && len == 2)
+		error = ft_create_new_and_fill_type(token, T_HEREDOC);
+	else if (str[0] == '>' && len == 1)
+		error = ft_create_new_and_fill_type(token, T_OUTPUT);
+	else if (str[0] == '>' && len == 2)
+		error = ft_create_new_and_fill_type(token, T_APPEND);
+	else
+		return (CNFERR);
+	if (error != 0)
+		return (error);
 	return (len);
 }
 
@@ -45,7 +56,7 @@ int	ft_pipe(char *str, t_token *token)
 	len = ft_fill_word(str, token, ft_lenpipe);
 	if (len < 0)
 		return (len);
-	if (ft_fill_type_and_next(token, T_OPERATER) == -1)
+	if (ft_create_new_and_fill_type(token, T_PIPE) == -1)
 		return (-1);
 	return (len);
 }
@@ -70,7 +81,7 @@ int	ft_single_quote(char *str, t_token *token, int flag)
 		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
 		return (free(token->word), len);
 	}
-	if (ft_fill_type_and_next(token, T_WORD) == -1)
+	if (ft_create_new_and_fill_type(token, T_WORD) == -1)
 		return (-1);
 	return (len);
 }
@@ -95,7 +106,7 @@ int	ft_double_quote(char *str, t_token *token, int flag)
 		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
 		return (free(token->word), len);
 	}
-	if (ft_fill_type_and_next(token, T_WORD) == -1)
+	if (ft_create_new_and_fill_type(token, T_WORD) == -1)
 		return (-1);
 	return (len);
 }

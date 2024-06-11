@@ -6,7 +6,7 @@
 #    By: mdraper <mdraper@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/03/11 14:49:44 by mdraper       #+#    #+#                  #
-#    Updated: 2024/06/10 12:16:33 by mdraper       ########   odam.nl          #
+#    Updated: 2024/06/11 17:17:36 by mdraper       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,8 +63,6 @@ $(LIBFT_DIR):
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@ $(LDFLAGS)
 	$(info CREATED $(NAME))
-	$(info HEADERS: $(HEADERS))
-
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(DIR_DUP)
@@ -87,48 +85,4 @@ re: fclean all
 # **************************************|************************************** #
 
 .PHONY: all clean fclean re
-# .SILENT:
-
-
-# **************************************|************************************** #
-#									 NORIKA										#
-# **************************************|************************************** #
-
-# CC = cc
-# CFLAGS = -Wall -Wextra -Werror -Iincludes
-# LDFLAGS = -lreadline
-
-# INC_DIR = includes
-# LIBFT_DIR = libft
-# SRCS_DIR = src
-# OBJ_DIR = obj
-
-# SRCS_MINISHELL = $(shell find $(SRCS_DIR) -iname "*.c")
-# OBJ_MINISHELL := $(patsubst $(SRCS_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS_MINISHELL))
-
-# all: $(NAME)
-
-# $(NAME): $(OBJ_MINISHELL) $(LIBFT_NAME)
-# 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-# $(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJ_DIR)
-# 	mkdir -p $(@D)
-# 	$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
-
-# $(OBJ_DIR):
-# 	mkdir -p $(OBJ_DIR)
-
-# $(LIBFT_NAME):
-# 	$(MAKE) -C $(LIBFT_DIR)
-
-# clean:
-# 	$(RM) -r $(OBJ_DIR)
-# 	$(MAKE) -C $(LIBFT_DIR) clean
-
-# fclean: clean
-# 	$(RM) $(NAME)
-# 	$(RM) $(LIBFT_NAME)
-
-# re: fclean all
-
-# .PHONY: all clean fclean re
+.SILENT:
