@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/10 15:12:25 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/12 18:26:15 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,12 @@ int	ft_minishell(int argc, char **argv, char **env)
 			add_history(line);
 		// 1) Expand ($...)
 		// 2) Input check (what to check here)?
+		/* quotes, starting with pipe, redirections like this: <> or >< after every redirection should be a word*/
+		/* Don't forget to make the free function for Execution!!! */
 		my_func(line, &shell);
 		// ft_interpret(line, env);
 		free(line);
-	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+	}
 	(void)env;
 	exit(0);
 }

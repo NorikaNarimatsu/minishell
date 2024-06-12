@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/11 17:59:52 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/12 18:32:01 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_exec
 	char			**word;		// command/arguments
 	int				fd_infile;
 	int				fd_outfile;
-	char			*infile;	// Append and outfile | Already open it! (and close if already one opened). Append have different flags then for Append. Ask Norika for this.
+	char			*infile;	// Append and infile | Already open it! (and close if already one opened). Append have different flags then for Append. Ask Norika for this.
 	char			*outfile;
 	char			*heredoc;
 	struct s_exec	*pipe;		// linked list to this struct
@@ -64,7 +64,6 @@ typedef struct s_shell
 	t_token	*ll_token;
 	t_exec	*execution;
 }	t_shell;
-
 
 enum e_errno
 {
