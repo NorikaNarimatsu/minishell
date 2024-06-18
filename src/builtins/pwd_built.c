@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:49:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/06 13:56:05 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:22:55 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	pwd_builtin(char **argv, t_data *data)
 	t_env	*current;
 
 	(void) argv;
-	current = data->env_copy;
+	current = data->env;
 	while (current)
 	{
 		if (ft_strcmp(current->key, "PWD") == 0)

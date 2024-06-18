@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:21:39 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/06 13:51:07 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:22:31 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	env_builtin(char **argv, t_data *data)
 
 	if (argv && argv[2])
 		return (-1);
-	if (!data->env_copy)
+	if (!data->env)
 		return (EXIT_FAILURE);
-	current = data->env_copy;
+	current = data->env;
 	while (current)
 	{
 		ft_putendl_fd(current->env, 1);

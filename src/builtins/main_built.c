@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:49:00 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/06 15:08:39 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:22:48 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	(void) argc;
-	data.env_copy = init_env(envp);
+	data.env = init_env(envp);
 	if (ft_strcmp(argv[1], "echo") == 0)
 		echo_builtin(argv, &data);
 	else if (ft_strcmp(argv[1], "unset") == 0)

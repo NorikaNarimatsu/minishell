@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:36:23 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/02 16:37:45 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:21:33 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	ft_interpret(char *line, char **env)
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
+
 
 	(void) argc;
 	(void) argv;

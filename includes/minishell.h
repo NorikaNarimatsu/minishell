@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/06 14:07:01 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:22:15 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ typedef struct s_data
 {
 	char		*cwd;
 	char		*owd;
-	t_env		*env_copy;
+	t_env		*env;
 }	t_data;
-
-
 
 // error.c
 void	fatal_error(char *message);
