@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_built.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 14:49:00 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/18 14:22:48 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main_built.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/05 14:49:00 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/06/18 15:21:07 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	print_env(t_env *env)
 {
@@ -23,32 +23,32 @@ void	print_env(t_env *env)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_data	data;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_data	data;
 
-	(void) argc;
-	data.env = init_env(envp);
-	if (ft_strcmp(argv[1], "echo") == 0)
-		echo_builtin(argv, &data);
-	else if (ft_strcmp(argv[1], "unset") == 0)
-		unset_builtin(argv, &data);
-	else if (ft_strcmp(argv[1], "env") == 0)
-		env_builtin(argv, &data);
-	else if (ft_strcmp(argv[1], "pwd") == 0)
-		pwd_builtin(argv, &data);
+// 	(void) argc;
+// 	data.env = init_env(envp);
+// 	if (ft_strcmp(argv[1], "echo") == 0)
+// 		echo_builtin(argv, &data);
+// 	else if (ft_strcmp(argv[1], "unset") == 0)
+// 		unset_builtin(argv, &data);
+// 	else if (ft_strcmp(argv[1], "env") == 0)
+// 		env_builtin(argv, &data);
+// 	else if (ft_strcmp(argv[1], "pwd") == 0)
+// 		pwd_builtin(argv, &data);
 
-	// else if (ft_strcmp(argv[1], "cd") == 0)
-	// 	cd_builtin(argv);
-	// else if (ft_strcmp(argv[1], "export") == 0)
-	// 	export_builtin(argv);
-	// else if (ft_strcmp(argv[1], "exit") == 0)
-	// 	exit_builtin(argv);
-	else
-		printf("Not build in command\n");
+// 	// else if (ft_strcmp(argv[1], "cd") == 0)
+// 	// 	cd_builtin(argv);
+// 	// else if (ft_strcmp(argv[1], "export") == 0)
+// 	// 	export_builtin(argv);
+// 	// else if (ft_strcmp(argv[1], "exit") == 0)
+// 	// 	exit_builtin(argv);
+// 	else
+// 		printf("Not build in command\n");
 
-	return (0);
-}
+// 	return (0);
+// }
 
 
 

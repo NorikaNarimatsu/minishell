@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   echo_built.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 14:50:35 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/06 14:37:07 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   echo_built.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/05 14:50:35 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/06/18 16:28:20 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 bool	is_n_flag(char *arg)
 {
@@ -45,13 +45,13 @@ void	echo_print_args(char **args, bool n_flag, int i)
 	}
 }
 
-int	echo_builtin(char **args, t_data *data)
+int	echo_builtin(char **args, t_shell *shell)
 {
 	bool	n_flag;
 
 	if (!args[2])
 		return (printf("\n"), EXIT_SUCCESS);
-	(void) data;
+	(void) shell;
 	n_flag = is_n_flag(args[2]);
 	if (n_flag == true)
 		echo_print_args(args, n_flag, 3);

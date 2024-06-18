@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/02 16:37:40 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/05 18:13:34 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   path.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/02 16:37:40 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/06/18 15:17:19 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 char	*search_path(char *filename)
 {

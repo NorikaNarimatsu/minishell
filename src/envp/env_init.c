@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_init.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 12:44:31 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/06/06 14:37:48 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   env_init.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/06 12:44:31 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/06/18 16:15:07 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_env	*create_env_node(char *env_str)
 {
@@ -19,7 +19,7 @@ t_env	*create_env_node(char *env_str)
 
 	new_node = (t_env *)malloc(sizeof(t_env));
 	if (!new_node)
-		return NULL;
+		return (NULL);
 	new_node->env = strdup(env_str);
 	if (!new_node->env)
 		return (free(new_node), NULL);
@@ -42,10 +42,12 @@ t_env	*create_env_node(char *env_str)
 
 t_env	*init_env(char **env)
 {
-	t_env	*head = NULL;
-	t_env	*current = NULL;
+	t_env	*head;
+	t_env	*current;
 	t_env	*new_node;
 
+	head = NULL;
+	current = NULL;
 	while (*env)
 	{
 		new_node = create_env_node(*env);
