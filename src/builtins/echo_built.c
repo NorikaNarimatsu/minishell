@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 14:50:35 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/18 16:28:20 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/18 17:17:09 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ int	echo_builtin(char **args, t_shell *shell)
 {
 	bool	n_flag;
 
-	if (!args[2])
-		return (printf("\n"), EXIT_SUCCESS);
 	(void) shell;
-	n_flag = is_n_flag(args[2]);
+	printf("in here\n");
+	if (!args[1])
+		return (printf("\n"), EXIT_SUCCESS);
+	n_flag = is_n_flag(args[1]);
 	if (n_flag == true)
-		echo_print_args(args, n_flag, 3);
-	else
 		echo_print_args(args, n_flag, 2);
+	else
+		echo_print_args(args, n_flag, 1);
 	return (EXIT_SUCCESS);
 }
