@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/18 16:27:48 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/19 11:56:53 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,10 @@ int		ft_transfer_for_exec(t_token *token, t_exec *exec);
 
 
 void	my_func(char *str, t_shell *shell);
+
+/*		ft_expansion				*/
+int 	ft_expansion(char *line, t_env *env);
+
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 14:49:00 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/18 17:17:54 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/19 12:15:27 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	print_env(t_env *env)
 {
+	t_env	*head;
+
+	head = env;
 	while (env)
 	{
 		printf("env: %s\n", env->env);
@@ -21,6 +24,7 @@ void	print_env(t_env *env)
 		printf("value: %s\n\n", env->value);
 		env = env->next;
 	}
+	env = head;
 }
 
 // int	main(int argc, char **argv, char **envp)

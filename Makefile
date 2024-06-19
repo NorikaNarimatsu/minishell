@@ -6,7 +6,7 @@
 #    By: mdraper <mdraper@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/03/11 14:49:44 by mdraper       #+#    #+#                  #
-#    Updated: 2024/06/11 17:17:36 by mdraper       ########   odam.nl          #
+#    Updated: 2024/06/19 11:57:56 by mdraper       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRCS		:= $(shell find $(SRC_DIR) -iname "*.c")
 OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g
+CFLAGS		:= -Wall -Wextra -g
 HEADERS		:= -I $(INCS) -I $(LIBFT_DIR)/inc
 LDFLAGS		:= -lreadline
 

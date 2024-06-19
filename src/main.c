@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/18 17:14:41 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/19 12:19:37 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_minishell(int argc, char **argv, char **env)
 	char	*line;
 
 	shell.env = init_env(env);
-	print_env(shell.env);
+	// print_env(shell.env);
 	(void) argc;
 	(void) argv;
 	rl_outstream = stderr;
@@ -77,6 +77,7 @@ int	ft_minishell(int argc, char **argv, char **env)
 			break ;
 		if (*line)
 			add_history(line);
+		ft_expansion(line, shell.env);
 		// 1) Expand ($...)
 		// 2) Input check (what to check here)?
 		/* quotes, starting with pipe, redirections like this: <> or >< after every redirection should be a word*/

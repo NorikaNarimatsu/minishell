@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/06 12:44:31 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/18 16:15:07 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/19 11:36:09 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ t_env	*create_env_node(char *env_str)
 	new_node = (t_env *)malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
-	new_node->env = strdup(env_str);
+	new_node->env = ft_strdup(env_str);
 	if (!new_node->env)
 		return (free(new_node), NULL);
-	equal_sign = strchr(env_str, '=');
+	equal_sign = ft_strchr(env_str, '=');
 	if (equal_sign)
 	{
 		new_node->key = strndup(env_str, equal_sign - env_str);
-		new_node->value = strdup(equal_sign + 1);
+		new_node->value = ft_strdup(equal_sign + 1);
 	}
 	else
 	{
-		new_node->key = strdup(env_str);
+		new_node->key = ft_strdup(env_str);
 		new_node->value = NULL;
 	}
 	if (!new_node->key || (!new_node->value && equal_sign))
