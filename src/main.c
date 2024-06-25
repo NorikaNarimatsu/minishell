@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/19 12:19:37 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/25 15:16:36 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_minishell(int argc, char **argv, char **env)
 		// 2) Input check (what to check here)?
 		/* quotes, starting with pipe, redirections like this: <> or >< after every redirection should be a word*/
 		/* Don't forget to make the free function for Execution!!! */
-		my_func(line, &shell);
+		ft_tokenization(line, &shell);
 
 		if (ft_strcmp(shell.execution->word[0], "echo") == 0)
 			echo_builtin(shell.execution->word, &shell);

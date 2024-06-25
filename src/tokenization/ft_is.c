@@ -6,15 +6,20 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:01:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/10 12:18:51 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/25 14:50:48 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	ft_isinvalid(char c)
+{
+	return (c == '<' || c == '>' || c == '|' || c == '\'' || c == '"');
+}
+
 int	ft_isword(char c)
 {
-	return (ft_isalnum(c) || c == '_');
+	return (ft_isgraph(c) && !ft_isinvalid(c));
 }
 
 int	ft_isoneredirection(char c)

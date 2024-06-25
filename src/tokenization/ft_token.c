@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 21:54:23 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/11 18:12:14 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/25 15:26:31 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,10 @@ int	ft_single_quote(char *str, t_token *token, int flag)
 	if (flag == 0)
 	{
 		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
-		return (free(token->word), len);
+		free(token->word);
+		token->word = NULL;
 	}
-	if (ft_create_new_and_fill_type(token, T_WORD) == -1)
+	else if (ft_create_new_and_fill_type(token, T_WORD) == -1)
 		return (-1);
 	return (len);
 }
@@ -104,9 +105,10 @@ int	ft_double_quote(char *str, t_token *token, int flag)
 	if (flag == 0)
 	{
 		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
-		return (free(token->word), len);
+		free(token->word);
+		token->word = NULL;
 	}
-	if (ft_create_new_and_fill_type(token, T_WORD) == -1)
+	else if (ft_create_new_and_fill_type(token, T_WORD) == -1)
 		return (-1);
 	return (len);
 }

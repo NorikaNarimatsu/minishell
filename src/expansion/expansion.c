@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/19 13:23:20 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/25 15:31:05 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ char	*get_key_value2(char *line, t_env *env)
 	char	*key;
 	int		i;
 	int		j;
-	char *leftover;
-	char *result;
+	char	*leftover;
+	char	*result;
 
 	i = 0;
 	key = NULL;
 	while (line[i] && line[i] != '$')
 		i++;
 	result = ft_substr(line, 0, i);
-	printf("first result : %s\n", result);
+	printf("first result: %s\n", result);
 	while (line[i])
 	{
 		j = 0;
@@ -44,7 +44,7 @@ char	*get_key_value2(char *line, t_env *env)
 				printf("ITS A MATCH!!!\n");
 				printf("%s -> %s\n", env->key, env->value);
 				result = ft_strjoin(result, env->value);
-				printf("result : %s\n", result);
+				printf("result: %s\n", result);
 			}
 			env = env->next;
 		}
@@ -117,7 +117,7 @@ char	*get_key_value2(char *line, t_env *env)
 // 	return (key);
 // }
 
-int ft_expansion(char *line, t_env *env)
+int	ft_expansion(char *line, t_env *env)
 {
 	// char	*key;
 

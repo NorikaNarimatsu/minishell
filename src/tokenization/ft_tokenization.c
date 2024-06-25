@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   token.c                                            :+:    :+:            */
+/*   ft_tokenization.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/11 17:56:05 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/25 15:16:09 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,17 @@ int	ft_token(char *str, t_token *token, int flag)
 	return (len);
 }
 
-void	ft_check_str(char *str, t_shell *shell)
+int	ft_check_str(char *str, t_shell *shell)
 {
 	int		len;
 	int		i;
 
-	shell->token_flag = 1;
 	i = 0;
-	if (!str || !shell || !shell->ll_token)
-		return ;
 	while (str[i])
 	{
 		len = ft_token(&str[i], shell->ll_token, shell->token_flag);
 		if (len < 0)
-			return ;	// TO_DO: Error & free
+			return (len);
 		else if (len > 0)
 		{
 			i += len;
@@ -57,25 +54,33 @@ void	ft_check_str(char *str, t_shell *shell)
 			shell->token_flag = 1;
 		}
 	}
+	return (0);
 }
 
-void	my_func(char *str, t_shell *shell)
+/*
+This function is 
+*/
+void	ft_tokenization(char *str, t_shell *shell)
 {
+	if (!str || !shell)
+		return ; // TO_DO: check string before. Don't do it here!
 	shell->ll_token = ft_create_token();
 	if (!shell->ll_token)
 		return ;	// TO_DO: Error & free
-	ft_check_str(str, shell);
+	shell->token_flag = 1;
+	if (ft_check_str(str, shell) < 0)
+		return ;	// TO_DO: Error & free
 	shell->ll_token->type = T_EOF;
 	while (shell->ll_token->prev != NULL)
 		shell->ll_token = shell->ll_token->prev;
-	ft_print_token_list(shell->ll_token);
+	ft_print_token_list(shell->ll_token); // TO_DO: Remove line
 	shell->execution = ft_create_exec();
-	printf("\n\n");
+	printf("\n\n"); // TO_DO: Remove line
 	if (!shell->execution)
 		return ;	// TO_DO: Error & free
 	if (ft_transfer_for_exec(shell->ll_token, shell->execution) != 0)
 		return ;	// TO_DO: Error & free
-	ft_print_exec_list(shell->execution);
+	ft_print_exec_list(shell->execution); // TO_DO: Remove line
 	ft_free_t_token(&(shell->ll_token));
 }
 
