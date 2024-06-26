@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/25 15:13:02 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/06/26 18:24:45 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,25 @@ typedef struct s_exec
 	struct s_exec	*pipe;		// linked list to this struct
 }	t_exec;
 
+typedef struct s_expan
+{
+	char			*temp;
+	char			*key;
+	int				key_malloc;
+	char			*expanded_line;
+	int				expan_malloc;
+	int				need_to_expand;
+	int				len;
+	int				malloc_error;
+	int				exit_status;
+}	t_expan;
+
 typedef struct s_shell
 {
 	char	*cwd;
 	char	*owd;
 	t_env	*env;
+	t_expan	*expanding;
 	int		token_flag;
 	t_token	*ll_token;
 	t_exec	*execution;
@@ -107,6 +121,10 @@ void	print_env(t_env *env);
 
 
 /*		Martijn						*/
+
+/*		ft_error					*/
+void	ft_free_string(char **str);
+void	ft_free_t_token(t_token	**ll_token);
 
 /*		ft_is						*/
 int		ft_isword(char c);
@@ -153,8 +171,8 @@ int		ft_transfer_for_exec(t_token *token, t_exec *exec);
 void	ft_tokenization(char *str, t_shell *shell);
 
 /*		ft_expansion				*/
-int		ft_expansion(char *line, t_env *env);
-
+int		ft_expansion(char *line, t_env *env, t_expan *expanding);
+t_expan *ft_create_expansion(void);
 
 
 #endif
