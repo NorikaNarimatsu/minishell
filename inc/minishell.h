@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/10 13:22:08 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/10 13:50:55 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <limits.h>
 # include <string.h>
 # include <error.h>
+# include <stdbool.h>
 
 # define PATH_MAX	4096
 
@@ -33,6 +34,7 @@ typedef struct s_env
 {
 	char			*env;
 	char			*key;
+	bool			flag;
 	char			*value;
 	struct s_env	*next;
 }	t_env;
@@ -111,9 +113,25 @@ char	*search_path(char *filename);
 //builtins
 int		echo_builtin(char **args, t_shell *shell);
 int		env_builtin(char **argv, t_shell *shell);
-int		pwd_builtin(char **args, t_shell *shell);
+int		export_builtin(char **input, t_shell *shell);
+void	print_env_list_sorted(t_env *env_list);
+void	unset_builtin(char **input, t_shell *shell);
+int		pwd_builtin(char **input, t_shell *shell);
+int		cd_builtin(char **input, t_shell *shell);
+void	replace_env_value(t_env *env_list, const char *input);
+void	free_env_node(t_env *node);
+int		exit_builtin(char **input, t_shell *shell);
+int		which_buildin(t_shell *shell);
 
+// utils
 t_env	*init_env(char **env);
+t_env	*create_env_node(char *env_str);
+void	free_env_list(t_env *head);
+bool	is_valid_identifier(char *input);
+bool	is_exist_identifier(t_env *env_list, const char *key);
+void	reset_env_flags(t_env *env_list);
+int		is_valid_directory(char *path);
+char	**ft_convert(int argc, char **argv);
 void	print_env(t_env *env);
 
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/10 13:32:06 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/26 12:36:23 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/10 14:00:02 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,13 @@ int	ft_minishell(int argc, char **argv, char **env)
 		/* quotes, starting with pipe, redirections like this: <> or >< after every redirection should be a word*/
 		/* Don't forget to make the free function for Execution!!! */
 		printf("----- TOKENIZATION -----\n");
-		ft_tokenization(shell.expanding->exp_line, &shell);
-
+		ft_tokenization(line, &shell);
 		printf("----- EXECUTION -----\n");
-		if (ft_strcmp(shell.execution->word[0], "echo") == 0) // this can get segfault!?
-			echo_builtin(shell.execution->word, &shell);
+		// if (ft_strcmp(shell.execution->word[0], "echo") == 0) // this can get segfault!?
+		// 	echo_builtin(shell.execution->word, &shell);
+
+		which_buildin(&shell);
+
 		// ft_interpret(line, env);
 		ft_free_string(&line);
 	}

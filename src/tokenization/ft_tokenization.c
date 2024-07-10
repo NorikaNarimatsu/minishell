@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_tokenization.c                                  :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/10 13:28:30 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_tokenization.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/05 10:35:35 by mdraper           #+#    #+#             */
+/*   Updated: 2024/07/10 13:59:29 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_check_str(char *str, t_shell *shell)
 }
 
 /*
-This function is 
+This function is
 */
 void	ft_tokenization(char *str, t_shell *shell)
 {
@@ -72,7 +72,7 @@ void	ft_tokenization(char *str, t_shell *shell)
 	while (shell->ll_token->prev != NULL)
 		shell->ll_token = shell->ll_token->prev;
 	// ft_print_token_list(shell->ll_token); // TO_DO: Remove line
-	// shell->execution = ft_create_exec();
+	shell->execution = ft_create_exec();
 	// printf("\n\n"); // TO_DO: Remove line
 	if (!shell->execution)
 		return ;	// TO_DO: Error & free
