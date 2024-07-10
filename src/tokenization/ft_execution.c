@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/10 17:16:21 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/11 20:26:38 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/10 17:46:38 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	ft_transfer_word(t_token *token, t_exec *exec)
 
 int	ft_transfer_append(t_token **token, t_exec *exec)
 {
-	// (void)token;
-	// (void)exec;
 	exec->infile = ft_strdup((*token)->next->word);
 	(*token) = (*token)->next;
 	return (0);
@@ -46,8 +44,6 @@ int	ft_transfer_append(t_token **token, t_exec *exec)
 
 int	ft_transfer_heredoc(t_token **token, t_exec *exec)
 {
-	// (void)token;
-	// (void)exec;
 	exec->heredoc = ft_strdup((*token)->next->word);
 	(*token) = (*token)->next;
 	return (0);
@@ -55,12 +51,6 @@ int	ft_transfer_heredoc(t_token **token, t_exec *exec)
 
 int	ft_transfer_input(t_token **token, t_exec *exec)
 {
-	// (void)token;
-	// (void)exec;
-	// if (exec->infile != NULL)
-	// {
-	// 	/* code */ // Free the string? What the do with the old one?
-	// }
 	exec->infile = ft_strdup((*token)->next->word);
 	(*token) = (*token)->next;
 	return (0);
@@ -68,8 +58,6 @@ int	ft_transfer_input(t_token **token, t_exec *exec)
 
 int	ft_transfer_output(t_token **token, t_exec *exec)
 {
-	// (void)token;
-	// (void)exec;
 	exec->outfile = ft_strdup((*token)->next->word);
 	(*token) = (*token)->next;
 	return (0);

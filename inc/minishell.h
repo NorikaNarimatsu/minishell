@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 13:50:55 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/10 19:27:36 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,17 +138,34 @@ void	print_env(t_env *env);
 
 /*		Martijn						*/
 
-/*		ft_error					*/
+/*	EXPANSION-----------------------*/
+/*		ft_create_error				*/
+t_expan	*ft_create_expansion(void);
+void	ft_free_expansion(t_expan *exp);
+
+/*		ft_exp_utils				*/
+int		ft_get_position(const char *line, t_expan *exp);
+char	*ft_expstring(char **s1, char **s2);
+int		ft_strlen_dollar_sign(char *str);
+int		ft_exp_needed(const char *line, t_expan *exp);
+
+/*		ft_expansion				*/
+int		ft_expansion(char *line, t_env *env, t_expan *expanding);
+
+/*	TOKENIZATION--------------------*/
+/*		ft_execution				*/
+int		ft_transfer_for_exec(t_token *token, t_exec *exec);
+
+/*		ft_free_error					*/
+void	get_errdescr(enum e_errno error);
 void	ft_free_string(char **str);
 void	ft_free_t_token(t_token	**ll_token);
 
 /*		ft_is						*/
+int		ft_isinvalid(char c);
 int		ft_isword(char c);
 int		ft_isoneredirection(char c);
 int		ft_istworedirection(char *str);
-int		ft_ispipe(char c);
-int		ft_issquote(char c);
-int		ft_isdquote(char c);
 
 /*		ft_len						*/
 int		ft_lenword(char *str);
@@ -164,6 +181,11 @@ int		ft_create_token_list(t_token *token);
 int		ft_create_new_and_fill_type(t_token *token, enum e_token type);
 int		ft_fill_word(char *str, t_token *token, int (*strlen_func)(char *));
 
+/*		ft_print					*/
+void	ft_print_token_list(t_token *token);
+void	ft_print_exec_list(t_exec *exec);
+int		ft_ms_count_words(char **str);
+
 /*		ft_token					*/
 int		ft_word(char *str, t_token *token);
 int		ft_redirection(char *str, t_token *token);
@@ -171,24 +193,7 @@ int		ft_pipe(char *str, t_token *token);
 int		ft_single_quote(char *str, t_token *token, int flag);
 int		ft_double_quote(char *str, t_token *token, int flag);
 
-/*		ft_print					*/
-void	ft_print_token_list(t_token *token);
-void	ft_print_exec_list(t_exec *exec);
-
-/*		ft_print					*/
-void	get_errdescr(enum e_errno error);
-void	ft_free_t_token(t_token	**ll_token);
-int		ft_ms_count_words(char **str);
-
-/*		ft_execution				*/
-int		ft_transfer_for_exec(t_token *token, t_exec *exec);
-
 /*		ft_tokenization				*/
-void	ft_tokenization(char *str, t_shell *shell);
-
-/*		ft_expansion				*/
-int		ft_expansion(char *line, t_env *env, t_expan *expanding);
-t_expan *ft_create_expansion(void);
-
+int		ft_tokenization(char *str, t_shell *shell);
 
 #endif

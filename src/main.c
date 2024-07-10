@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 12:36:23 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 14:00:02 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/10 17:03:43 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	ft_minishell(int argc, char **argv, char **env)
 		ft_bzero(&shell.ll_token, sizeof(shell.ll_token));
 		ft_bzero(&shell.execution, sizeof(shell.execution));
 		shell.expanding->exp_line = NULL;
-		shell.expanding->single_double_quote = 0;
 		// ft_bzero(&shell.expanding, sizeof(shell.expanding));
 		line = readline("minishell$ ");
 		if (line == NULL)
@@ -84,7 +83,8 @@ int	ft_minishell(int argc, char **argv, char **env)
 		if (*line)
 			add_history(line);
 		printf("----- EXPANSION -----\n");
-		ft_expansion(line, shell.env, shell.expanding);
+		if (ft_expansion(line, shell.env, shell.expanding) == MALERR)
+			return (MALERR); // free_everything function;
 		ft_free_string(&line);
 		line = shell.expanding->exp_line;
 		// 2) Input check (what to check here)?
