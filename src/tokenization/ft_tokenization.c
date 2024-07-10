@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/25 15:16:09 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/10 13:28:30 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ This function is
 */
 void	ft_tokenization(char *str, t_shell *shell)
 {
-	if (!str || !shell)
-		return ; // TO_DO: check string before. Don't do it here!
 	shell->ll_token = ft_create_token();
 	if (!shell->ll_token)
 		return ;	// TO_DO: Error & free
@@ -73,9 +71,9 @@ void	ft_tokenization(char *str, t_shell *shell)
 	shell->ll_token->type = T_EOF;
 	while (shell->ll_token->prev != NULL)
 		shell->ll_token = shell->ll_token->prev;
-	ft_print_token_list(shell->ll_token); // TO_DO: Remove line
-	shell->execution = ft_create_exec();
-	printf("\n\n"); // TO_DO: Remove line
+	// ft_print_token_list(shell->ll_token); // TO_DO: Remove line
+	// shell->execution = ft_create_exec();
+	// printf("\n\n"); // TO_DO: Remove line
 	if (!shell->execution)
 		return ;	// TO_DO: Error & free
 	if (ft_transfer_for_exec(shell->ll_token, shell->execution) != 0)

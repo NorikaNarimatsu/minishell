@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/26 18:24:45 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/10 13:22:08 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,10 @@ typedef struct s_expan
 {
 	char			*temp;
 	char			*key;
-	int				key_malloc;
-	char			*expanded_line;
-	int				expan_malloc;
+	char			*exp_line;
+	int				single_double_quote;
 	int				need_to_expand;
 	int				len;
-	int				malloc_error;
 	int				exit_status;
 }	t_expan;
 

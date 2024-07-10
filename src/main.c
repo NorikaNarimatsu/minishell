@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/26 18:35:46 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/10 13:32:06 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,24 +75,29 @@ int	ft_minishell(int argc, char **argv, char **env)
 	{
 		ft_bzero(&shell.ll_token, sizeof(shell.ll_token));
 		ft_bzero(&shell.execution, sizeof(shell.execution));
-		shell.expanding->expanded_line = NULL;
+		shell.expanding->exp_line = NULL;
+		shell.expanding->single_double_quote = 0;
 		// ft_bzero(&shell.expanding, sizeof(shell.expanding));
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
 		if (*line)
 			add_history(line);
+		printf("----- EXPANSION -----\n");
 		ft_expansion(line, shell.env, shell.expanding);
-		// 1) Expand ($...)
+		ft_free_string(&line);
+		line = shell.expanding->exp_line;
 		// 2) Input check (what to check here)?
 		/* quotes, starting with pipe, redirections like this: <> or >< after every redirection should be a word*/
 		/* Don't forget to make the free function for Execution!!! */
-		ft_tokenization(shell.expanding->expanded_line, &shell);
+		printf("----- TOKENIZATION -----\n");
+		ft_tokenization(shell.expanding->exp_line, &shell);
 
-		if (ft_strcmp(shell.execution->word[0], "echo") == 0)
+		printf("----- EXECUTION -----\n");
+		if (ft_strcmp(shell.execution->word[0], "echo") == 0) // this can get segfault!?
 			echo_builtin(shell.execution->word, &shell);
 		// ft_interpret(line, env);
-		free(line);
+		ft_free_string(&line);
 	}
 	(void)env;
 	exit(0);

@@ -6,11 +6,16 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:01:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/25 14:50:48 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/08 13:55:11 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_isseperator(char c)
+{
+	return (c == '<' || c == '>' || c == '|' || c == '$');
+}
 
 int	ft_isinvalid(char c)
 {
