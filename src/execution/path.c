@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   path.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/06/02 16:37:40 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/18 15:17:19 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   path.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/13 16:28:58 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/13 16:28:59 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ char	*search_path(char *filename)
 	value = getenv("PATH");
 	while (*value)
 	{
-		ft_bzero(path, PATH_MAX);
-		end = ft_strchr(value, ':');
+		bzero(path, PATH_MAX);
+		end = strchr(value, ':');
 		if (end)
-			strncpy(path, value, end - value); //todo
+			strncpy(path, value, end - value);
 		else
 			ft_strlcpy(path, value, PATH_MAX);
 		ft_strlcat(path, "/", PATH_MAX);
 		ft_strlcat(path, filename, PATH_MAX);
 		if (access(path, X_OK) == 0)
 		{
-			dup = ft_strdup(path);
+			dup = strdup(path);
 			if (dup == NULL)
 				fatal_error("strdup");
 			return (dup);

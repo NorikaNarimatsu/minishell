@@ -6,33 +6,48 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:49:00 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 14:01:16 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:22:57 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	which_buildin(t_shell *shell)
+bool	is_buildin(char *command)
+{
+	if ((strcmp(command, "echo") == 0)
+		|| (strcmp(command, "env") == 0)
+		|| (strcmp(command, "export") == 0)
+		|| (strcmp(command, "unset") == 0)
+		|| (strcmp(command, "pwd") == 0)
+		|| (strcmp(command, "cd") == 0)
+		|| (strcmp(command, "exit") == 0))
+		return (true);
+	else
+		return (false);
+}
+
+
+int	execute_buildin(t_shell *shell)
 {
 	char	**input;
 
 	input = shell->execution->word;
 	if (strcmp(input[0], "echo") == 0)
-		echo_builtin(input, shell);
+		return (echo_builtin(input, shell), 0);
 	else if (strcmp(input[0], "env") == 0)
-		env_builtin(input, shell);
+		return (env_builtin(input, shell), 0);
 	else if (strcmp(input[0], "export") == 0)
-		export_builtin(input, shell);
+		return (export_builtin(input, shell), 0);
 	else if (strcmp(input[0], "unset") == 0)
-		unset_builtin(input, shell);
+		return (unset_builtin(input, shell), 0);
 	else if (strcmp(input[0], "pwd") == 0)
-		pwd_builtin(input, shell);
+		return (pwd_builtin(input, shell), 0);
 	else if (strcmp(input[0], "cd") == 0)
-		cd_builtin(input, shell);
+		return (cd_builtin(input, shell), 0);
 	else if (strcmp(input[0], "exit") == 0)
-		exit_builtin(input, shell);
+		return (exit_builtin(input, shell), 0);
 	else
-		printf("No command found\n");
+		return (-1); //command not found in builtin
 	return (0);
 }
 

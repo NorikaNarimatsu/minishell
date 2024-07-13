@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 13:50:55 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:25:42 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_exec
 	char			*infile;	// Append and infile | Already open it! (and close if already one opened). Append have different flags then for Append. Ask Norika for this.
 	char			*outfile;
 	char			*heredoc;
+	bool			append; // please add this
 	struct s_exec	*pipe;		// linked list to this struct
 }	t_exec;
 
@@ -133,6 +134,13 @@ void	reset_env_flags(t_env *env_list);
 int		is_valid_directory(char *path);
 char	**ft_convert(int argc, char **argv);
 void	print_env(t_env *env);
+
+// execution
+int		ft_interpret(t_shell *shell);
+char	**env_list_to_array(t_env *env_list);
+int		count_command(t_exec *exec);
+bool	is_buildin(char *command);
+int		execute_buildin(t_shell *shell);
 
 
 
