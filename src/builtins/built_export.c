@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:31:41 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 13:42:45 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:10:05 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,21 +134,21 @@ void	print_env_list_sorted(t_env *env_list)
 	}
 }
 
-int	export_builtin(char **input, t_shell *shell)
+int	export_builtin(char **input, t_env *env)
 {
 	int		i;
 
 	i = 1;
 	if (!input[i])
 	{
-		print_env_list_sorted(shell->env);
+		print_env_list_sorted(env);
 		return (EXIT_SUCCESS);
 	}
 	else
 	{
 		while (input[i])
 		{
-			handle_export(&(shell->env), input[i]);
+			handle_export(&(env), input[i]);
 			i++;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:23:32 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 13:42:40 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:10:41 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void	unset_env_var(t_env **env_list, char *key)
 	}
 }
 
-void	unset_builtin(char **input, t_shell *shell)
+void	unset_builtin(char **input, t_env *env)
 {
 	int	i;
 
 	i = 1;
 	while (input[i])
 	{
-		unset_env_var(&(shell->env), input[i]);
+		unset_env_var(&(env), input[i]);
 		i++;
 	}
 }

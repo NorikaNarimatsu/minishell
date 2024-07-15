@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:29:44 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/13 17:45:36 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:32:58 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char	**env_list_to_array(t_env *env_list)
 
 	count = 0;
 	temp = env_list;
-	// Count the number of environment variables
 	while (temp)
 	{
 		count++;

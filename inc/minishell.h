@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/13 17:25:42 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:43:51 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_env
 {
 	char			*env;
 	char			*key;
-	bool			flag;
 	char			*value;
+	bool			flag;
 	struct s_env	*next;
 }	t_env;
 
@@ -112,17 +112,16 @@ void	validate_access(char *path, char *filename);
 char	*search_path(char *filename);
 
 //builtins
-int		echo_builtin(char **args, t_shell *shell);
-int		env_builtin(char **argv, t_shell *shell);
-int		export_builtin(char **input, t_shell *shell);
-void	print_env_list_sorted(t_env *env_list);
-void	unset_builtin(char **input, t_shell *shell);
-int		pwd_builtin(char **input, t_shell *shell);
-int		cd_builtin(char **input, t_shell *shell);
-void	replace_env_value(t_env *env_list, const char *input);
-void	free_env_node(t_env *node);
-int		exit_builtin(char **input, t_shell *shell);
-int		which_buildin(t_shell *shell);
+int		echo_builtin(char **input);
+int		env_builtin(char **input, t_env *env);
+int		export_builtin(char **input, t_env *env);
+void	print_env_list_sorted(t_env *env);
+void	unset_builtin(char **input, t_env *env);
+int		pwd_builtin(char **input, t_env *env);
+int		cd_builtin(char **input, t_env *env);
+void	replace_env_value(t_env *env, const char *input);
+void	free_env_node(t_env *env);
+int		exit_builtin(char **input);
 
 // utils
 t_env	*init_env(char **env);
@@ -139,8 +138,8 @@ void	print_env(t_env *env);
 int		ft_interpret(t_shell *shell);
 char	**env_list_to_array(t_env *env_list);
 int		count_command(t_exec *exec);
-bool	is_buildin(char *command);
-int		execute_buildin(t_shell *shell);
+bool	is_builtin(char *command);
+int		execute_builtin(t_exec *exec, t_env *env);
 
 
 

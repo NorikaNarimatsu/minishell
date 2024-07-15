@@ -6,19 +6,18 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 11:38:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 17:18:12 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:14:33 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exit_builtin(char **input, t_shell *shell)
+int	exit_builtin(char **input)
 {
 	int		exit_status;
 	int		i;
 	char	*p;
 
-	(void)shell;
 	exit_status = 0;
 	i = 0;
 	p = input[1];

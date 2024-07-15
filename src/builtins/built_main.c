@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:49:00 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/13 17:22:57 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:15:19 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_buildin(char *command)
+bool	is_builtin(char *command)
 {
 	if ((strcmp(command, "echo") == 0)
 		|| (strcmp(command, "env") == 0)
@@ -27,25 +27,25 @@ bool	is_buildin(char *command)
 }
 
 
-int	execute_buildin(t_shell *shell)
+int	execute_builtin(t_exec *exec, t_env *env)
 {
 	char	**input;
 
-	input = shell->execution->word;
+	input = exec->word;
 	if (strcmp(input[0], "echo") == 0)
-		return (echo_builtin(input, shell), 0);
+		return (echo_builtin(input), 0);
 	else if (strcmp(input[0], "env") == 0)
-		return (env_builtin(input, shell), 0);
+		return (env_builtin(input, env), 0);
 	else if (strcmp(input[0], "export") == 0)
-		return (export_builtin(input, shell), 0);
+		return (export_builtin(input, env), 0);
 	else if (strcmp(input[0], "unset") == 0)
-		return (unset_builtin(input, shell), 0);
+		return (unset_builtin(input, env), 0);
 	else if (strcmp(input[0], "pwd") == 0)
-		return (pwd_builtin(input, shell), 0);
+		return (pwd_builtin(input, env), 0);
 	else if (strcmp(input[0], "cd") == 0)
-		return (cd_builtin(input, shell), 0);
+		return (cd_builtin(input, env), 0);
 	else if (strcmp(input[0], "exit") == 0)
-		return (exit_builtin(input, shell), 0);
+		return (exit_builtin(input), 0);
 	else
 		return (-1); //command not found in builtin
 	return (0);

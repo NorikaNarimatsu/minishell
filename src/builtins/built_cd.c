@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:36:11 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 13:43:14 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:13:11 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*find_env_value(t_env *env_list, char *key)
 	return (NULL);
 }
 
-int	cd_check_change(char *path, t_shell *shell)
+int	cd_check_change(char *path, t_env *env)
 {
 	char	*oldpwd;
 
@@ -95,7 +95,7 @@ int	cd_check_change(char *path, t_shell *shell)
 		return (ft_putstr_fd("cd: missing argument\n", 2), EXIT_FAILURE);
 	if (strcmp(path, "-") == 0)
 	{
-		oldpwd = find_env_value(shell->env, "OLDPWD");
+		oldpwd = find_env_value(env, "OLDPWD");
 		if (!oldpwd)
 			return (ft_putstr_fd("cd: OLDPWD not set\n", 2), EXIT_FAILURE);
 		path = oldpwd;
@@ -105,13 +105,13 @@ int	cd_check_change(char *path, t_shell *shell)
 		return (ft_putstr_fd("cd: no such file or directory\n", 2), EXIT_FAILURE);
 	if (chdir(path) != 0)
 		return (perror("cd"), EXIT_FAILURE); //TODO
-	update_pwd_and_owd(shell->env);
+	update_pwd_and_owd(env);
 	return (0);
 }
 
 // This is the function to execute cd
 // return 0 with success,1 fail.
-int	cd_builtin(char **input, t_shell *shell)
+int	cd_builtin(char **input, t_env *env)
 {
 	char	*path;
 	char	*home_path;
@@ -120,12 +120,12 @@ int	cd_builtin(char **input, t_shell *shell)
 		return (ft_putstr_fd("cd: too many arguments\n", 2), EXIT_FAILURE);
 	if (!input[1] || strlen(input[1]) == 0)
 	{
-		home_path = find_env_value(shell->env, "HOME");
+		home_path = find_env_value(env, "HOME");
 		if (!home_path)
 			return (ft_putstr_fd("cd: HOME not set\n", 2), EXIT_FAILURE);
 		path = home_path;
 	}
 	else
 		path = input[1];
-	return (cd_check_change(path, shell));
+	return (cd_check_change(path, env));
 }

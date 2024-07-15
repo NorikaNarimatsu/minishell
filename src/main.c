@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 12:36:23 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/13 18:19:14 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:32:57 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ int	ft_minishell(int argc, char **argv, char **env)
 	t_shell	shell;
 	char	*line;
 
+	(void) argc;
+	(void) argv;
 	shell.env = init_env(env);
 	shell.expanding = ft_create_expansion();
 	if (!shell.expanding)
 		return (EXIT_FAILURE); // TO_DO: MALLOC ERROR!
-	(void) argc;
-	(void) argv;
-	rl_outstream = stderr;
 	while (1)
 	{
 		ft_bzero(&shell.ll_token, sizeof(shell.ll_token));
@@ -49,7 +48,6 @@ int	ft_minishell(int argc, char **argv, char **env)
 		ft_interpret(&shell);
 		ft_free_string(&line);
 	}
-	(void)env;
 	exit(0);
 }
 
