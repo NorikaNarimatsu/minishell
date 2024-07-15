@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 21:54:23 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/10 18:02:28 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/15 11:09:38 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ft_redirection(char *str, t_token *token)
 	int	len;
 	int	error;
 
+	error = 0;
 	len = ft_fill_word(str, token, ft_lenredirection);
 	if (len < 0)
 		return (len);

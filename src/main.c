@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/10 17:03:43 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/15 13:50:05 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,22 @@ int	ft_minishell(int argc, char **argv, char **env)
 			return (MALERR); // free_everything function;
 		ft_free_string(&line);
 		line = shell.expanding->exp_line;
+		printf("----- SYNTAX -----\n");
+		if (ft_syntax(line) == 0)
+			printf("No syntax error!\nline=%s\n", line);
 		// 2) Input check (what to check here)?
 		/* quotes, starting with pipe, redirections like this: <> or >< after every redirection should be a word*/
 		/* Don't forget to make the free function for Execution!!! */
-		printf("----- TOKENIZATION -----\n");
-		ft_tokenization(line, &shell);
-		printf("----- EXECUTION -----\n");
-		// if (ft_strcmp(shell.execution->word[0], "echo") == 0) // this can get segfault!?
-		// 	echo_builtin(shell.execution->word, &shell);
 
-		which_buildin(&shell);
+		// printf("----- TOKENIZATION -----\n");
+		// ft_tokenization(line, &shell);
+		// printf("----- EXECUTION -----\n");
+		// // if (ft_strcmp(shell.execution->word[0], "echo") == 0) // this can get segfault!?
+		// // 	echo_builtin(shell.execution->word, &shell);
 
-		// ft_interpret(line, env);
+		// which_buildin(&shell);
+
+		// // ft_interpret(line, env);
 		ft_free_string(&line);
 	}
 	(void)env;

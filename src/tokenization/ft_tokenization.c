@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/10 17:58:01 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/15 11:10:34 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,19 @@ int	ft_tokenization(char *str, t_shell *shell)
 		return (MALERR);	// TO_DO: Error & free
 	shell->token_flag = 1;
 	if (ft_check_str(str, shell) < 0)
-		return ;	// TO_DO: Error & free
+		return (MALERR);	// TO_DO: Error & free
 	shell->ll_token->type = T_EOF;
 	while (shell->ll_token->prev != NULL)
 		shell->ll_token = shell->ll_token->prev;
 	ft_print_token_list(shell->ll_token); // TO_DO: Remove line
 	shell->execution = ft_create_exec();
 	if (!shell->execution)
-		return ;	// TO_DO: Error & free
+		return (MALERR);	// TO_DO: Error & free
 	if (ft_transfer_for_exec(shell->ll_token, shell->execution) != 0)
-		return ;	// TO_DO: Error & free
+		return (MALERR);	// TO_DO: Error & free
 	ft_print_exec_list(shell->execution); // TO_DO: Remove line
 	ft_free_t_token(&(shell->ll_token));
+	return (0);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/10 19:27:36 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/15 13:42:10 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ enum e_token
 	T_EOF
 };
 
+typedef struct s_syn
+{
+	int	squote;
+	int	dquote;
+	int	input;
+	int	output;
+	int	pipe;
+}	t_syn;
+
 typedef struct s_token
 {
 	char			*word;
@@ -86,6 +95,7 @@ typedef struct s_shell
 	char	*cwd;
 	char	*owd;
 	t_env	*env;
+	t_syn	*syntax;
 	t_expan	*expanding;
 	int		token_flag;
 	t_token	*ll_token;
@@ -137,6 +147,9 @@ void	print_env(t_env *env);
 
 
 /*		Martijn						*/
+
+/*	SYNTAX ERROR--------------------*/
+int		ft_syntax(char *line);
 
 /*	EXPANSION-----------------------*/
 /*		ft_create_error				*/
