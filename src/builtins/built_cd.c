@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_cd.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/08 17:36:11 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 13:43:14 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_cd.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/08 17:36:11 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/12 13:20:10 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	update_env_value(t_env *env_list, char *key, char *value)
 		{
 			free(env_list->value);
 			env_list->value = strdup(value);
-			if (!env_list->value)
-				; // TODO, strdup
+			// if (!env_list->value)
+			// 	; // TODO, strdup
 			free(env_list->env);
 			env_list->env = malloc(strlen(key) + 1 + strlen(value) + 1);
-			if (!env_list)
-				; // TODO, malloc
+			// if (!env_list)
+			// 	; // TODO, malloc
 			if (env_list->env)
 			{
 				strcpy(env_list->env, key);
@@ -53,8 +53,8 @@ void	update_pwd_and_owd(t_env *env_list)
 		if (strcmp(env_list->key, "PWD") == 0)
 		{
 			old_pwd = strdup(env_list->value);
-			if (!old_pwd)
-				; // TODO, strdup
+			// if (!old_pwd)
+			// 	; // TODO, strdup
 			break ;
 		}
 		env_list = env_list->next;
@@ -65,13 +65,13 @@ void	update_pwd_and_owd(t_env *env_list)
 		free(old_pwd);
 	}
 	new_pwd = getcwd(NULL, 0);
-	if (!new_pwd)
-		; //TODO getcwd
-	else
-	{
+	// if (!new_pwd)
+	// 	; //TODO getcwd
+	// else
+	// {
 		update_env_value(env_list, "PWD", new_pwd);
 		free(new_pwd);
-	}
+	// }
 }
 
 // This is the function to find the value (char *) of

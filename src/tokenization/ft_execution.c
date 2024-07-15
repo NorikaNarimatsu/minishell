@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/10 17:16:21 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/11 20:26:38 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/12 18:18:50 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,43 +35,96 @@ int	ft_transfer_word(t_token *token, t_exec *exec)
 	return (0);
 }
 
-int	ft_transfer_append(t_token **token, t_exec *exec)
-{
-	// (void)token;
-	// (void)exec;
-	exec->infile = ft_strdup((*token)->next->word);
-	(*token) = (*token)->next;
-	return (0);
-}
+/*
+	pipe()
 
+	write and read 
+	save in copmmand structure
+	current command has 
+*/	
+	
 int	ft_transfer_heredoc(t_token **token, t_exec *exec)
 {
-	// (void)token;
-	// (void)exec;
-	exec->heredoc = ft_strdup((*token)->next->word);
+	
 	(*token) = (*token)->next;
+	exec->heredoc = ft_strdup((*token)->word);
 	return (0);
 }
 
 int	ft_transfer_input(t_token **token, t_exec *exec)
 {
-	// (void)token;
-	// (void)exec;
-	// if (exec->infile != NULL)
-	// {
-	// 	/* code */ // Free the string? What the do with the old one?
-	// }
-	exec->infile = ft_strdup((*token)->next->word);
+	int result;
+
 	(*token) = (*token)->next;
+	if (exec->flag == -1)
+		return (0);
+	if (!exec->infile)
+		ft_free_string(&exec->infile);
+	exec->infile = ft_strdup((*token)->word);
+	if (!exec->infile)
+	{
+		printf("Malloc error\n");	// TO_DO: ERROR!
+		return (0);
+	}
+	result = access(exec->infile, F_OK | R_OK);
+	if (result == -1)
+	{
+		exec->flag = result;
+		printf("Permission denied\n");	// TO_DO: ERROR!
+		return (0);
+	}
 	return (0);
 }
 
 int	ft_transfer_output(t_token **token, t_exec *exec)
 {
-	// (void)token;
-	// (void)exec;
-	exec->outfile = ft_strdup((*token)->next->word);
+	int fd;
+
 	(*token) = (*token)->next;
+	if (exec->flag == -1)
+		return (0);
+	if (!exec->outfile)
+		ft_free_string(&exec->outfile);
+	exec->outfile = ft_strdup((*token)->word);
+	if (!exec->outfile)
+	{
+		printf("Malloc error\n");	// TO_DO: ERROR!
+		return (0);
+	}
+	fd = open(exec->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		exec->flag = fd;
+		printf("Permission denied\n");	// TO_DO: ERROR!
+		return (0);
+	}
+	close(fd);
+	return (0);
+}
+
+int	ft_transfer_append(t_token **token, t_exec *exec)
+{
+int fd;
+
+	(*token) = (*token)->next;
+	if (exec->flag == -1)
+		return (0);
+	if (!exec->outfile)
+		ft_free_string(&exec->outfile);
+	exec->outfile = ft_strdup((*token)->word);
+	if (!exec->outfile)
+	{
+		printf("Malloc error\n");	// TO_DO: ERROR!
+		return (0);
+	}
+	fd = open(exec->outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (fd == -1)
+	{
+		exec->flag = fd;
+		printf("Permission denied\n");	// TO_DO: ERROR!
+		return (0);
+	}
+	close(fd);
 	return (0);
 }
 

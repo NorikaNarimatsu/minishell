@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 13:50:55 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/12 23:11:17 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ typedef struct s_token
 typedef struct s_exec
 {
 	char			**word;		// command/arguments
-	int				fd_infile;
+	int				flag;
 	int				fd_outfile;
-	char			*infile;	// Append and infile | Already open it! (and close if already one opened). Append have different flags then for Append. Ask Norika for this.
-	char			*outfile;
-	char			*heredoc;
+	char			*infile;	// Infile (<) | Already open it! (and close if already one opened). Append have different flags then for Append. Ask Norika for this.
+	char			*outfile;	// Append (>>) O_CREAT O_WRONLY O_APPEND, 0644 and outfile (>) O_CREAT O_WRONLY O_TRUNC, 0644
+	char			**heredoc;	// Heredoc (<<) (double **)
 	struct s_exec	*pipe;		// linked list to this struct
 }	t_exec;
 
