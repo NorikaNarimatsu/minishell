@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   built_export.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/04 16:31:41 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/16 11:36:19 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   built_export.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/04 16:31:41 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/16 09:28:32 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	ft_replace_env_value(t_env *env_list, const char *input)
 
 	equal_sign = strchr(input, '=');
 	key = strndup(input, equal_sign - input);
-	// if (!key)
-	// 	; // TODO
+	if (!key)
+		; // TODO
 	new_value = strdup(equal_sign + 1);
-	// if (!new_value)
-	// 	; // TODO
+	if (!new_value)
+		; // TODO
 	if (new_value)
 	{
 		while (env_list)
@@ -35,8 +35,8 @@ void	ft_replace_env_value(t_env *env_list, const char *input)
 				env_list->value = new_value;
 				free(env_list->env);
 				env_list->env = strdup(input);
-				// if (!env_list->env)
-				// 	; //TODO
+				if (!env_list->env)
+					; //TODO
 				free(key);
 				return ;
 			}

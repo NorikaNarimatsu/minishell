@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/16 11:36:10 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/16 10:09:28 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,6 @@ int	ft_minishell(int argc, char **argv, char **env)
 			printf("No syntax error!\nline=%s\n", line);
 		printf("----- TOKENIZATION -----\n");
 		ft_tokenization(line, &shell);
-
-		printf("----- HEREDOC -----\n");
-		ft_heredoc(&shell);
-		
 		printf("----- EXECUTION -----\n");
 		ft_interpret(&shell);
 		ft_free_string(&line);
