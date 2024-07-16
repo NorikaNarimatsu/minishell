@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/15 13:42:10 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/16 09:16:06 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,14 @@ void	print_env(t_env *env);
 /*		Martijn						*/
 
 /*	SYNTAX ERROR--------------------*/
+/*		ft_redirections				*/
+void	ft_syn_dquote(t_syn *syntax);
+void	ft_syn_squote(t_syn *syntax);
+int		ft_syn_input(t_syn *syntax);
+int		ft_syn_output(t_syn *syntax);
+int		ft_syn_pipe(t_syn *syntax);
+
+/*		ft_syntax					*/
 int		ft_syntax(char *line);
 
 /*	EXPANSION-----------------------*/
