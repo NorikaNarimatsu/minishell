@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:31:41 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/15 14:10:05 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:28:32 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	replace_env_value(t_env *env_list, const char *input)
+void	ft_replace_env_value(t_env *env_list, const char *input)
 {
 	char	*equal_sign;
 	char	*new_value;
@@ -69,10 +69,10 @@ void	handle_export(t_env **env_list, char *input)
 	if (equal_sign)
 	{
 		if (is_exist_identifier(*env_list, key))
-			replace_env_value(*env_list, input);
+			ft_replace_env_value(*env_list, input);
 		else
 		{
-			new_node = create_env_node(input);
+			new_node = ft_create_env_node(input);
 			if (new_node)
 			{
 				new_node->next = *env_list;
@@ -84,7 +84,7 @@ void	handle_export(t_env **env_list, char *input)
 	{
 		if (!is_exist_identifier(*env_list, key))
 		{
-			new_node = create_env_node(input);
+			new_node = ft_create_env_node(input);
 			if (new_node)
 			{
 				new_node->next = *env_list;
@@ -110,13 +110,13 @@ t_env	*find_min_unflagged(t_env *env_list)
 	return (min_node);
 }
 
-void	print_env_list_sorted(t_env *env_list)
+void	ft_print_sorted_env(t_env *env_list)
 {
 	t_env	*min_node;
 
 	if (!env_list)
 		return ;
-	reset_env_flags(env_list);
+	ft_reset_env_flags(env_list);
 	min_node = find_min_unflagged(env_list);
 	while (min_node)
 	{
@@ -134,14 +134,14 @@ void	print_env_list_sorted(t_env *env_list)
 	}
 }
 
-int	export_builtin(char **input, t_env *env)
+int	ft_export_builtin(char **input, t_env *env)
 {
 	int		i;
 
 	i = 1;
 	if (!input[i])
 	{
-		print_env_list_sorted(env);
+		ft_print_sorted_env(env);
 		return (EXIT_SUCCESS);
 	}
 	else
@@ -168,13 +168,13 @@ MARTIJN=
 nnarimat@f1r5s18:~$
 
 IF YOU WANT TO CHECK THE CD
-void	print_env_list_sorted(t_env *env_list)
+void	ft_print_sorted_env(t_env *env_list)
 {
 	t_env	*min_node;
 
 	if (!env_list)
 		return ;
-	reset_env_flags(env_list);
+	ft_reset_env_flags(env_list);
 	min_node = find_min_unflagged(env_list);
 	while (min_node)
 	{

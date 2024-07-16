@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 11:38:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/15 14:14:33 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:25:21 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exit_builtin(char **input)
+int	ft_exit_builtin(char **input)
 {
 	int		exit_status;
 	int		i;

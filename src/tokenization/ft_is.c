@@ -6,16 +6,11 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:01:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/08 13:55:11 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/10 17:34:55 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_isseperator(char c)
-{
-	return (c == '<' || c == '>' || c == '|' || c == '$');
-}
 
 int	ft_isinvalid(char c)
 {
@@ -42,19 +37,4 @@ int	ft_istworedirection(char *str)
 	if ((str[i] == str[i + 1]) && (ft_isoneredirection(str[i]) == 1))
 		return (2);
 	return (0);
-}
-
-int	ft_ispipe(char c)
-{
-	return (c == '|');
-}
-
-int	ft_issquote(char c)
-{
-	return (c == '\'');
-}
-
-int	ft_isdquote(char c)
-{
-	return (c == '"');
 }

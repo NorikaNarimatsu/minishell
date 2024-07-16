@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:44:31 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 13:42:37 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:29:12 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_env_node(t_env *node)
+void	ft_free_env_node(t_env *node)
 {
 	if (node)
 	{
@@ -23,7 +23,7 @@ void	free_env_node(t_env *node)
 	}
 }
 
-void	free_env_list(t_env *head)
+void	ft_free_env_list(t_env *head)
 {
 	t_env	*current;
 	t_env	*next_node;
@@ -32,12 +32,12 @@ void	free_env_list(t_env *head)
 	while (current)
 	{
 		next_node = current->next;
-		free_env_node(current);
+		ft_free_env_node(current);
 		current = next_node;
 	}
 }
 
-void	reset_env_flags(t_env *env_list)
+void	ft_reset_env_flags(t_env *env_list)
 {
 	while (env_list)
 	{
@@ -46,7 +46,7 @@ void	reset_env_flags(t_env *env_list)
 	}
 }
 
-t_env	*create_env_node(char *env_str)
+t_env	*ft_create_env_node(char *env_str)
 {
 	t_env	*new_node;
 	char	*equal_sign;
@@ -69,12 +69,12 @@ t_env	*create_env_node(char *env_str)
 		new_node->value = NULL;
 	}
 	if (!new_node->key || (equal_sign && !new_node->value))
-		return (free_env_node(new_node), NULL);
+		return (ft_free_env_node(new_node), NULL);
 	new_node->next = NULL;
 	return (new_node);
 }
 
-t_env	*init_env(char **env)
+t_env	*ft_init_env(char **env)
 {
 	t_env	*head;
 	t_env	*current;
@@ -86,10 +86,10 @@ t_env	*init_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		new_node = create_env_node(env[i]);
+		new_node = ft_create_env_node(env[i]);
 		if (!new_node)
 		{
-			free_env_list(head);
+			ft_free_env_list(head);
 			return (NULL);
 		}
 		if (head == NULL)

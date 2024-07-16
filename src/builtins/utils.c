@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:26:14 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 14:18:15 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:27:52 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(t_env *env)
+void	ft_print_env(t_env *env)
 {
 	t_env	*head;
 

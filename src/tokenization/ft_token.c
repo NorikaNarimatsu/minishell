@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 21:54:23 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/25 15:26:31 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/15 11:09:38 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@ int	ft_word(char *str, t_token *token)
 {
 	int	len;
 
-	if (!str)
-		return (-1);
 	len = ft_fill_word(str, token, ft_lenword);
 	if (len < 0)
 		return (len);
-	if (ft_create_new_and_fill_type(token, T_WORD) == -1)
-		return (-1);
+	if (ft_create_new_and_fill_type(token, T_WORD) == MALERR)
+		return (MALERR);
 	return (len);
 }
 
@@ -31,6 +29,7 @@ int	ft_redirection(char *str, t_token *token)
 	int	len;
 	int	error;
 
+	error = 0;
 	len = ft_fill_word(str, token, ft_lenredirection);
 	if (len < 0)
 		return (len);
@@ -42,10 +41,8 @@ int	ft_redirection(char *str, t_token *token)
 		error = ft_create_new_and_fill_type(token, T_OUTPUT);
 	else if (str[0] == '>' && len == 2)
 		error = ft_create_new_and_fill_type(token, T_APPEND);
-	else
-		return (CNFERR);
-	if (error != 0)
-		return (error);
+	if (error == MALERR)
+		return (MALERR);
 	return (len);
 }
 
@@ -56,8 +53,8 @@ int	ft_pipe(char *str, t_token *token)
 	len = ft_fill_word(str, token, ft_lenpipe);
 	if (len < 0)
 		return (len);
-	if (ft_create_new_and_fill_type(token, T_PIPE) == -1)
-		return (-1);
+	if (ft_create_new_and_fill_type(token, T_PIPE) == MALERR)
+		return (MALERR);
 	return (len);
 }
 

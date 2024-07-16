@@ -6,20 +6,20 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:28:58 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/15 16:44:33 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:26:46 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*search_path(char *filename)
+char	*ft_search_path(char *filename, t_env *env)
 {
 	char	path[PATH_MAX];
 	char	*value;
 	char	*end;
 	char	*dup;
 
-	value = getenv("PATH");
+	value = ft_find_env_value(env, "PATH");
 	while (*value)
 	{
 		bzero(path, PATH_MAX);
@@ -32,9 +32,9 @@ char	*search_path(char *filename)
 		ft_strlcat(path, filename, PATH_MAX);
 		if (access(path, X_OK) == 0)
 		{
-			dup = strdup(path);
+			dup = ft_strdup(path);
 			if (dup == NULL)
-				fatal_error("strdup");
+				ft_fatal_error("strdup");
 			return (dup);
 		}
 		if (end == NULL)
@@ -44,7 +44,7 @@ char	*search_path(char *filename)
 	return (NULL);
 }
 
-void	validate_access(char *path, char *filename)
+void	ft_validate_access(char *path, char *filename)
 {
 	if (path == NULL)
 		error_exit(filename, "command not found", 127);

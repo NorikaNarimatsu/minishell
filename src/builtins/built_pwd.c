@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:49:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/15 14:12:13 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:25:03 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwd_builtin(char **input, t_env *env)
+int	ft_pwd_builtin(char **input, t_env *env)
 {
 	t_env	*current;
 
