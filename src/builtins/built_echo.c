@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:46:42 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/10 13:42:57 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:24:27 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ void	echo_print_args(char **input, int idx, bool n_flag)
 // if there is no string, just /n
 // check -n flag, which can be -n or -nnn, but not -nnnna
 // return 0 with success, no place for return 1.
-int	echo_builtin(char **input, t_shell *shell)
+int	ft_echo_builtin(char **input)
 {
 	bool	n_flag;
 	int		idx;
 
-	(void)shell;
 	n_flag = false;
 	idx = 1;
 	if (!input[1])

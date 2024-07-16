@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/16 09:16:06 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/16 10:03:03 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,13 @@ typedef struct s_token
 typedef struct s_exec
 {
 	char			**word;		// command/arguments
+	int				flag;
 	int				fd_infile;
 	int				fd_outfile;
-	char			*infile;	// Append and infile | Already open it! (and close if already one opened). Append have different flags then for Append. Ask Norika for this.
-	char			*outfile;
-	char			*heredoc;
+	char			*infile;	// Infile (<) | Already open it! (and close if already one opened). Append have different flags then for Append. Ask Norika for this.
+	char			*outfile;	// Append (>>) O_CREAT O_WRONLY O_APPEND, 0644 and outfile (>) O_CREAT O_WRONLY O_TRUNC, 0644
+	char			*heredoc;	// Heredoc (<<) (double **)
+	bool			append;		// please add this!
 	struct s_exec	*pipe;		// linked list to this struct
 }	t_exec;
 
@@ -110,54 +112,49 @@ enum e_errno
 };
 
 /*		Norika						*/
-
 // error.c
-void	fatal_error(char *message);
+void	ft_fatal_error(char *message);
 void	error_exit(char *location, char *message, int status);
 
-
 // path.c
-void	validate_access(char *path, char *filename);
-char	*search_path(char *filename);
+void	ft_validate_access(char *path, char *filename);
+char	*ft_search_path(char *filename, t_env *env);
 
 //builtins
-int		echo_builtin(char **args, t_shell *shell);
-int		env_builtin(char **argv, t_shell *shell);
-int		export_builtin(char **input, t_shell *shell);
-void	print_env_list_sorted(t_env *env_list);
-void	unset_builtin(char **input, t_shell *shell);
-int		pwd_builtin(char **input, t_shell *shell);
-int		cd_builtin(char **input, t_shell *shell);
-void	replace_env_value(t_env *env_list, const char *input);
-void	free_env_node(t_env *node);
-int		exit_builtin(char **input, t_shell *shell);
-int		which_buildin(t_shell *shell);
+bool	is_builtin(char *command);
+int		ft_echo_builtin(char **input);
+int		ft_env_builtin(char **input, t_env *env);
+int		ft_export_builtin(char **input, t_env *env);
+void	ft_unset_builtin(char **input, t_env *env);
+int		ft_pwd_builtin(char **input, t_env *env);
+int		ft_cd_builtin(char **input, t_env *env);
+int		ft_exit_builtin(char **input);
 
 // utils
-t_env	*init_env(char **env);
-t_env	*create_env_node(char *env_str);
-void	free_env_list(t_env *head);
+t_env	*ft_init_env(char **env);
+t_env	*ft_create_env_node(char *env_str);
+
+void	ft_print_sorted_env(t_env *env);
+char	*ft_find_env_value(t_env *env_list, char *key);
+void	ft_replace_env_value(t_env *env, const char *input);
+void	ft_reset_env_flags(t_env *env_list);
+
 bool	is_valid_identifier(char *input);
 bool	is_exist_identifier(t_env *env_list, const char *key);
-void	reset_env_flags(t_env *env_list);
 int		is_valid_directory(char *path);
-char	**ft_convert(int argc, char **argv);
-void	print_env(t_env *env);
 
+// free
+void	ft_free_env_node(t_env *env);
+void	ft_free_env_list(t_env *head);
+void	ft_print_env(t_env *env);
 
+// execution
+int		ft_interpret(t_shell *shell);
+char	**ft_env_to_array(t_env *env_list);
+int		ft_count_command(t_exec *exec);
+int		ft_execute_builtin(t_exec *exec, t_env *env);
 
 /*		Martijn						*/
-
-/*	SYNTAX ERROR--------------------*/
-/*		ft_redirections				*/
-void	ft_syn_dquote(t_syn *syntax);
-void	ft_syn_squote(t_syn *syntax);
-int		ft_syn_input(t_syn *syntax);
-int		ft_syn_output(t_syn *syntax);
-int		ft_syn_pipe(t_syn *syntax);
-
-/*		ft_syntax					*/
-int		ft_syntax(char *line);
 
 /*	EXPANSION-----------------------*/
 /*		ft_create_error				*/
@@ -172,6 +169,18 @@ int		ft_exp_needed(const char *line, t_expan *exp);
 
 /*		ft_expansion				*/
 int		ft_expansion(char *line, t_env *env, t_expan *expanding);
+
+/*	SYNTAX ERROR--------------------*/
+/*		ft_redirections				*/
+void	ft_syn_dquote(t_syn *syntax);
+void	ft_syn_squote(t_syn *syntax);
+int		ft_syn_input(t_syn *syntax);
+int		ft_syn_output(t_syn *syntax);
+int		ft_syn_pipe(t_syn *syntax);
+
+/*		ft_syntax					*/
+void	ft_free_syntax(t_syn **syntax);
+int		ft_syntax(char *line);
 
 /*	TOKENIZATION--------------------*/
 /*		ft_execution				*/

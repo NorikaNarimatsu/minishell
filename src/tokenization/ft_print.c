@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:38:08 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/11 17:36:00 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/16 09:42:09 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_print_exec_list(t_exec *exec)
 				i++;
 			}
 		}
-		printf("infile:\t\t%s [%d]\n", exec->infile, exec->fd_infile);
+		printf("infile:\t\t%s [%d]\n", exec->infile, exec->flag);
 		printf("outfile:\t%s [%d]\n", exec->outfile, exec->fd_outfile);
 		printf("heredoc:\t%s\n", exec->heredoc);
 		printf("pipe address:\t%p\n\n", exec->pipe);

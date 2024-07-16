@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 10:51:42 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/16 09:19:20 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/16 09:30:43 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ static int	ft_final_check(t_syn *syntax)
 		return (ft_putstr_fd("syntax error near unexpected token `newline'\n", \
 				2), SYNERR);
 	return (0);
+}
+
+void	ft_free_syntax(t_syn **syntax)
+{
+	if (!syntax || !*syntax)
+		return ;
+	free(*syntax);
+	*syntax = NULL;
 }
 
 int	ft_syntax(char *line)

@@ -6,71 +6,23 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/15 13:50:05 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/16 10:09:28 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	fatal_error(char *message)
-{
-	dprintf(STDERR_FILENO, "Fatal Error: %s\n", message);
-	exit(1);
-}
-
-void	error_exit(char *location, char *message, int status)
-{
-	dprintf(STDERR_FILENO, "minishell: %s: %s\n", location, message); //to do
-	exit(status);
-}
-
-int	exec(char **argv, char **env)
-{
-	pid_t	pid;
-	char	*path = argv[0];
-	int		status;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		ft_putstr_fd("pid error\n", 2);
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		if (ft_strchr(path, '/') == NULL)
-			path = search_path(path);
-		validate_access(path, argv[0]);
-		execve(path, argv, env);
-		fatal_error("Execve");
-	}
-
-	wait(&status);
-	return (WEXITSTATUS(status));
-}
-
-int	ft_interpret(char *line, char **env)
-{
-	int		status;
-	char	*argv[] = {line, NULL};
-
-	status = exec(argv, env);
-	return (status);
-}
 
 int	ft_minishell(int argc, char **argv, char **env)
 {
 	t_shell	shell;
 	char	*line;
 
-	shell.env = init_env(env);
+	(void) argc;
+	(void) argv;
+	shell.env = ft_init_env(env);
 	shell.expanding = ft_create_expansion();
 	if (!shell.expanding)
 		return (EXIT_FAILURE); // TO_DO: MALLOC ERROR!
-	// print_env(shell.env);
-	(void) argc;
-	(void) argv;
-	rl_outstream = stderr;
 	while (1)
 	{
 		ft_bzero(&shell.ll_token, sizeof(shell.ll_token));
@@ -90,19 +42,10 @@ int	ft_minishell(int argc, char **argv, char **env)
 		printf("----- SYNTAX -----\n");
 		if (ft_syntax(line) == 0)
 			printf("No syntax error!\nline=%s\n", line);
-		// 2) Input check (what to check here)?
-		/* quotes, starting with pipe, redirections like this: <> or >< after every redirection should be a word*/
-		/* Don't forget to make the free function for Execution!!! */
-
-		// printf("----- TOKENIZATION -----\n");
-		// ft_tokenization(line, &shell);
-		// printf("----- EXECUTION -----\n");
-		// // if (ft_strcmp(shell.execution->word[0], "echo") == 0) // this can get segfault!?
-		// // 	echo_builtin(shell.execution->word, &shell);
-
-		// which_buildin(&shell);
-
-		// // ft_interpret(line, env);
+		printf("----- TOKENIZATION -----\n");
+		ft_tokenization(line, &shell);
+		printf("----- EXECUTION -----\n");
+		ft_interpret(&shell);
 		ft_free_string(&line);
 	}
 	(void)env;
