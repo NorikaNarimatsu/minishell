@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   path.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/06/02 16:37:40 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/06/18 15:17:19 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   path.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/13 16:28:58 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/16 09:26:46 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*search_path(char *filename)
+char	*ft_search_path(char *filename, t_env *env)
 {
 	char	path[PATH_MAX];
 	char	*value;
 	char	*end;
 	char	*dup;
 
-	value = getenv("PATH");
+	value = ft_find_env_value(env, "PATH");
 	while (*value)
 	{
-		ft_bzero(path, PATH_MAX);
-		end = ft_strchr(value, ':');
+		bzero(path, PATH_MAX);
+		end = strchr(value, ':');
 		if (end)
-			strncpy(path, value, end - value); //todo
+			strncpy(path, value, end - value);
 		else
 			ft_strlcpy(path, value, PATH_MAX);
 		ft_strlcat(path, "/", PATH_MAX);
@@ -34,7 +34,7 @@ char	*search_path(char *filename)
 		{
 			dup = ft_strdup(path);
 			if (dup == NULL)
-				fatal_error("strdup");
+				ft_fatal_error("strdup");
 			return (dup);
 		}
 		if (end == NULL)
@@ -44,7 +44,7 @@ char	*search_path(char *filename)
 	return (NULL);
 }
 
-void	validate_access(char *path, char *filename)
+void	ft_validate_access(char *path, char *filename)
 {
 	if (path == NULL)
 		error_exit(filename, "command not found", 127);

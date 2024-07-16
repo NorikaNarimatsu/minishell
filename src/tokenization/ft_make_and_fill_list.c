@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:09:13 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/10 13:28:06 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/10 18:00:25 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_create_token_list(t_token *token)
 
 	new_token = ft_create_token();
 	if (!new_token)
-		return (-1);
+		return (MALERR);
 	token->next = new_token;
 	new_token->prev = token;
 	return (0);
@@ -46,8 +46,8 @@ int	ft_create_token_list(t_token *token)
 
 int	ft_create_new_and_fill_type(t_token *token, enum e_token type)
 {
-	if (ft_create_token_list(token) == -1)
-		return (-1);
+	if (ft_create_token_list(token) == MALERR)
+		return (MALERR);
 	token->type = type;
 	return (0);
 }
@@ -61,7 +61,7 @@ int	ft_fill_word(char *str, t_token *token, int (*strlen_func)(char *))
 	{
 		token->word = (char *)ft_calloc(len + 1, sizeof(char));
 		if (!token->word)
-			return (-1);
+			return (MALERR);
 		ft_strlcpy(token->word, str, len + 1);
 	}
 	return (len);

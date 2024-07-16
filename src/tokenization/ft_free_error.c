@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_error.c                                         :+:    :+:            */
+/*   ft_free_error.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/06 14:08:28 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/10 12:18:40 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/10 17:48:24 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-
-
-char *errdescr[] = {
+char	*errdescr[] = {
 	"No Errors",
 	"Malloc error: No memory to allocate\n"
 	"Syntax error: Unterminated quoted string\n"

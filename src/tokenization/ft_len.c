@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:11:18 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/06/10 12:18:49 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/10 17:33:37 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	ft_lenpipe(char *str)
 	i = 0;
 	if (!str)
 		return (i);
-	i = ft_ispipe(str[i]);
+	if (str[i] == '|')
+		return (1);
 	return (i);
 }
 
@@ -54,13 +55,13 @@ int	ft_lensquote(char *str)
 	int	i;
 
 	i = 0;
-	if (!str || ft_issquote(str[i]) == 0)
+	if (!str || str[i] != '\'')
 		return (i);
 	quote = 1;
 	i++;
 	while (str[i])
 	{
-		if (ft_issquote(str[i]) == 1)
+		if (str[i] == '\'')
 		{
 			quote++;
 			break ;
@@ -81,13 +82,13 @@ int	ft_lendquote(char *str)
 	int	i;
 
 	i = 0;
-	if (!str || ft_isdquote(str[i]) == 0)
+	if (!str || str[i] != '"')
 		return (i);
 	quote = 1;
 	i++;
 	while (str[i])
 	{
-		if (ft_isdquote(str[i]) == 1)
+		if (str[i] == '"')
 		{
 			quote++;
 			break ;
