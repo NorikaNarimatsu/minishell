@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 13:26:14 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/16 09:27:52 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/16 17:56:14 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	ft_print_env(t_env *env)
 	head = env;
 	while (env)
 	{
-		printf("env: %s\n", env->env);
-		printf("key: %s\n", env->key);
-		printf("value: %s\n\n", env->value);
+		// printf("env: %s\n", env->env);
+		printf("key: %s [%p]\n", env->key, env);
+		// printf("value: %s\n\n", env->value);
 		env = env->next;
 	}
 	env = head;

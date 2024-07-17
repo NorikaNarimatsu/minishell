@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_print.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/06/05 15:38:08 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/16 09:42:09 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_print.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/05 15:38:08 by mdraper           #+#    #+#             */
+/*   Updated: 2024/07/17 12:12:59 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,17 @@ void	ft_print_exec_list(t_exec *exec)
 				i++;
 			}
 		}
-		printf("infile:\t\t%s [%d]\n", exec->infile, exec->flag);
-		printf("outfile:\t%s [%d]\n", exec->outfile, exec->fd_outfile);
-		printf("heredoc:\t%s\n", exec->heredoc);
+		printf("infile:\t\t%s [%d]\n", exec->infile, exec->is_end_infile);
+		printf("outfile:\t%s [%d]\n", exec->outfile, exec->append);
+		if (exec->heredoc)
+		{
+			i = 0;
+			while (exec->heredoc[i])
+			{
+				printf("heredoc[%d]:\t%s\n", i, exec->heredoc[i]);
+				i++;
+			}
+		}
 		printf("pipe address:\t%p\n\n", exec->pipe);
 		exec = exec->pipe;
 	}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_create_error.c                                  :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/10 17:15:04 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_create_error.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/19 11:41:43 by mdraper           #+#    #+#             */
+/*   Updated: 2024/07/16 20:09:26 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_expan	*ft_create_expansion(void)
 
 void	ft_free_expansion(t_expan *exp)
 {
-	printf("exp->exp_line = %s\n", exp->exp_line); // have to delete this later!
+	// printf("exp->exp_line = %s\n", exp->exp_line); // have to delete this later!
 	ft_free_string(&(exp->temp));
 	ft_free_string(&(exp->key));
 	// ft_free_string(&(exp->exp_line));

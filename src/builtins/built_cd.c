@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:36:11 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/16 09:52:11 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:43:13 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void	ft_update_env_value(t_env *env_list, char *key, char *value)
 			if (!env_list->value)
 				; // TODO, strdup
 			free(env_list->env);
-			env_list->env = malloc(ft_strlen(key) + 1 + ft_strlen(value) + 1);
+			env_list->env = calloc(sizeof(char), ft_strlen(key) + 1 + ft_strlen(value) + 1);
 			if (!env_list)
 				; // TODO, malloc
 			if (env_list->env)
 			{
-				strcpy(env_list->env, key); // TODO make LIBFT function!
-				strcat(env_list->env, "="); // TODO make LIBFT function!
-				strcat(env_list->env, value); // TODO make LIBFT function!
+				ft_strcpy(env_list->env, key);
+				ft_strcat(env_list->env, "=");
+				ft_strcat(env_list->env, value);
 			}
 			return ;
 		}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/16 10:03:03 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/17 14:31:09 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,12 @@ typedef struct s_exec
 	int				flag;
 	int				fd_infile;
 	int				fd_outfile;
+	int				fd_heredoc;
 	char			*infile;	// Infile (<) | Already open it! (and close if already one opened). Append have different flags then for Append. Ask Norika for this.
 	char			*outfile;	// Append (>>) O_CREAT O_WRONLY O_APPEND, 0644 and outfile (>) O_CREAT O_WRONLY O_TRUNC, 0644
-	char			*heredoc;	// Heredoc (<<) (double **)
+	char			**heredoc;	// Heredoc (<<) (double **)
 	bool			append;		// please add this!
+	bool			is_end_infile;
 	struct s_exec	*pipe;		// linked list to this struct
 }	t_exec;
 
@@ -94,8 +96,6 @@ typedef struct s_expan
 
 typedef struct s_shell
 {
-	char	*cwd;
-	char	*owd;
 	t_env	*env;
 	t_syn	*syntax;
 	t_expan	*expanding;
@@ -144,7 +144,7 @@ bool	is_exist_identifier(t_env *env_list, const char *key);
 int		is_valid_directory(char *path);
 
 // free
-void	ft_free_env_node(t_env *env);
+void	ft_free_env_node(t_env **env);
 void	ft_free_env_list(t_env *head);
 void	ft_print_env(t_env *env);
 
@@ -153,6 +153,16 @@ int		ft_interpret(t_shell *shell);
 char	**ft_env_to_array(t_env *env_list);
 int		ft_count_command(t_exec *exec);
 int		ft_execute_builtin(t_exec *exec, t_env *env);
+void	ft_redirect(t_exec *exec);
+void	ft_open_files(t_exec *exec);
+void	ft_redirect_io(t_exec *exec);
+void	ft_setup_pipes(int *fd, int num_cmnds);
+void	ft_execute_command(t_exec *exec, t_env *env);
+void	ft_restore_io(int saved_stdin, int saved_stdout);
+void	ft_handle_command(t_exec *exec, int *fd, int num_cmnd, int index, t_env *env);
+
+
+int	ft_heredoc(t_shell *shell);
 
 /*		Martijn						*/
 
@@ -217,9 +227,9 @@ void	ft_print_exec_list(t_exec *exec);
 int		ft_ms_count_words(char **str);
 
 /*		ft_token					*/
-int		ft_word(char *str, t_token *token);
-int		ft_redirection(char *str, t_token *token);
-int		ft_pipe(char *str, t_token *token);
+int		ft_word(char *str, t_token *token, int flag);
+int		ft_redirection(char *str, t_token *token, int *flag);
+int		ft_pipe(char *str, t_token *token, int *flag);
 int		ft_single_quote(char *str, t_token *token, int flag);
 int		ft_double_quote(char *str, t_token *token, int flag);
 

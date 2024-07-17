@@ -6,14 +6,12 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:46:42 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/16 09:24:27 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:12:42 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// This is the function to check -n flag in the input string
-// -n: do not output the trailing newline
 bool	is_n_flag_string(char *str)
 {
 	int	i;
@@ -29,7 +27,6 @@ bool	is_n_flag_string(char *str)
 		return (false);
 }
 
-// This is the function to print input based on -n status
 void	echo_print_args(char **input, int idx, bool n_flag)
 {
 	int	i;
@@ -52,10 +49,6 @@ void	echo_print_args(char **input, int idx, bool n_flag)
 		ft_putchar_fd('\n', 1);
 }
 
-// This is the function to execute echo
-// if there is no string, just /n
-// check -n flag, which can be -n or -nnn, but not -nnnna
-// return 0 with success, no place for return 1.
 int	ft_echo_builtin(char **input)
 {
 	bool	n_flag;
