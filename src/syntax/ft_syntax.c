@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 10:51:42 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/16 09:30:43 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/17 15:58:58 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ int	ft_syntax(char *line)
 	}
 	if (ft_final_check(syntax) == SYNERR)
 		return (SYNERR);
+	ft_free_syntax(&syntax);
 	return (0);
 }

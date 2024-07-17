@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/17 14:31:09 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/17 16:41:18 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int		is_valid_directory(char *path);
 
 // free
 void	ft_free_env_node(t_env **env);
-void	ft_free_env_list(t_env *head);
+void	ft_free_env_list(t_env **env);
 void	ft_print_env(t_env *env);
 
 // execution
@@ -169,7 +169,8 @@ int	ft_heredoc(t_shell *shell);
 /*	EXPANSION-----------------------*/
 /*		ft_create_error				*/
 t_expan	*ft_create_expansion(void);
-void	ft_free_expansion(t_expan *exp);
+void	ft_free_small_expansion(t_expan *exp);
+void	ft_free_expansion(t_expan **exp);
 
 /*		ft_exp_utils				*/
 int		ft_get_position(const char *line, t_expan *exp);
@@ -197,9 +198,10 @@ int		ft_syntax(char *line);
 int		ft_transfer_for_exec(t_token *token, t_exec *exec);
 
 /*		ft_free_error					*/
-void	get_errdescr(enum e_errno error);
 void	ft_free_string(char **str);
+void	ft_free_array(char ***str);
 void	ft_free_t_token(t_token	**ll_token);
+void	ft_free_s_exec(t_exec **exec);
 
 /*		ft_is						*/
 int		ft_isinvalid(char c);

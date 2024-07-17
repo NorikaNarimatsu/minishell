@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_tokenization.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 10:35:35 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/17 14:23:04 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_tokenization.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/07/17 16:31:48 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	ft_tokenization(char *str, t_shell *shell)
 		return (MALERR);	// TO_DO: Error & free
 	ft_print_exec_list(shell->execution); // TO_DO: Remove line
 	ft_free_t_token(&(shell->ll_token));
+	// ft_free_s_exec(&(shell->execution));
 	return (0);
 }
 

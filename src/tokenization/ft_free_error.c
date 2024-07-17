@@ -6,28 +6,11 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/06 14:08:28 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/10 17:48:24 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/17 15:55:26 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*errdescr[] = {
-	"No Errors",
-	"Malloc error: No memory to allocate\n"
-	"Syntax error: Unterminated quoted string\n"
-};
-
-void	get_errdescr(enum e_errno error)
-{
-	int	index;
-
-	index = -error;
-	printf("error number: %d\n", error);
-	if (error >= 0)
-		return ;
-	ft_putstr_fd(errdescr[index], 2);
-}
 
 void	ft_free_string(char **str)
 {
@@ -35,6 +18,26 @@ void	ft_free_string(char **str)
 		return ;
 	free(*str);
 	*str = NULL;
+}
+
+void	ft_free_array(char ***str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return ;
+	if (str[0])
+	{
+		while (str[0][i])
+		{
+			free(str[0][i]);
+			str[0][i] = NULL;
+			i++;
+		}
+		free(str[0]);
+		str[0] = NULL;
+	}
 }
 
 void	ft_free_t_token(t_token	**ll_token)
@@ -54,4 +57,23 @@ void	ft_free_t_token(t_token	**ll_token)
 		current = next;
 	}
 	*ll_token = NULL;
+}
+
+void	ft_free_s_exec(t_exec **exec)
+{
+	t_exec	*next;
+
+	if (!exec)
+		return ;
+	while (*exec)
+	{
+		next = (*exec)->pipe;
+		ft_free_array(&(*exec)->word);
+		ft_free_string(&(*exec)->infile);
+		ft_free_string(&(*exec)->outfile);
+		ft_free_array(&(*exec)->heredoc);
+		free(*exec);
+		*exec = NULL;
+		*exec = next;
+	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_init.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 12:44:31 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/16 17:08:22 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   env_init.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/06 12:44:31 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/17 16:05:25 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,17 @@ void	ft_free_env_node(t_env **node)
 	}
 }
 
-void	ft_free_env_list(t_env *current)
+void	ft_free_env_list(t_env **env)
 {
 	t_env	*next_node;
 
-	while (current)
+	if (!env)
+		return ;
+	while (*env)
 	{
-		next_node = current->next;
-		ft_free_env_node(&current);
-		current = next_node;
+		next_node = (*env)->next;
+		ft_free_env_node(env);
+		*env = next_node;
 	}
 }
 
@@ -91,7 +93,7 @@ t_env	*ft_init_env(char **env)
 		new_node = ft_create_env_node(env[i]);
 		if (!new_node)
 		{
-			ft_free_env_list(head);
+			ft_free_env_list(&head);
 			return (NULL);
 		}
 		if (head == NULL)

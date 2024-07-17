@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/10 17:13:29 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/17 16:48:22 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	ft_get_key(const char *line, t_expan *exp)
 	else
 	{
 		exp->key = ft_substr(line, 1, len - 1);
-		if (!exp->key) // if (!exp->key && len > 1)
+		if (!exp->key)
 			return (MALERR);
 		exp->len = len;
 	}
@@ -130,6 +130,6 @@ int	ft_expansion(char *line, t_env *env, t_expan *exp)
 		if (!exp->exp_line)
 			return (MALERR);
 	}
-	ft_free_expansion(exp);
+	ft_free_small_expansion(exp);
 	return (0);
 }

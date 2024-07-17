@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_create_error.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/19 11:41:43 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/16 20:09:26 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_create_error.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/07/17 16:40:52 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,19 @@ t_expan	*ft_create_expansion(void)
 	return (expansion);
 }
 
-void	ft_free_expansion(t_expan *exp)
+void	ft_free_small_expansion(t_expan *exp)
 {
-	// printf("exp->exp_line = %s\n", exp->exp_line); // have to delete this later!
 	ft_free_string(&(exp->temp));
 	ft_free_string(&(exp->key));
-	// ft_free_string(&(exp->exp_line));
+}
+
+void	ft_free_expansion(t_expan **exp)
+{
+	if (!exp | !*exp)
+		return ;
+	ft_free_string(&(*exp)->temp);
+	ft_free_string(&(*exp)->key);
+	ft_free_string(&(*exp)->exp_line);
+	free(*exp);
+	*exp = NULL;
 }

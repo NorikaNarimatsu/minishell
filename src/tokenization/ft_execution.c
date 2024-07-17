@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_execution.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 17:16:21 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/16 21:10:48 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_execution.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/10 17:16:21 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/07/17 17:34:42 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,14 @@ int	ft_transfer_output(t_token **token, t_exec *exec)
 
 int	ft_transfer_eof(t_token *token, t_exec *exec)
 {
-	(void)token;
+	(void)token;			// DELETE FUNCTION
 	(void)exec;
 	return (0);
 }
 
 int	ft_transfer_env(t_token *token, t_exec *exec)
 {
-	(void)token;
+	(void)token;			// DELETE FUNCTION
 	(void)exec;
 	return (0);
 }
@@ -162,25 +162,6 @@ static int	ft_transfer(t_token **token, t_exec *exec)
 		return (ft_transfer_env(*token, exec));
 	else
 		return (CNFERR);
-}
-
-int	ft_count_words(t_token *token)
-{
-	t_token	*head;
-	int		i;
-
-	i = 0;
-	head = token;
-	while (token)
-	{
-		if (token->type == T_WORD)
-			i++;
-		if (token->type == T_PIPE)
-			break ;
-		token = token->next;
-	}
-	token = head;
-	return (i);
 }
 
 int	ft_count_type(t_token *token, enum e_token type)
@@ -211,12 +192,12 @@ int	ft_transfer_for_exec(t_token *token, t_exec *exec)
 	error = 0;
 	head_token = token;
 	head_exec = exec;
-	exec->word = (char **)ft_calloc(ft_count_words(token) + 1, sizeof(char *));
+	exec->word = ft_calloc(ft_count_type(token, T_WORD) + 1, sizeof(char *));
 	if (!exec->word)
-		return (printf("Malloc error here!\n"), MALERR);
-	exec->heredoc = ft_calloc(ft_count_type(token, T_HEREDOC) + 1, sizeof(char *));
+		return (MALERR);
+	exec->heredoc = ft_calloc(ft_count_type(token, 3) + 1, sizeof(char *));
 	if (!exec->heredoc)
-		return (printf("Malloc error here!\n"), MALERR);
+		return (MALERR);
 	while (token)
 	{
 		error = ft_transfer(&(token), exec);

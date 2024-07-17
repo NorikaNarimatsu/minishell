@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_token.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 21:54:23 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/17 14:24:51 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_token.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/05 21:54:23 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/07/17 17:27:52 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ int	ft_word(char *str, t_token *token, int flag)
 		return (len);
 	if (flag == 0)
 	{
-		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);	// TODO MALLOC ERROR HALLO!?!??!
+		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
 		free(token->word);
 		token->word = NULL;
+		if (!token->prev->word)
+			return (MALERR);
 	}
 	else if (ft_create_new_and_fill_type(token, T_WORD) == MALERR)
 		return (MALERR);
@@ -83,9 +85,11 @@ int	ft_single_quote(char *str, t_token *token, int flag)
 	token->word = strtrim;
 	if (flag == 0)
 	{
-		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);	// TODO MALLOC ERROR HALLO!?!??!
+		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
 		free(token->word);
 		token->word = NULL;
+		if (!token->prev->word)
+			return (MALERR);
 	}
 	else if (ft_create_new_and_fill_type(token, T_WORD) == -1)
 		return (-1);
@@ -109,9 +113,11 @@ int	ft_double_quote(char *str, t_token *token, int flag)
 	token->word = strtrim;
 	if (flag == 0)
 	{
-		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);	// TODO MALLOC ERROR HALLO!?!??!
+		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
 		free(token->word);
 		token->word = NULL;
+		if (!token->prev->word)
+			return (MALERR);
 	}
 	else if (ft_create_new_and_fill_type(token, T_WORD) == MALERR)
 		return (MALERR);

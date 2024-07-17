@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 09:37:49 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/17 12:42:15 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   heredoc.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/07/17 16:31:41 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_heredoc(t_shell *shell)
 {
 	t_exec	*exec;
 
-	shell->execution->fd_infile = -1;
+	// shell->execution->fd_infile = -1;
 	exec = shell->execution;
 	while (exec)
 	{

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   exp_utils.c                                        :+:    :+:            */
+/*   ft_exp_utils.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/10 17:08:09 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/17 16:47:28 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ int	ft_exp_needed(const char *line, t_expan *exp)
 		exp->exp_line = ft_strdup(line);
 		if (!exp->exp_line)
 			return (MALERR);
-		ft_free_expansion(exp);
-		exp->single_double_quote = 0;
+		ft_free_small_expansion(exp);
 		return (1);
 	}
 	exp->single_double_quote = 0;
