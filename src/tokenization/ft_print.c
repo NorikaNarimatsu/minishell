@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:38:08 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/17 12:12:59 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:43:57 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_print_exec_list(t_exec *exec)
 			}
 		}
 		printf("infile:\t\t%s [%d]\n", exec->infile, exec->is_end_infile);
-		printf("outfile:\t%s [%d]\n", exec->outfile, exec->append);
+		printf("outfile:\t%s [%d]\n", exec->outfile, exec->is_end_append);
 		if (exec->heredoc)
 		{
 			i = 0;

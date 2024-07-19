@@ -1,0 +1,30 @@
+# case 1: NEED TO BE IMPLEMENTED
+exit status after syntax error
+
+# case 2: SYNTAX ERROR
+nnarimat@f1r7s3:~/Core_Norika/Rank3/minishell$ echo bonjour | |
+bash: syntax error near unexpected token `|'
+
+nnarimat@f1r7s3:~/Core_Norika/Rank3/minishell$ echo bonjour |;
+bash: syntax error near unexpected token `;'
+
+minishell$ echo >
+syntax error near unexpected token `newline'
+Permission denied
+No such file or directory
+(A lot of error messages)
+
+nnarimat@f1r7s3:~/Documents$ export "" et unset ""
+bash: export: `': not a valid identifier
+bash: export: `': not a valid identifier
+Fixed!!!
+
+
+# case 3: parsing error
+nnarimat@f1r7s3:~/Core_Norika/Rank3/minishell$  echo bonjour > test\ 1
+Bash create test 1 file, but ours is test\
+
+
+Wrong in execution:
+echo >> newf0 my sweet norika > newf1 | > newf2
+

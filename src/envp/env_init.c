@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   env_init.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/06/06 12:44:31 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/17 16:05:25 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   env_init.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 12:44:31 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/17 16:28:07 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,15 @@ void	ft_free_env_node(t_env **node)
 	}
 }
 
-void	ft_free_env_list(t_env **env)
+void	ft_free_env_list(t_env *current)
 {
 	t_env	*next_node;
 
-	if (!env)
-		return ;
-	while (*env)
+	while (current)
 	{
-		next_node = (*env)->next;
-		ft_free_env_node(env);
-		*env = next_node;
+		next_node = current->next;
+		ft_free_env_node(&current);
+		current = next_node;
 	}
 }
 
@@ -64,6 +62,8 @@ t_env	*ft_create_env_node(char *env_str)
 	equal_sign = ft_strchr(env_str, '=');
 	if (equal_sign != NULL)
 	{
+		// new_node->key = ft_substr(env_str, 0, ft_pos(env_str, '=') -1); // TODO create original
+		// printf("str=%s\n", new_node->key);
 		new_node->key = strndup(env_str, equal_sign - env_str); // TODO create original
 		new_node->value = ft_strdup(equal_sign + 1);
 	}
@@ -93,7 +93,7 @@ t_env	*ft_init_env(char **env)
 		new_node = ft_create_env_node(env[i]);
 		if (!new_node)
 		{
-			ft_free_env_list(&head);
+			ft_free_env_list(head);
 			return (NULL);
 		}
 		if (head == NULL)
@@ -105,4 +105,3 @@ t_env	*ft_init_env(char **env)
 	}
 	return (head);
 }
-

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/17 18:21:20 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/19 20:07:48 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_minishell(char **env)
 		return (EXIT_FAILURE);
 	shell.expanding = ft_create_expansion();
 	if (!shell.expanding)
-		return (ft_free_env_list(&shell.env), EXIT_FAILURE);
+		return (ft_free_env_list(shell.env), EXIT_FAILURE);
 	while (1)
 	{
 		ft_bzero(&shell.ll_token, sizeof(shell.ll_token));
@@ -37,21 +37,18 @@ int	ft_minishell(char **env)
 		printf("----- EXPANSION -----\n");
 		if (ft_expansion(line, shell.env, shell.expanding) == MALERR)
 			return (MALERR); // free_everything function;
-		// printf("adress env=%p\n", shell.env);
-		// ft_free_env_list(&shell.env);
-		// printf("adress env=%p\n", shell.env);
 		ft_free_string(&line);
 		line = shell.expanding->exp_line;
 		printf("----- SYNTAX -----\n");
 		if (ft_syntax(line) == 0)
 			printf("No syntax error!\nline=%s\n", line);
 		printf("----- TOKENIZATION -----\n");
-		if (ft_tokenization(line, &shell) < 0)
-			return (printf("probably malloc error\n"), MALERR); // free_everything function;
+		ft_tokenization(line, &shell);
 		printf("----- HEREDOC -----\n");
 		ft_heredoc(&shell);
 		printf("----- EXECUTION -----\n");
 		ft_interpret(&shell);
+		// printf("[exit_status is ... %d]\n", shell.exit_status);
 		ft_free_string(&line);
 		// probably use ft_free_expansion(shell.expanding);
 	}

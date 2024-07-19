@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 21:54:23 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/17 17:27:52 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/19 21:01:54 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ int	ft_double_quote(char *str, t_token *token, int flag)
 	strtrim = ft_strtrim(token->word, "\"");
 	if (!strtrim)
 		return (MALERR);
-	if (strtrim[0] == '\0')
-		return (free(strtrim), free(token->word), len);
+	// if (strtrim[0] == '\0')
+	// 	return (free(strtrim), free(token->word), len);				// TODO: Not always free token->word! Fix this stoepid shit
 	free(token->word);
 	token->word = strtrim;
 	if (flag == 0)

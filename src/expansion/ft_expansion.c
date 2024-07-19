@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_expansion.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/17 16:48:22 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/19 19:57:27 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

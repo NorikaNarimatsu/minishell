@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/17 16:41:18 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/19 19:58:20 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@
 
 # define PATH_MAX	4096
 
-typedef struct s_env
-{
-	char			*env;
-	char			*key;
-	bool			flag;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
 enum e_token
 {
 	T_WORD,
@@ -49,6 +40,13 @@ enum e_token
 	T_PIPE,
 	T_ENV,
 	T_EOF
+};
+
+enum e_errno
+{
+	MALERR = -1,		// malloc error
+	SYNERR = -2,		// syntax error
+	CNFERR = -3,		// command not found
 };
 
 typedef struct s_syn
@@ -70,17 +68,17 @@ typedef struct s_token
 
 typedef struct s_exec
 {
-	char			**word;		// command/arguments
+	char			**word;
 	int				flag;
 	int				fd_infile;
 	int				fd_outfile;
 	int				fd_heredoc;
-	char			*infile;	// Infile (<) | Already open it! (and close if already one opened). Append have different flags then for Append. Ask Norika for this.
-	char			*outfile;	// Append (>>) O_CREAT O_WRONLY O_APPEND, 0644 and outfile (>) O_CREAT O_WRONLY O_TRUNC, 0644
-	char			**heredoc;	// Heredoc (<<) (double **)
-	bool			append;		// please add this!
+	char			*infile;
+	char			*outfile;
+	char			**heredoc;
+	bool			is_end_append;
 	bool			is_end_infile;
-	struct s_exec	*pipe;		// linked list to this struct
+	struct s_exec	*pipe;
 }	t_exec;
 
 typedef struct s_expan
@@ -94,6 +92,15 @@ typedef struct s_expan
 	int				exit_status;
 }	t_expan;
 
+typedef struct s_env
+{
+	char			*env;
+	char			*key;
+	bool			flag;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_shell
 {
 	t_env	*env;
@@ -102,41 +109,33 @@ typedef struct s_shell
 	int		token_flag;
 	t_token	*ll_token;
 	t_exec	*execution;
+	int		exit_status;
 }	t_shell;
 
-enum e_errno
-{
-	MALERR = -1,		// malloc error
-	SYNERR = -2,		// syntax error
-	CNFERR = -3,		// command not found
-};
+
 
 /*		Norika						*/
-// error.c
-void	ft_fatal_error(char *message);
-void	error_exit(char *location, char *message, int status);
 
-// path.c
-void	ft_validate_access(char *path, char *filename);
-char	*ft_search_path(char *filename, t_env *env);
-
-//builtins
+/*	BUILTIN-----------------------*/
+/*		builtins				*/
 bool	is_builtin(char *command);
 int		ft_echo_builtin(char **input);
 int		ft_env_builtin(char **input, t_env *env);
-int		ft_export_builtin(char **input, t_env *env);
-void	ft_unset_builtin(char **input, t_env *env);
+int		ft_export_builtin(char **input, t_env **env);
+int		ft_unset_builtin(char **input, t_env **env);
 int		ft_pwd_builtin(char **input, t_env *env);
-int		ft_cd_builtin(char **input, t_env *env);
-int		ft_exit_builtin(char **input);
+int		ft_cd_builtin(char **input, t_env **env);
+int		ft_exit_builtin(char **input, t_shell *shell);
 
-// utils
+/*		built_utils				*/
+
+
 t_env	*ft_init_env(char **env);
 t_env	*ft_create_env_node(char *env_str);
 
 void	ft_print_sorted_env(t_env *env);
 char	*ft_find_env_value(t_env *env_list, char *key);
-void	ft_replace_env_value(t_env *env, const char *input);
+int		ft_replace_env_value(t_env *env, const char *input);
 void	ft_reset_env_flags(t_env *env_list);
 
 bool	is_valid_identifier(char *input);
@@ -145,24 +144,41 @@ int		is_valid_directory(char *path);
 
 // free
 void	ft_free_env_node(t_env **env);
-void	ft_free_env_list(t_env **env);
+void	ft_free_env_list(t_env *head);
 void	ft_print_env(t_env *env);
 
-// execution
+/*	EXECUTION-----------------------*/
+/*		interpretation				*/
 int		ft_interpret(t_shell *shell);
-char	**ft_env_to_array(t_env *env_list);
-int		ft_count_command(t_exec *exec);
-int		ft_execute_builtin(t_exec *exec, t_env *env);
-void	ft_redirect(t_exec *exec);
-void	ft_open_files(t_exec *exec);
-void	ft_redirect_io(t_exec *exec);
 void	ft_setup_pipes(int *fd, int num_cmnds);
-void	ft_execute_command(t_exec *exec, t_env *env);
+int		ft_execute_builtin(t_shell *shell, t_exec *exec, t_env **env);
+
+/*		ft_redirect				*/
+void	ft_open_io(t_exec *exec);
+void	ft_redirect_io(t_exec *exec);
 void	ft_restore_io(int saved_stdin, int saved_stdout);
-void	ft_handle_command(t_exec *exec, int *fd, int num_cmnd, int index, t_env *env);
+
+/*		ft_handle_command				*/
+void	ft_handle_command(t_shell *shell, t_exec *exec, int *fd, int num_cmnd, int index, t_env *env);
+void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell);
+
+/*		ft_path				*/
+void	ft_validate_access(char *path, char *filename);
+char	*ft_search_path(char *filename, t_env *env);
+
+/*		exec_utils				*/
+void	ft_fatal_error(char *message);
+void	error_exit(char *location, char *message, int status);
+int		ft_count_command(t_exec *exec);
+char	**ft_env_to_array(t_env *env_list);
+
+/*	HEREDOC-----------------------*/
+int		ft_heredoc(t_shell *shell);
 
 
-int	ft_heredoc(t_shell *shell);
+
+
+
 
 /*		Martijn						*/
 
@@ -237,5 +253,4 @@ int		ft_double_quote(char *str, t_token *token, int flag);
 
 /*		ft_tokenization				*/
 int		ft_tokenization(char *str, t_shell *shell);
-
 #endif

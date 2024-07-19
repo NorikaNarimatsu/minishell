@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/17 16:31:41 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 09:37:49 by mdraper           #+#    #+#             */
+/*   Updated: 2024/07/17 15:47:20 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
 	while (1)
 	{
 		line = readline("> ");
-		if (ft_strcmp(line, heredoc[delimitor_index]) == 0) // ask chriss fr strncmp
+		if (ft_strcmp(line, heredoc[delimitor_index]) == 0)
 		{
 			free(line);
 			break ;
@@ -54,23 +54,19 @@ int	heredoc_pipe(t_exec *exec)
 	return (0);
 }
 
-// make the array of delimintors (char **)
-
 int	ft_heredoc(t_shell *shell)
 {
 	t_exec	*exec;
 
-	// shell->execution->fd_infile = -1;
 	exec = shell->execution;
 	while (exec)
 	{
-		if (exec->heredoc && exec->heredoc[0]) // char **
+		if (exec->heredoc && exec->heredoc[0])
 		{
 			if (heredoc_pipe(exec) == -1)
 				return (-1);
 		}
 		exec = exec->pipe;
 	}
-
 	return (0);
 }

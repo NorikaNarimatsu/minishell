@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   interpret2.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 11:56:22 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/17 13:53:34 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_redirect.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/17 11:56:22 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/19 20:58:47 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Function to open input and output files
-void	ft_open_files(t_exec *exec)
+void	ft_open_io(t_exec *exec)
 {
 	int	flags;
 
 	exec->fd_infile = -1;
 	exec->fd_outfile = -1;
+	printf("OPENING IO...with [in:%s] and [out:%s]\n", exec->infile, exec->outfile);
 	if (exec->infile)
 	{
 		exec->fd_infile = open(exec->infile, O_RDONLY);
@@ -30,7 +31,7 @@ void	ft_open_files(t_exec *exec)
 	}
 	if (exec->outfile)
 	{
-		if (exec->append)
+		if (exec->is_end_append)
 			flags = O_WRONLY | O_CREAT | O_APPEND;
 		else
 			flags = O_WRONLY | O_CREAT | O_TRUNC;
@@ -46,9 +47,10 @@ void	ft_open_files(t_exec *exec)
 }
 
 // Function to redirect input and output
+// CHECK: not closing fd_infile if heredoc is last?
 void	ft_redirect_io(t_exec *exec)
 {
-	printf("Redirecting IO...\n");
+	printf("Redirecting IO...with [in:%s] and [out:%s]\n", exec->infile, exec->outfile);
 	if (exec->fd_infile != -1 && exec->is_end_infile)
 	{
 		if (dup2(exec->fd_infile, STDIN_FILENO) < 0)
@@ -69,11 +71,13 @@ void	ft_redirect_io(t_exec *exec)
 	}
 	if (exec->fd_outfile != -1)
 	{
+		printf("hello\n");
 		if (dup2(exec->fd_outfile, STDOUT_FILENO) < 0)
 		{
 			perror("dup2 outfile");
 			exit(EXIT_FAILURE);
 		}
+		printf("current command is %s\n", exec->word[0]);
 		close(exec->fd_outfile);
 	}
 }
@@ -93,51 +97,4 @@ void	ft_restore_io(int saved_stdin, int saved_stdout)
 	}
 	close(saved_stdin);
 	close(saved_stdout);
-}
-
-// Function to execute a command
-void	ft_execute_command(t_exec *exec, t_env *env)
-{
-	char	*path;
-	char	**envp;
-
-	path = exec->word[0];
-	envp = ft_env_to_array(env);
-	if (is_builtin(path))
-	{
-		ft_execute_builtin(exec, env);
-		exit(0);
-	}
-	else
-	{
-		if (strchr(path, '/') == NULL)
-			path = ft_search_path(path, env);
-		ft_validate_access(path, exec->word[0]);
-		execve(path, exec->word, envp);
-		ft_fatal_error("execve");
-	}
-}
-
-// Function to handle a command in a pipeline
-void	ft_handle_command(t_exec *exec, int *fd, int num_cmnd, int index, t_env *env)
-{
-	int	i;
-
-	ft_open_files(exec);
-	ft_redirect_io(exec);
-
-	if (index > 0)
-	{
-		if (dup2(fd[2 * (index - 1)], STDIN_FILENO) < 0)
-			ft_fatal_error("dup2 stdin");
-	}
-	if (index < num_cmnd - 1)
-	{
-		if (dup2(fd[2 * index + 1], STDOUT_FILENO) < 0)
-			ft_fatal_error("dup2 stdout");
-	}
-	i = 0;
-	while (i < 2 * (num_cmnd - 1))
-		close(fd[i++]);
-	ft_execute_command(exec, env);
 }

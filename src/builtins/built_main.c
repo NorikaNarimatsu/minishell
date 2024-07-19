@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:49:00 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/17 14:09:53 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:20:51 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,21 @@ bool	is_builtin(char *command)
 		return (false);
 }
 
-int	ft_execute_builtin(t_exec *exec, t_env *env)
+int	ft_execute_builtin(t_shell *shell, t_exec *exec, t_env **env)
 {
-	char	**input;
-
-	input = exec->word;
-	if (ft_strcmp(input[0], "echo") == 0)
-		return (ft_echo_builtin(input));
-	else if (ft_strcmp(input[0], "env") == 0)
-		return (ft_env_builtin(input, env), 0);
-	else if (ft_strcmp(input[0], "export") == 0)
-		return (ft_export_builtin(input, env), 0);
-	else if (ft_strcmp(input[0], "unset") == 0)
-		return (ft_unset_builtin(input, env), 0);
-	else if (ft_strcmp(input[0], "pwd") == 0)
-		return (ft_pwd_builtin(input, env), 0);
-	else if (ft_strcmp(input[0], "cd") == 0)
-		return (ft_cd_builtin(input, env), 0);
-	else if (ft_strcmp(input[0], "exit") == 0)
-		return (ft_exit_builtin(input), 0);
-	return (-1);
+	if (ft_strcmp(exec->word[0], "echo") == 0)
+		return (ft_echo_builtin(exec->word));
+	else if (ft_strcmp(exec->word[0], "env") == 0)
+		return (ft_env_builtin(exec->word, *env));
+	else if (ft_strcmp(exec->word[0], "export") == 0)
+		return (ft_export_builtin(exec->word, env));
+	else if (ft_strcmp(exec->word[0], "unset") == 0)
+		return (ft_unset_builtin(exec->word, env));
+	else if (ft_strcmp(exec->word[0], "pwd") == 0)
+		return (ft_pwd_builtin(exec->word, *env));
+	else if (ft_strcmp(exec->word[0], "cd") == 0)
+		return (ft_cd_builtin(exec->word, env));
+	else if (ft_strcmp(exec->word[0], "exit") == 0)
+		return (ft_exit_builtin(exec->word, shell));
+	return (0);
 }

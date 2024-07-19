@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/10 17:16:21 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/17 17:34:42 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/19 20:51:04 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_transfer_append(t_token **token, t_exec *exec)
 		return (0);
 	}
 	close(fd);
-	exec->append = true;
+	exec->is_end_append = true;
 	return (0);
 }
 
@@ -124,7 +124,7 @@ int	ft_transfer_output(t_token **token, t_exec *exec)
 		return (0);
 	}
 	close(fd);
-	exec->append = false;
+	exec->is_end_append = false;
 	return (0);
 }
 

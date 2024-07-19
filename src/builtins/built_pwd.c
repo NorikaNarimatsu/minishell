@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:49:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/16 09:25:03 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:10:15 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	ft_pwd_builtin(char **input, t_env *env)
 	{
 		if (strcmp(current->key, "PWD") == 0)
 		{
-			return (ft_putendl_fd(current->value, 1), EXIT_SUCCESS);
+			ft_putendl_fd(current->value, 1);
+			return (EXIT_SUCCESS);
 		}
 		current = current->next;
 	}

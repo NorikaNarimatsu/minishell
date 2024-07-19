@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/16 09:13:04 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/16 09:17:31 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/19 20:09:12 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	ft_syn_pipe(t_syn *syntax)
 {
 	syntax->pipe++;
 	if (syntax->pipe == 2)
-		return (SYNERR);
+		return (ft_putstr_fd("syntax error near unexpected token `|'\n", 2), \
+				SYNERR);
 	else if (syntax->input >= 1 || syntax->output >= 1)
 		return (ft_putstr_fd("syntax error near unexpected token `|'\n", 2), \
 				SYNERR);

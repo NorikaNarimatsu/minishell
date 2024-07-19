@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 15:21:39 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/16 09:24:35 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:55:25 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	ft_env_builtin(char **input, t_env *env)
 
 	if (input[1])
 	{
-		printf("Too much argument\n");
-		return (EXIT_SUCCESS);
+		fprintf(stderr, "env: '%s': No such file or directory\n", input[1]);
+		return (127);
 	}
 	current = env;
 	while (current)
 	{
 		if (current->value)
-			ft_putendl_fd(current->env, 1);
+			printf("%s\n", current->env);
 		current = current->next;
 	}
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/17 16:31:48 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/19 20:18:32 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_tokenization(char *str, t_shell *shell)
 	shell->ll_token->type = T_EOF;
 	while (shell->ll_token->prev != NULL)
 		shell->ll_token = shell->ll_token->prev;
-	// ft_print_token_list(shell->ll_token); // TO_DO: Remove line
+	ft_print_token_list(shell->ll_token); // TO_DO: Remove line
 	shell->execution = ft_create_exec();
 	if (!shell->execution)
 		return (MALERR);	// TO_DO: Error & free
@@ -80,12 +80,3 @@ int	ft_tokenization(char *str, t_shell *shell)
 	// ft_free_s_exec(&(shell->execution));
 	return (0);
 }
-
-/*
-Next steps:
-1) Making notes for all the functions
-2) Error handling (with a bigger struct)
-3) Getting better sense of the complete assignment
-4) Talk with Andres and Chriss what to do else? - What about the metacharacters??
-*/
-

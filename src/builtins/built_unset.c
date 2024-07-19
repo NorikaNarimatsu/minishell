@@ -6,41 +6,11 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 15:23:32 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/16 18:38:04 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:06:39 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	unset_env_var(t_env **env_list, char *key)
-// {
-// 	t_env	*head;
-// 	t_env	*previous;
-
-// 	if (!env_list || !*env_list)
-// 		return ;
-// 	head = *env_list;
-// 	previous = NULL;
-// 	while (*env_list)
-// 	{
-// 		if (strcmp((*env_list)->key, key) == 0)
-// 		{
-// 			printf("here with %p\n", (*env_list));
-// 			if (previous)
-// 				previous->next = (*env_list)->next;
-// 			else
-// 				*env_list = (*env_list)->next;
-// 			ft_free_env_node(env_list); // CHANGED THIS
-// 			printf("deleted node: %p\n", (*env_list));
-// 			*env_list = head;
-// 			printf("head node: %p\n", (*env_list));
-// 			return ;
-// 		}
-// 		previous = *env_list;
-// 		*env_list = (*env_list)->next;
-// 	}
-// 	*env_list = head;
-// }
 
 void	unset_env_var(t_env **env_list, char *key)
 {
@@ -48,7 +18,7 @@ void	unset_env_var(t_env **env_list, char *key)
 	t_env	*previous;
 
 	if (!env_list || !*env_list)
-		return ;
+		return;
 	current = *env_list;
 	previous = NULL;
 	while (current)
@@ -60,21 +30,33 @@ void	unset_env_var(t_env **env_list, char *key)
 			else
 				*env_list = current->next;
 			ft_free_env_node(&current); // CHANGED THIS
-			return ;
+			return;
 		}
 		previous = current;
 		current = current->next;
 	}
 }
 
-void	ft_unset_builtin(char **input, t_env *env)
+
+int	ft_unset_builtin(char **input, t_env **env)
 {
 	int		i;
+	int		exit_status;
 
+	exit_status = EXIT_SUCCESS;
 	i = 1;
 	while (input[i])
 	{
-		unset_env_var(&env, input[i]);
+		if (!is_valid_identifier(input[i]))
+		{
+			fprintf(stderr, "unset: `%s': not a valid identifier\n", input[i]);
+			exit_status = EXIT_FAILURE;
+		}
+		else
+		{
+			unset_env_var(env, input[i]);
+		}
 		i++;
 	}
+	return (exit_status);
 }
