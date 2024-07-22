@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 09:37:49 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/17 15:47:20 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:33:10 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	heredoc_pipe(t_exec *exec)
 	int	delimitor_index;
 
 	if (pipe(fd) == -1)
-		return (printf("pipe error\n"), -1);
+		return (ft_putstr_fd("pipe error\n", 2), -1);
 	exec->fd_heredoc = fd[0];
 	delimitor_index = 0;
 	while (exec->heredoc[delimitor_index])

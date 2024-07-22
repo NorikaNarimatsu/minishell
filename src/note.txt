@@ -28,3 +28,42 @@ Bash create test 1 file, but ours is test\
 Wrong in execution:
 echo >> newf0 norika > newf1 | > newf2
 
+
+
+The $? expansion seems not working,
+If I check the following print in main function, the exit status is okay/
+Could you check, please ?
+
+printf("EXIT STATUS is %d\n", shell.exit_status);
+
+———————————— builtins
+Test  26: ❌ export A-
+mini exit code = 0
+bash exit code = 1
+Test  30: ❌ export HELLO-=123
+mini exit code = 0
+bash exit code = 1
+Test  31: ❌ export =
+mini exit code = 0
+bash exit code = 1
+Test  32: ❌ export 123
+mini exit code = 0
+bash exit code = 1
+Test  40: ❌ cd $PWD hi
+mini exit code = 0
+bash exit code = 1
+Test  41: ❌ cd 123123
+mini exit code = 0
+bash exit code = 1
+Test  51: ❌ exit 42 world
+mini exit code = 0
+bash exit code = 1
+
+
+———————————— pipes
+Test   3: ❌ cat minishell.h | grep ");"$
+mini exit code = 0
+bash exit code = 1
+Test   4: ❌ export GHOST=123 | env | grep GHOST
+mini exit code = 0
+bash exit code = 1

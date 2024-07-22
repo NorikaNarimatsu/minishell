@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:31:41 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 19:37:51 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:49:07 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,23 @@ t_env	*find_min_unflagged(t_env *env_list)
 	return (min_node);
 }
 
-int	validate_and_extract_key(char *input, char **key, char **equal_sign)
-{
-	*equal_sign = ft_strchr(input, '=');
-	if (*equal_sign)
-		*key = strndup(input, *equal_sign - input); // martijn
-	else
-		*key = ft_strdup(input);
-	if (!*key)
-		return (EXIT_FAILURE);
-	if (!is_valid_identifier(*key))
-	{
-		ft_putstr_fd("export: not a valid identifier\n", 2);
-		free(*key);
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
+// int	validate_and_extract_key(char *input, char **key, char **equal_sign)
+// {
+// 	*equal_sign = ft_strchr(input, '=');
+// 	if (*equal_sign)
+// 		*key = strndup(input, *equal_sign - input); // martijn
+// 	else
+// 		*key = ft_strdup(input);
+// 	if (!*key)
+// 		return (EXIT_FAILURE);
+// 	if (!is_valid_identifier(*key))
+// 	{
+// 		ft_putstr_fd("export: not a valid identifier\n", 2);
+// 		free(*key);
+// 		return (EXIT_FAILURE);
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
 
 int	add_new_env_node(t_env **env_list, char *input, char *key)
 {

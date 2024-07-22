@@ -27,7 +27,7 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell)
 	}
 	else
 	{
-		if (strchr(path, '/') == NULL)
+		if (ft_strchr(path, '/') == NULL)
 			path = ft_search_path(path, env);
 		ft_validate_access(path, exec->word[0], shell);
 		execve(path, exec->word, envp);
@@ -47,15 +47,15 @@ void	ft_handle_cmnd(t_shell *shell, t_exec *exec, int *fd, int idx)
 	{
 		if (dup2(fd[2 * (idx - 1)], STDIN_FILENO) < 0)
 		{
-			ft_putstr_fd("dup2 stdin error", 2);
+			ft_putstr_fd("dup2 stdin error\n", 2);
 			exit(EXIT_FAILURE);
 		}
 	}
-	if (idx < shell->n_cmd - 1 && !exec->fd_outfile)
+	if (idx < shell->n_cmd - 1 && !exec->outfile)
 	{
 		if (dup2(fd[2 * idx + 1], STDOUT_FILENO) < 0)
 		{
-			ft_putstr_fd("dup2 stdout error", 2);
+			ft_putstr_fd("dup2 stdout error\n", 2);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -64,3 +64,4 @@ void	ft_handle_cmnd(t_shell *shell, t_exec *exec, int *fd, int idx)
 		close(fd[i++]);
 	ft_execute_command(exec, shell->env, shell);
 }
+

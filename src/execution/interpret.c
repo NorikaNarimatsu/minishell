@@ -6,11 +6,28 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:42:57 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 21:12:11 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:50:30 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_setup_pipes(int *fd, int num_cmnds)
+{
+	int	i;
+
+	i = 0;
+	while (i < num_cmnds)
+	{
+		if (pipe(fd + 2 * i) < 0)
+		{
+			ft_putstr_fd("Pipe Error\n", 2);
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+}
+
 
 
 static int	ft_execute_single(t_shell *shell)
@@ -39,22 +56,6 @@ static int	ft_execute_single(t_shell *shell)
 		}
 	}
 	return (shell->exit_status);
-}
-
-void	ft_setup_pipes(int *fd, int num_cmnds)
-{
-	int	i;
-
-	i = 0;
-	while (i < num_cmnds)
-	{
-		if (pipe(fd + 2 * i) < 0)
-		{
-			ft_putstr_fd("Pipe Error\n", 2);
-			exit(EXIT_FAILURE);
-		}
-		i++;
-	}
 }
 
 int	ft_execute_pipe(t_shell *shell, t_exec *exec)
@@ -100,10 +101,12 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 	return (shell->exit_status);
 }
 
+
 int	ft_interpret(t_shell *shell)
 {
 	int	saved_stdin;
 	int	saved_stdout;
+	int	status;
 
 	shell->n_cmd = ft_count_command(shell->execution);
 	saved_stdin = dup(STDIN_FILENO);
@@ -111,9 +114,10 @@ int	ft_interpret(t_shell *shell)
 	if (!shell->execution->word[0])
 		return (0);
 	if (shell->n_cmd == 1)
-		shell->exit_status = ft_execute_single(shell);
+		status = ft_execute_single(shell);
 	else
-		shell->exit_status = ft_execute_pipe(shell, shell->execution);
+		status = ft_execute_pipe(shell, shell->execution);
 	ft_restore_io(saved_stdin, saved_stdout);
-	return (0);
+	shell->exit_status = status; // no need?
+	return (status);
 }

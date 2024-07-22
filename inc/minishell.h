@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 21:22:38 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:04:22 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int		ft_export_builtin(char **input, t_env **env);
 int		ft_unset_builtin(char **input, t_env **env);
 int		ft_pwd_builtin(char **input, t_env *env);
 int		ft_cd_builtin(char **input, t_env **env);
-int		ft_exit_builtin(char **input, t_shell *shell);
+int		ft_exit_builtin(char **input);
 t_env	*find_min_unflagged(t_env *env_list);
 void	ft_validate_access(char *path, char *filename, t_shell *shell);
 int		add_new_env_node(t_env **env_list, char *input, char *key);

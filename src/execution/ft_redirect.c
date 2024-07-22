@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 11:56:22 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 21:09:31 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:52:57 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	ft_open_io(t_exec *exec)
 		exec->fd_infile = open(exec->infile, O_RDONLY);
 		if (exec->fd_infile < 0)
 		{
-			ft_putstr_fd("Error: opening infile", 2);
+			// ft_putstr_fd("Error: opening infile\n", 2);
+			perror(exec->infile);  // Added perror for detailed error message
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -36,13 +37,15 @@ void	ft_open_io(t_exec *exec)
 		exec->fd_outfile = open(exec->outfile, flags, 0644);
 		if (exec->fd_outfile < 0)
 		{
-			ft_putstr_fd("Error: opening outfile", 2);
+			// ft_putstr_fd("Error: opening outfile\n", 2);
+			perror(exec->outfile);  // Added perror for detailed error message
 			if (exec->fd_infile >= 0)
 				close(exec->fd_infile);
 			exit(EXIT_FAILURE);
 		}
 	}
 }
+
 
 void	ft_redirect_io(t_exec *exec)
 {

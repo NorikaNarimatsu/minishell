@@ -6,12 +6,11 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:29:44 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 21:08:28 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:30:38 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_count_command(t_exec *exec)
 {
@@ -24,12 +23,6 @@ int	ft_count_command(t_exec *exec)
 		exec = exec->pipe;
 	}
 	return (count);
-}
-
-void	ft_putstr_fd(char *str, int fd)
-{
-	while (*str)
-		write(fd, str++, 1);
 }
 
 char	**ft_env_to_array(t_env *env_list)

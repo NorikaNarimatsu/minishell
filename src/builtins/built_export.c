@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 16:31:41 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 19:32:27 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:48:44 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,30 @@ void	ft_print_sorted_env(t_env *env_list)
 		min_node->flag = true;
 		min_node = find_min_unflagged(env_list);
 	}
+}
+
+int	validate_and_extract_key(char *input, char **key, char **equal_sign)
+{
+	int		i;
+
+	i = 0;
+	*equal_sign = ft_strchr(input, '=');
+	if (*equal_sign)
+		*key = strndup(input, *equal_sign - input);
+	else
+		*key = ft_strdup(input);
+	if (!*key)
+	{
+		ft_putstr_fd("Memory allocation error\n", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+	if (!is_valid_identifier(*key))
+	{
+		ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
+		free(*key);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	handle_export(t_env **env_list, char *input)
@@ -67,21 +91,18 @@ int	ft_export_builtin(char **input, t_env **env)
 	int		i;
 	int		status;
 
+	status = EXIT_SUCCESS;
 	i = 1;
 	if (!input[i])
 	{
 		ft_print_sorted_env(*env);
 		return (EXIT_SUCCESS);
 	}
-	else
+	while (input[i])
 	{
-		status = EXIT_SUCCESS;
-		while (input[i])
-		{
-			if (handle_export(env, input[i]) == EXIT_FAILURE)
-				status = EXIT_FAILURE;
-			i++;
-		}
+		if (handle_export(env, input[i]) == EXIT_FAILURE)
+			status = EXIT_FAILURE;
+		i++;
 	}
 	return (status);
 }

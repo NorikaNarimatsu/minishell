@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:36:11 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 17:24:59 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:32:21 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ int	cd_check_change(char *path, t_env **env)
 		printf("%s\n", path);
 	}
 	if (is_valid_directory(path) == 0)
-		return (
-			ft_putstr_fd("cd: no such file or directory\n", 2), EXIT_FAILURE);
+		return (ft_putstr_fd("cd: No such file or directory\n", 2), EXIT_FAILURE);
 	if (chdir(path) != 0)
 	{
 		perror("cd");
@@ -112,7 +111,10 @@ int	ft_cd_builtin(char **input, t_env **env)
 	char	*home_path;
 
 	if (input[2])
-		return (ft_putstr_fd("cd: too many arguments\n", 2), EXIT_FAILURE);
+	{
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		return (EXIT_FAILURE);
+	}
 	if (!input[1] || ft_strlen(input[1]) == 0)
 	{
 		home_path = ft_find_env_value(*env, "HOME");

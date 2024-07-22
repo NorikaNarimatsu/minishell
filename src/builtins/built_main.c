@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:49:00 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/17 19:20:51 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:05:20 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ bool	is_builtin(char *command)
 
 int	ft_execute_builtin(t_shell *shell, t_exec *exec, t_env **env)
 {
+	(void) shell; //todo
 	if (ft_strcmp(exec->word[0], "echo") == 0)
 		return (ft_echo_builtin(exec->word));
 	else if (ft_strcmp(exec->word[0], "env") == 0)
@@ -41,6 +42,6 @@ int	ft_execute_builtin(t_shell *shell, t_exec *exec, t_env **env)
 	else if (ft_strcmp(exec->word[0], "cd") == 0)
 		return (ft_cd_builtin(exec->word, env));
 	else if (ft_strcmp(exec->word[0], "exit") == 0)
-		return (ft_exit_builtin(exec->word, shell));
+		return (ft_exit_builtin(exec->word));
 	return (0);
 }
