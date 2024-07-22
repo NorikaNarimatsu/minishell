@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution_utils.c                                  :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:29:44 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/16 09:24:04 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/20 21:08:28 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Function to count the number of commands
+
 int	ft_count_command(t_exec *exec)
 {
 	int	count;
@@ -26,16 +26,10 @@ int	ft_count_command(t_exec *exec)
 	return (count);
 }
 
-void	ft_fatal_error(char *message)
+void	ft_putstr_fd(char *str, int fd)
 {
-	dprintf(STDERR_FILENO, "Fatal Error: %s\n", message);
-	exit(1);
-}
-
-void	error_exit(char *location, char *message, int status)
-{
-	dprintf(STDERR_FILENO, "minishell: %s: %s\n", location, message);
-	exit(status);
+	while (*str)
+		write(fd, str++, 1);
 }
 
 char	**ft_env_to_array(t_env *env_list)
@@ -52,19 +46,18 @@ char	**ft_env_to_array(t_env *env_list)
 		count++;
 		temp = temp->next;
 	}
-	env_array = malloc(sizeof(char *) * (count + 1));
+	env_array = calloc(sizeof(char *), (count + 1));
 	if (!env_array)
 	{
-		perror("malloc");
+		ft_putstr_fd("malloc error", 2);
 		exit(EXIT_FAILURE);
 	}
 	temp = env_list;
 	i = 0;
 	while (i < count)
 	{
-		env_array[i] = temp->env;
+		env_array[i++] = temp->env;
 		temp = temp->next;
-		i++;
 	}
 	env_array[count] = NULL;
 	return (env_array);

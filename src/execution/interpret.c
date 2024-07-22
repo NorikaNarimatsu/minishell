@@ -6,49 +6,39 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:42:57 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/17 19:34:22 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/20 21:12:11 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Function to execute a single command
+
 static int	ft_execute_single(t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
-	char	*command;
-	int		exit_status;
 
 	ft_open_io(shell->execution);
-	command = shell->execution->word[0];
-	if (is_builtin(command))
-	{
-		ft_redirect_io(shell->execution);
-		exit_status = ft_execute_builtin(shell, shell->execution, &shell->env);
-		return (exit_status);
-	}
+	ft_redirect_io(shell->execution);
+	if (is_builtin(shell->execution->word[0]))
+		return (ft_execute_builtin(shell, shell->execution, &shell->env));
 	else
 	{
 		pid = fork();
 		if (pid < 0)
 		{
-			perror("fork");
+			ft_putstr_fd("Fork Error\n", 2);
 			exit(EXIT_FAILURE);
 		}
 		else if (pid == 0)
-		{
-			ft_redirect_io(shell->execution);
 			ft_execute_command(shell->execution, shell->env, shell);
-		}
 		else
 		{
 			waitpid(pid, &status, 0);
-			exit_status = WEXITSTATUS(status);
-			return (exit_status);
+			shell->exit_status = WEXITSTATUS(status);
 		}
 	}
-	return (0);
+	return (shell->exit_status);
 }
 
 void	ft_setup_pipes(int *fd, int num_cmnds)
@@ -59,66 +49,71 @@ void	ft_setup_pipes(int *fd, int num_cmnds)
 	while (i < num_cmnds)
 	{
 		if (pipe(fd + 2 * i) < 0)
-			ft_fatal_error("pipe");
+		{
+			ft_putstr_fd("Pipe Error\n", 2);
+			exit(EXIT_FAILURE);
+		}
 		i++;
 	}
 }
 
-// Function to execute multiple commands in a pipeline
-int	ft_execute_pipe(t_shell *shell, t_exec *exec, t_env *env, int num_cmnd)
+int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 {
 	t_exec	*head;
 	int		*fd;
-	int		index;
 	pid_t	pid;
 	int		status;
 	int		i;
-	int		last_status;
 
 	head = exec;
-	index = 0;
-	fd = ft_calloc(2 * (num_cmnd - 1), sizeof(int));
+	i = 0;
+	fd = ft_calloc(2 * (shell->n_cmd - 1), sizeof(int));
 	if (!fd)
-		ft_fatal_error("malloc");
-	ft_setup_pipes(fd, num_cmnd - 1);
+	{
+		ft_putstr_fd("Malloc Error\n", 2);
+		exit(EXIT_FAILURE);
+	}
+	ft_setup_pipes(fd, shell->n_cmd - 1);
 	while (exec)
 	{
 		pid = fork();
 		if (pid < 0)
-			ft_fatal_error("fork");
+		{
+			free(fd);
+			ft_putstr_fd("Fork Error\n", 2);
+			exit(EXIT_FAILURE);
+		}
 		else if (pid == 0)
-			ft_handle_command(shell, exec, fd, num_cmnd, index, env);
-		index++;
+			ft_handle_cmnd(shell, exec, fd, i);
+		i++;
 		exec = exec->pipe;
 	}
 	exec = head;
 	i = 0;
-	while (i < 2 * (num_cmnd - 1))
+	while (i < 2 * (shell->n_cmd - 1))
 		close(fd[i++]);
 	i = 0;
-	while (i++ < num_cmnd)
+	while (i++ < shell->n_cmd)
 		wait(&status);
-	last_status = WEXITSTATUS(status);
 	free(fd);
-	return (last_status);
+	shell->exit_status = WEXITSTATUS(status);
+	return (shell->exit_status);
 }
 
-// Main interpret function
 int	ft_interpret(t_shell *shell)
 {
-	int	num_cmnd;
 	int	saved_stdin;
 	int	saved_stdout;
 
-	num_cmnd = ft_count_command(shell->execution);
+	shell->n_cmd = ft_count_command(shell->execution);
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	if (!shell->execution->word[0])
 		return (0);
-	if (num_cmnd == 1)
+	if (shell->n_cmd == 1)
 		shell->exit_status = ft_execute_single(shell);
 	else
-		shell->exit_status = ft_execute_pipe(shell, shell->execution, shell->env, num_cmnd);
+		shell->exit_status = ft_execute_pipe(shell, shell->execution);
 	ft_restore_io(saved_stdin, saved_stdout);
 	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/19 19:58:20 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/20 21:22:38 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,12 @@ typedef struct s_env
 typedef struct s_shell
 {
 	t_env	*env;
-	t_syn	*syntax;
 	t_expan	*expanding;
 	int		token_flag;
 	t_token	*ll_token;
 	t_exec	*execution;
 	int		exit_status;
+	int		n_cmd;
 }	t_shell;
 
 
@@ -126,6 +126,11 @@ int		ft_unset_builtin(char **input, t_env **env);
 int		ft_pwd_builtin(char **input, t_env *env);
 int		ft_cd_builtin(char **input, t_env **env);
 int		ft_exit_builtin(char **input, t_shell *shell);
+t_env	*find_min_unflagged(t_env *env_list);
+void	ft_validate_access(char *path, char *filename, t_shell *shell);
+int		add_new_env_node(t_env **env_list, char *input, char *key);
+int		ft_replace_env_value(t_env *env_list, char *input);
+int		validate_and_extract_key(char *input, char **key, char **equal_sign);
 
 /*		built_utils				*/
 
@@ -135,16 +140,16 @@ t_env	*ft_create_env_node(char *env_str);
 
 void	ft_print_sorted_env(t_env *env);
 char	*ft_find_env_value(t_env *env_list, char *key);
-int		ft_replace_env_value(t_env *env, const char *input);
+int		ft_replace_env_value(t_env *env_list, char *input);
 void	ft_reset_env_flags(t_env *env_list);
 
 bool	is_valid_identifier(char *input);
-bool	is_exist_identifier(t_env *env_list, const char *key);
+bool	is_exist_identifier(t_env *env_list, char *key);
 int		is_valid_directory(char *path);
 
 // free
 void	ft_free_env_node(t_env **env);
-void	ft_free_env_list(t_env *head);
+void	ft_free_env_list(t_env **current);
 void	ft_print_env(t_env *env);
 
 /*	EXECUTION-----------------------*/
@@ -158,12 +163,11 @@ void	ft_open_io(t_exec *exec);
 void	ft_redirect_io(t_exec *exec);
 void	ft_restore_io(int saved_stdin, int saved_stdout);
 
-/*		ft_handle_command				*/
-void	ft_handle_command(t_shell *shell, t_exec *exec, int *fd, int num_cmnd, int index, t_env *env);
+/*		ft_handle_cmnd				*/
+void	ft_handle_cmnd(t_shell *shell, t_exec *exec, int *fd, int i);
 void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell);
 
 /*		ft_path				*/
-void	ft_validate_access(char *path, char *filename);
 char	*ft_search_path(char *filename, t_env *env);
 
 /*		exec_utils				*/
@@ -174,11 +178,6 @@ char	**ft_env_to_array(t_env *env_list);
 
 /*	HEREDOC-----------------------*/
 int		ft_heredoc(t_shell *shell);
-
-
-
-
-
 
 /*		Martijn						*/
 

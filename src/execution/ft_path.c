@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   ft_path.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:28:58 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/16 09:26:46 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:14:58 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*ft_search_path(char *filename, t_env *env)
 	while (*value)
 	{
 		bzero(path, PATH_MAX);
-		end = strchr(value, ':');
+		end = ft_strchr(value, ':');
 		if (end)
-			strncpy(path, value, end - value);
+			strncpy(path, value, end - value); // strlcpy does not work!
 		else
 			ft_strlcpy(path, value, PATH_MAX);
 		ft_strlcat(path, "/", PATH_MAX);
@@ -34,7 +34,10 @@ char	*ft_search_path(char *filename, t_env *env)
 		{
 			dup = ft_strdup(path);
 			if (dup == NULL)
-				ft_fatal_error("strdup");
+			{
+				ft_putstr_fd("strdup error", 2);
+				exit(EXIT_FAILURE);
+			}
 			return (dup);
 		}
 		if (end == NULL)
@@ -44,10 +47,19 @@ char	*ft_search_path(char *filename, t_env *env)
 	return (NULL);
 }
 
-void	ft_validate_access(char *path, char *filename)
+void	ft_validate_access(char *path, char *filename, t_shell *shell)
 {
+	(void) filename;
 	if (path == NULL)
-		error_exit(filename, "command not found", 127);
+	{
+		ft_putstr_fd("minishell: command not found\n", 2);
+		shell->exit_status = 127;
+		exit(shell->exit_status);
+	}
 	if (access(path, F_OK) < 0)
-		error_exit(filename, "command not found", 127);
+	{
+		ft_putstr_fd("minishell: command not found\n", 2);
+		shell->exit_status = 127;
+		exit(shell->exit_status);
+	}
 }

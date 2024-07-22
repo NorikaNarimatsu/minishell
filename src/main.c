@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/19 20:07:48 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/26 12:36:23 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/20 21:24:22 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+Still to do:
+I don't really need expanding inside the struct.
+I only need the line and exit status at the end. So maybe I have to rewrite it a bit?
+*/
+
 #include "minishell.h"
+void	ft_free_minishell(t_shell *shell)
+{
+	if (shell->env)
+		ft_free_env_list(&shell->env);
+	if (shell->expanding)
+		ft_free_expansion(&shell->expanding);
+	if (shell->ll_token)
+		ft_free_t_token(&shell->ll_token);
+	if (shell->execution)
+		ft_free_s_exec(&shell->execution);
+}
 
 int	ft_minishell(char **env)
 {
@@ -22,7 +39,7 @@ int	ft_minishell(char **env)
 		return (EXIT_FAILURE);
 	shell.expanding = ft_create_expansion();
 	if (!shell.expanding)
-		return (ft_free_env_list(shell.env), EXIT_FAILURE);
+		return (ft_free_env_list(&shell.env), EXIT_FAILURE);
 	while (1)
 	{
 		ft_bzero(&shell.ll_token, sizeof(shell.ll_token));
@@ -50,6 +67,7 @@ int	ft_minishell(char **env)
 		ft_interpret(&shell);
 		// printf("[exit_status is ... %d]\n", shell.exit_status);
 		ft_free_string(&line);
+		// ft_free_minishell(&shell);
 		// probably use ft_free_expansion(shell.expanding);
 	}
 	exit(0);

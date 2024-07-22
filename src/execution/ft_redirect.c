@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_redirect.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/17 11:56:22 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/19 20:58:47 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_redirect.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 11:56:22 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/07/20 21:09:31 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Function to open input and output files
 void	ft_open_io(t_exec *exec)
 {
 	int	flags;
 
 	exec->fd_infile = -1;
 	exec->fd_outfile = -1;
-	printf("OPENING IO...with [in:%s] and [out:%s]\n", exec->infile, exec->outfile);
 	if (exec->infile)
 	{
 		exec->fd_infile = open(exec->infile, O_RDONLY);
 		if (exec->fd_infile < 0)
 		{
-			perror(exec->infile);
+			ft_putstr_fd("Error: opening infile", 2);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -38,7 +36,7 @@ void	ft_open_io(t_exec *exec)
 		exec->fd_outfile = open(exec->outfile, flags, 0644);
 		if (exec->fd_outfile < 0)
 		{
-			perror(exec->outfile);
+			ft_putstr_fd("Error: opening outfile", 2);
 			if (exec->fd_infile >= 0)
 				close(exec->fd_infile);
 			exit(EXIT_FAILURE);
@@ -46,16 +44,13 @@ void	ft_open_io(t_exec *exec)
 	}
 }
 
-// Function to redirect input and output
-// CHECK: not closing fd_infile if heredoc is last?
 void	ft_redirect_io(t_exec *exec)
 {
-	printf("Redirecting IO...with [in:%s] and [out:%s]\n", exec->infile, exec->outfile);
 	if (exec->fd_infile != -1 && exec->is_end_infile)
 	{
 		if (dup2(exec->fd_infile, STDIN_FILENO) < 0)
 		{
-			perror("dup2 infile");
+			ft_putstr_fd("dup2 infile error", 2);
 			exit(EXIT_FAILURE);
 		}
 		close(exec->fd_infile);
@@ -64,35 +59,32 @@ void	ft_redirect_io(t_exec *exec)
 	{
 		if (dup2(exec->fd_heredoc, STDIN_FILENO) < 0)
 		{
-			perror("dup2 heredoc");
+			ft_putstr_fd("dup2 heredoc error", 2);
 			exit(EXIT_FAILURE);
 		}
 		close(exec->fd_heredoc);
 	}
 	if (exec->fd_outfile != -1)
 	{
-		printf("hello\n");
 		if (dup2(exec->fd_outfile, STDOUT_FILENO) < 0)
 		{
-			perror("dup2 outfile");
+			ft_putstr_fd("dup2 outfile error", 2);
 			exit(EXIT_FAILURE);
 		}
-		printf("current command is %s\n", exec->word[0]);
 		close(exec->fd_outfile);
 	}
 }
 
-// Function to restore original stdin and stdout
 void	ft_restore_io(int saved_stdin, int saved_stdout)
 {
 	if (dup2(saved_stdin, STDIN_FILENO) < 0)
 	{
-		perror("dup2 restore stdin");
+		ft_putstr_fd("dup2 restore stdin error", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(saved_stdout, STDOUT_FILENO) < 0)
 	{
-		perror("dup2 restore stdout");
+		ft_putstr_fd("dup2 restore stdout error", 2);
 		exit(EXIT_FAILURE);
 	}
 	close(saved_stdin);

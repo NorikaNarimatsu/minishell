@@ -26,5 +26,5 @@ Bash create test 1 file, but ours is test\
 
 
 Wrong in execution:
-echo >> newf0 my sweet norika > newf1 | > newf2
+echo >> newf0 norika > newf1 | > newf2
 

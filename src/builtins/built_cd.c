@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:36:11 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/17 19:15:20 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:24:59 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,73 +22,53 @@ void	ft_update_env_value(t_env *env_list, char *key, char *value)
 			env_list->value = ft_strdup(value);
 			if (!env_list->value)
 			{
-				// Handle strdup error
 				ft_putstr_fd("Memory allocation error\n", 2);
 				exit(EXIT_FAILURE);
 			}
 			free(env_list->env);
-			env_list->env = calloc(sizeof(char), ft_strlen(key) + 1 + ft_strlen(value) + 1);
+			env_list->env = calloc(1, ft_strlen(key) + ft_strlen(value) + 2);
 			if (!env_list->env)
 			{
-				// Handle malloc error
 				ft_putstr_fd("Memory allocation error\n", 2);
 				exit(EXIT_FAILURE);
 			}
 			ft_strcpy(env_list->env, key);
 			ft_strcat(env_list->env, "=");
 			ft_strcat(env_list->env, value);
-			return;
+			return ;
 		}
 		env_list = env_list->next;
 	}
 }
 
-// This is the function to update pwd and oldpwd,
-// when cd (builtin) is executed
 void	ft_update_pwd_and_owd(t_env **env_list)
 {
 	char	*old_pwd;
 	char	*new_pwd;
-	t_env	*current;
 
-	old_pwd = NULL;
-	current = *env_list;
-	while (current)
-	{
-		if (ft_strcmp(current->key, "PWD") == 0)
-		{
-			old_pwd = ft_strdup(current->value);
-			if (!old_pwd)
-			{
-				// Handle strdup error
-				ft_putstr_fd("Memory allocation error\n", 2);
-				exit(EXIT_FAILURE);
-			}
-			break;
-		}
-		current = current->next;
-	}
+	old_pwd = ft_find_env_value(*env_list, "PWD");
 	if (old_pwd)
 	{
+		old_pwd = ft_strdup(old_pwd);
+		if (!old_pwd)
+		{
+			ft_putstr_fd("Memory allocation error\n", 2);
+			exit(EXIT_FAILURE);
+		}
 		ft_update_env_value(*env_list, "OLDPWD", old_pwd);
 		free(old_pwd);
 	}
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 	{
-		// Handle getcwd error
 		ft_putstr_fd("Error getting current working directory\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	else
-	{
 		ft_update_env_value(*env_list, "PWD", new_pwd);
-		free(new_pwd);
-	}
+	free(new_pwd);
 }
 
-// This is the function to find the value (char *) of
-// given key in env linked list
 char	*ft_find_env_value(t_env *env_list, char *key)
 {
 	while (env_list)
@@ -115,7 +95,8 @@ int	cd_check_change(char *path, t_env **env)
 		printf("%s\n", path);
 	}
 	if (is_valid_directory(path) == 0)
-		return (ft_putstr_fd("cd: no such file or directory\n", 2), EXIT_FAILURE);
+		return (
+			ft_putstr_fd("cd: no such file or directory\n", 2), EXIT_FAILURE);
 	if (chdir(path) != 0)
 	{
 		perror("cd");
@@ -125,8 +106,6 @@ int	cd_check_change(char *path, t_env **env)
 	return (EXIT_SUCCESS);
 }
 
-// This is the function to execute cd
-// return 0 with success, 1 fail.
 int	ft_cd_builtin(char **input, t_env **env)
 {
 	char	*path;

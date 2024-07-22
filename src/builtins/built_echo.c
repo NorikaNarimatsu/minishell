@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 15:46:42 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/17 19:17:31 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/20 21:27:27 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ void	echo_print_args(char **input, int idx, bool n_flag)
 	if (!input[i])
 	{
 		if (!n_flag)
-			ft_putchar_fd('\n', 1);
+			ft_putstr_fd("\n", 1);
 		return ;
 	}
 	while (input[i])
 	{
 		ft_putstr_fd(input[i], 1);
 		if (input[i + 1])
-			ft_putchar_fd(' ', 1);
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (!n_flag)
-		ft_putchar_fd('\n', 1);
+		ft_putstr_fd("\n", 1);
 }
 
 int	ft_echo_builtin(char **input)
@@ -58,7 +58,7 @@ int	ft_echo_builtin(char **input)
 	idx = 1;
 	if (!input[1])
 	{
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 		return (EXIT_SUCCESS);
 	}
 	while (input[idx] && is_n_flag_string(input[idx]))

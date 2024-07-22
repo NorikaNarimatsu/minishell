@@ -6,11 +6,11 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 11:38:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/17 19:20:12 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/20 18:02:24 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell.h" // TODO? UPDATE SHLVL when you exit
 
 int	ft_exit_builtin(char **input, t_shell *shell)
 {
@@ -28,41 +28,15 @@ int	ft_exit_builtin(char **input, t_shell *shell)
 		{
 			if (!isdigit(p[i]))
 			{
-				fprintf(stderr, "exit: numeric argument required\n");
-				shell->exit_status = 255;
-				return (255); // Set exit status and return
+				ft_putstr_fd("exit: numeric argument required\n", 2);
+				return (shell->exit_status = 255, 255);
 			}
 			i++;
 		}
-		exit_status = atoi(input[1]);
+		exit_status = ft_atoi(input[1]);
 	}
 	else
 		exit_status = shell->exit_status;
-		// Use the last exit status if no argument
 	shell->exit_status = exit_status;
-	exit(exit_status); // Exit with the status
-	return (exit_status); // Return the exit status
+	return (exit(exit_status), exit_status);
 }
-
-// TODO? UPDATE SHLVL when you exit
-
-// nnarimat@f1r6s17:~$ exit hello 89
-// exit
-// bash: exit: hello: numeric argument required
-// f1r6s17% echo $?
-// 2
-// f1r6s17% bash
-// nnarimat@f1r6s17:~$ exit 89 hello
-// exit
-// bash: exit: too many arguments
-// nnarimat@f1r6s17:~$ echo $?
-// 1
-// nnarimat@f1r6s17:~$ exit 89 93
-// exit
-// bash: exit: too many arguments
-// nnarimat@f1r6s17:~$ echo $?
-// 1
-// nnarimat@f1r6s17:~$ exit 89
-// exit
-// f1r6s17% echo $?
-// 89
