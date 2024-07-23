@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   interpret.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 16:42:57 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/22 17:50:30 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   interpret.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/10 16:42:57 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/23 18:11:54 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ static int	ft_execute_single(t_shell *shell)
 		else
 		{
 			waitpid(pid, &status, 0);
+			// if (WIFEXITED(status))		// SIGNAL HANDLING | MAYBE SOMETHING HERE
 			shell->exit_status = WEXITSTATUS(status);
+			// else if (WIFSIGNALED(status))
+			// 	shell->exit_status += 128;
 		}
 	}
 	return (shell->exit_status);

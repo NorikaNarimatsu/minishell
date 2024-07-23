@@ -8,6 +8,13 @@ t_token	*ll_token;
 This doesnt need to be in the head struct.
 
 
+the function: cat
+should work as in bash!!! They test it in the eval
+
+running minishell in minishell.
+Also take care of signals here!
+
+
 
 # case 1: NEED TO BE IMPLEMENTED
 exit status after syntax error

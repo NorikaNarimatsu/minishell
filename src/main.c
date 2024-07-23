@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/23 11:47:30 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/23 18:23:39 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,11 @@ int	ft_minishell(char **env)
 		ft_free_string(&shell->line);
 		shell->line = readline("minishell$ ");
 		if (!shell->line)
+		{
+			//the actual function of exit (free anything that was allocated)
+			printf("exit\n");
 			break ;
+		}
 		add_history(shell->line);
 		// printf("----- EXPANSION -----\n");
 		if (ft_expansion(shell) == MALERR)
@@ -89,5 +93,15 @@ int	main(int argc, char **argv, char **env)
 {
 	(void) argc;
 	(void) argv;
+	if (argc != 1)
+	{
+		printf("Wrong input!\n");	// TODO: Optimazation!
+		return (1);
+	}
+	/*
+	Here we should handle the signals
+	//running program:
+	//child program:
+	*/
 	return (ft_minishell(env));
 }
