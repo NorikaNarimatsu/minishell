@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_tokenization.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 10:35:35 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/22 17:24:53 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_tokenization.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/07/23 10:33:29 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ static int	ft_check_str(char *str, t_shell *shell)
 	return (0);
 }
 
-int	ft_tokenization(char *str, t_shell *shell)
+int	ft_tokenization(t_shell *shell)
 {
 	shell->ll_token = ft_create_token();
 	if (!shell->ll_token)
 		return (MALERR);	// TO_DO: Error & free
 	shell->token_flag = 1;
-	if (ft_check_str(str, shell) < 0)
+	if (ft_check_str(shell->line, shell) < 0)
 		return (MALERR);	// TO_DO: Error & free
 	shell->ll_token->type = T_EOF;
 	while (shell->ll_token->prev != NULL)

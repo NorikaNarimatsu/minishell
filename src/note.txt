@@ -1,3 +1,12 @@
+Syntax error in TOKENIZATION will continue to execution.
+Because of that the error message (like Permission denied) will be printed twice.
+
+TOKENIZATION norm and what to do when error?
+
+
+
+
+
 # case 1: NEED TO BE IMPLEMENTED
 exit status after syntax error
 

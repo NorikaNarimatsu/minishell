@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/19 19:57:27 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/23 10:19:49 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,30 +106,33 @@ static int	ft_get_key(const char *line, t_expan *exp)
 	return (0);
 }
 
-int	ft_expansion(char *line, t_env *env, t_expan *exp)
+int	ft_expansion(t_shell *shell)
 {
+	t_expan	*exp;
 	int		pos;
 
-	pos = ft_exp_needed(line, exp);
+	exp = ft_create_expansion(shell);
+	if (!exp)
+		return (MALERR);
+	pos = ft_exp_needed(shell, exp);
 	if (pos != 0)
-		return (0);
-	while (line[pos])
+		return (pos);
+	while (shell->line[pos])
 	{
-		if (ft_get_temp(&line[pos], exp) < 0)
+		if (ft_get_temp(&shell->line[pos], exp) < 0)
 			return (MALERR);
 		pos += exp->len;
-		if (ft_get_key(&line[pos], exp) < 0)
+		if (ft_get_key(&shell->line[pos], exp) < 0)
 			return (MALERR);
 		pos += exp->len;
-		if (exp->key != NULL && ft_get_env(env, exp) < 0)
+		if (exp->key != NULL && ft_get_env(shell->env, exp) < 0)
 			return (MALERR);
-		exp->temp = ft_expstring(&exp->temp, &exp->key);
-		if (!exp->temp)
-			return (MALERR);
-		exp->exp_line = ft_expstring(&exp->exp_line, &exp->temp);
+		exp->exp_line = ft_expstring(&exp->temp, &exp->key, &exp->exp_line);
 		if (!exp->exp_line)
 			return (MALERR);
 	}
-	ft_free_small_expansion(exp);
-	return (0);
+	shell->line = ft_strdup(exp->exp_line);
+	if (!shell->line)
+		return (MALERR);
+	return (ft_free_expansion(&exp), 0);
 }

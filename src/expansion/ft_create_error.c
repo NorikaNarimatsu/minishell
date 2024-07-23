@@ -6,19 +6,20 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/19 19:56:49 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/23 09:24:52 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_expan	*ft_create_expansion(void)
+t_expan	*ft_create_expansion(t_shell *shell)
 {
 	t_expan	*expansion;
 
 	expansion = ft_calloc(1, sizeof(t_expan));
 	if (!expansion)
 		return (NULL);
+	expansion->exit_status = shell->exit_status;
 	return (expansion);
 }
 

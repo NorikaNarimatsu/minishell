@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/22 17:04:22 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/23 10:32:43 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ typedef struct s_env
 typedef struct s_shell
 {
 	t_env	*env;
-	t_expan	*expanding;
+	char	*line;
 	int		token_flag;
 	t_token	*ll_token;
 	t_exec	*execution;
@@ -183,18 +183,18 @@ int		ft_heredoc(t_shell *shell);
 
 /*	EXPANSION-----------------------*/
 /*		ft_create_error				*/
-t_expan	*ft_create_expansion(void);
+t_expan	*ft_create_expansion(t_shell *shell);
 void	ft_free_small_expansion(t_expan *exp);
 void	ft_free_expansion(t_expan **exp);
 
 /*		ft_exp_utils				*/
 int		ft_get_position(const char *line, t_expan *exp);
-char	*ft_expstring(char **s1, char **s2);
+char	*ft_expstring(char **s1, char **s2, char **s3);
 int		ft_strlen_dollar_sign(char *str);
-int		ft_exp_needed(const char *line, t_expan *exp);
+int		ft_exp_needed(t_shell *shell, t_expan *exp);
 
 /*		ft_expansion				*/
-int		ft_expansion(char *line, t_env *env, t_expan *expanding);
+int		ft_expansion(t_shell *shell);
 
 /*	SYNTAX ERROR--------------------*/
 /*		ft_redirections				*/
@@ -251,5 +251,5 @@ int		ft_single_quote(char *str, t_token *token, int flag);
 int		ft_double_quote(char *str, t_token *token, int flag);
 
 /*		ft_tokenization				*/
-int		ft_tokenization(char *str, t_shell *shell);
+int		ft_tokenization(t_shell *shell);
 #endif
