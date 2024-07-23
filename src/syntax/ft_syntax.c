@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 10:51:42 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/19 19:55:47 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/23 11:46:56 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_free_syntax(t_syn **syntax)
 	*syntax = NULL;
 }
 
-int	ft_syntax(char *line)
+int	ft_syntax(char *line, t_shell *shell)
 {
 	t_syn	*syntax;
 	int		i;
@@ -81,15 +81,15 @@ int	ft_syntax(char *line)
 	i = 0;
 	syntax = ft_calloc(1, sizeof(t_syn));
 	if (!syntax)
-		return (MALERR);
+		return (ft_free_minishell(&shell), MALERR);
 	if (ft_first_check(line) == SYNERR)
-		return (-1);
+		return (ft_free_syntax(&syntax), SYNERR);
 	while (line[i])
 	{
 		if (ft_isinvalid(line[i]))
 		{
 			if (ft_find_character(line[i], syntax) == SYNERR)
-				return (SYNERR);
+				return (ft_free_syntax(&syntax), SYNERR);
 		}
 		else if (!ft_isspace(line[i]) && syntax->dquote == 0 \
 				&& syntax->squote == 0)
@@ -97,7 +97,6 @@ int	ft_syntax(char *line)
 		i++;
 	}
 	if (ft_final_check(syntax) == SYNERR)
-		return (SYNERR);
-	ft_free_syntax(&syntax);
-	return (0);
+		return (ft_free_syntax(&syntax), SYNERR);
+	return (ft_free_syntax(&syntax), 0);
 }

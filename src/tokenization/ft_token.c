@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_token.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 21:54:23 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/20 13:49:23 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_token.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/05 21:54:23 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/07/23 11:45:09 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ int	ft_word(char *str, t_token *token, int flag)
 	int		len;
 
 	len = ft_fill_word(str, token, ft_lenword);
-	if (len < 0)
-		return (len);
+	if (len == MALERR)
+		return (MALERR);
 	if (flag == 0)
 	{
 		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
-		free(token->word);
-		token->word = NULL;
+		ft_free_string(&token->word);
 		if (!token->prev->word)
 			return (MALERR);
 	}
@@ -39,8 +38,8 @@ int	ft_redirection(char *str, t_token *token, int *flag)
 
 	error = 0;
 	len = ft_fill_word(str, token, ft_lenredirection);
-	if (len < 0)
-		return (len);
+	if (len == MALERR)
+		return (MALERR);
 	if (str[0] == '<' && len == 1)
 		error = ft_create_new_and_fill_type(token, T_INPUT);
 	else if (str[0] == '<' && len == 2)
@@ -60,8 +59,8 @@ int	ft_pipe(char *str, t_token *token, int *flag)
 	int	len;
 
 	len = ft_fill_word(str, token, ft_lenpipe);
-	if (len < 0)
-		return (len);
+	if (len == MALERR)
+		return (MALERR);
 	if (ft_create_new_and_fill_type(token, T_PIPE) == MALERR)
 		return (MALERR);
 	*flag = 1;
@@ -74,23 +73,22 @@ int	ft_single_quote(char *str, t_token *token, int flag)
 	int		len;
 
 	len = ft_fill_word(str, token, ft_lensquote);
-	if (len < 0)
-		return (len);
+	if (len == MALERR)
+		return (MALERR);
 	strtrim = ft_strtrim(token->word, "'");
 	if (!strtrim)
-		return (-1);
-	free(token->word);
+		return (MALERR);
+	ft_free_string(&token->word);
 	token->word = strtrim;
 	if (flag == 0)
 	{
 		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
-		free(token->word);
-		token->word = NULL;
+		ft_free_string(&token->word);
 		if (!token->prev->word)
 			return (MALERR);
 	}
-	else if (ft_create_new_and_fill_type(token, T_WORD) == -1)
-		return (-1);
+	else if (ft_create_new_and_fill_type(token, T_WORD) == MALERR)
+		return (MALERR);
 	return (len);
 }
 
@@ -100,18 +98,17 @@ int	ft_double_quote(char *str, t_token *token, int flag)
 	int		len;
 
 	len = ft_fill_word(str, token, ft_lendquote);
-	if (len < 0)
-		return (len);
+	if (len == MALERR)
+		return (MALERR);
 	strtrim = ft_strtrim(token->word, "\"");
 	if (!strtrim)
 		return (MALERR);
-	free(token->word);
+	ft_free_string(&token->word);
 	token->word = strtrim;
 	if (flag == 0)
 	{
 		token->prev->word = ft_gnl_strjoin(token->prev->word, token->word);
-		free(token->word);
-		token->word = NULL;
+		ft_free_string(&token->word);
 		if (!token->prev->word)
 			return (MALERR);
 	}

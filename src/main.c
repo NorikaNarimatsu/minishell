@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/23 10:34:50 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/23 11:47:30 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ int	ft_minishell(char **env)
 		add_history(shell->line);
 		// printf("----- EXPANSION -----\n");
 		if (ft_expansion(shell) == MALERR)
-			return (MALERR); // free_everything function;
+			return (ft_free_minishell(&shell), MALERR); // free_everything function;
 		// printf("----- SYNTAX -----\n");
-		if (ft_syntax(shell->line) == 0)
-			;
+		if (ft_syntax(shell->line, shell) == SYNERR)		// free_everything function;
+			continue ;
 		// printf("----- TOKENIZATION -----\n");
 		ft_tokenization(shell);		// what is malloc error?
 		// printf("----- HEREDOC -----\n");
@@ -82,7 +82,6 @@ int	ft_minishell(char **env)
 		// printf("----- EXECUTION -----\n");
 		shell->exit_status = ft_interpret(shell);
 	}
-	ft_free_minishell(&shell);
 	return (ft_free_minishell(&shell), 0);
 }
 

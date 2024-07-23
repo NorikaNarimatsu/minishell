@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/10 17:16:21 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/19 20:51:04 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/23 12:07:24 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_transfer_pipe(t_token *token, t_exec *exec)
 	if (!new_exec)
 		return (MALERR);
 	exec->pipe = new_exec;
-	ft_transfer_for_exec(token->next, exec->pipe);
+	ft_transfer_for_exec(token->next, exec->pipe);	// TODO MALLOC ERROR HERE!!
 	return (0);
 }
 
@@ -128,23 +128,11 @@ int	ft_transfer_output(t_token **token, t_exec *exec)
 	return (0);
 }
 
-int	ft_transfer_eof(t_token *token, t_exec *exec)
-{
-	(void)token;			// DELETE FUNCTION
-	(void)exec;
-	return (0);
-}
-
-int	ft_transfer_env(t_token *token, t_exec *exec)
-{
-	(void)token;			// DELETE FUNCTION
-	(void)exec;
-	return (0);
-}
-
 static int	ft_transfer(t_token **token, t_exec *exec)
 {
-	if ((*token)->type == T_PIPE)
+	if ((*token)->type == T_WORD)
+		return (ft_transfer_word(*token, exec));
+	else if ((*token)->type == T_PIPE)
 		return (ft_transfer_pipe(*token, exec));
 	else if ((*token)->type == T_APPEND)
 		return (ft_transfer_append(token, exec));
@@ -154,14 +142,8 @@ static int	ft_transfer(t_token **token, t_exec *exec)
 		return (ft_transfer_input(token, exec));
 	else if ((*token)->type == T_OUTPUT)
 		return (ft_transfer_output(token, exec));
-	else if ((*token)->type == T_WORD)
-		return (ft_transfer_word(*token, exec));
-	else if ((*token)->type == T_EOF)
-		return (ft_transfer_eof(*token, exec));
-	else if ((*token)->type == T_ENV)
-		return (ft_transfer_env(*token, exec));
 	else
-		return (CNFERR);
+		return (0);
 }
 
 int	ft_count_type(t_token *token, enum e_token type)

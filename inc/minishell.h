@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/23 10:32:43 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/23 12:06:02 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,13 @@
 
 enum e_token
 {
+	T_EOF,
 	T_WORD,
 	T_INPUT,
 	T_OUTPUT,
 	T_HEREDOC,
 	T_APPEND,
-	T_PIPE,
-	T_ENV,
-	T_EOF
+	T_PIPE
 };
 
 enum e_errno
@@ -206,7 +205,7 @@ int		ft_syn_pipe(t_syn *syntax);
 
 /*		ft_syntax					*/
 void	ft_free_syntax(t_syn **syntax);
-int		ft_syntax(char *line);
+int		ft_syntax(char *line, t_shell *shell);
 
 /*	TOKENIZATION--------------------*/
 /*		ft_execution				*/
@@ -252,4 +251,9 @@ int		ft_double_quote(char *str, t_token *token, int flag);
 
 /*		ft_tokenization				*/
 int		ft_tokenization(t_shell *shell);
+
+
+
+void	ft_free_minishell(t_shell **shell);
+
 #endif
