@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 10:35:35 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/23 12:11:33 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 09:10:01 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_token(char *str, t_token *token, int *flag)
 	return (len);
 }
 
-static int	ft_check_str(char *str, t_shell *shell)
+static int	ft_check_str(char *str, t_token *ll_token, int *token_flag)
 {
 	int		len;
 	int		i;
@@ -38,21 +38,21 @@ static int	ft_check_str(char *str, t_shell *shell)
 	i = 0;
 	while (str[i])
 	{
-		len = ft_token(&str[i], shell->ll_token, &shell->token_flag);
+		len = ft_token(&str[i], ll_token, token_flag);
 		if (len == MALERR)
 			return (MALERR);
 		else if (len > 0)
 		{
 			i += len;
-			if (shell->ll_token->type == T_WORD)
-				shell->token_flag = 0;
-			if (shell->ll_token->next)
-				shell->ll_token = shell->ll_token->next;
+			if (ll_token->type == T_WORD)
+				*token_flag = 0;
+			if (ll_token->next)
+				ll_token = ll_token->next;
 		}
 		else
 		{
 			i++;
-			shell->token_flag = 1;
+			*token_flag = 1;
 		}
 	}
 	return (0);
@@ -60,23 +60,21 @@ static int	ft_check_str(char *str, t_shell *shell)
 
 int	ft_tokenization(t_shell *shell)
 {
+	t_token	*ll_token;
+
 	if (!shell)
 		return (MALERR);
-	shell->ll_token = ft_create_token();
-	if (!shell->ll_token)
-		return (MALERR);	// TO_DO: Error & free
-	shell->token_flag = 1;
-	if (ft_check_str(shell->line, shell) == MALERR)
-		return (MALERR);	// TO_DO: Error & free
-	while (shell->ll_token->prev != NULL)
-		shell->ll_token = shell->ll_token->prev;
-	shell->execution = ft_create_exec();
-	if (!shell->execution)
-		return (MALERR);	// TO_DO: Error & free
-	if (ft_transfer_for_exec(shell->ll_token, shell->execution) != 0)	// check !=0???
-		return (MALERR);	// TO_DO: Error & free
+	ll_token = ft_create_token();
+	if (!ll_token)
+		return (MALERR);	// TO_DO: Error & free (shell only)
+	if (ft_check_str(shell->line, ll_token, &shell->token_flag) == MALERR)
+		return (ft_free_t_token(&ll_token), MALERR);	// TO_DO: Error & free
+	while (ll_token->prev != NULL)
+		ll_token = ll_token->prev;
+	if (ft_transfer_for_exec(ll_token, shell->execution) != 0)	// check !=0???
+		return (ft_free_t_token(&ll_token), MALERR);	// TO_DO: Error & free
 	// ft_print_exec_list(shell->execution); // TO_DO: Remove line
-	ft_free_t_token(&(shell->ll_token));
+	ft_free_t_token(&ll_token);
 	// ft_free_s_exec(&(shell->execution));
 	return (0);
 }

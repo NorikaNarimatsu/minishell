@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/23 12:06:02 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 09:10:48 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ typedef struct s_shell
 	t_env	*env;
 	char	*line;
 	int		token_flag;
-	t_token	*ll_token;
 	t_exec	*execution;
 	int		exit_status;
 	int		n_cmd;

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/23 18:23:39 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 09:08:00 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	ft_free_minishell(t_shell **shell)
 		ft_free_string(&(*shell)->line);
 	if ((*shell)->env)
 		ft_free_env_list(&(*shell)->env);
-	if ((*shell)->ll_token)
-		ft_free_t_token(&(*shell)->ll_token);
+	// if ((*shell)->ll_token)
+	// 	ft_free_t_token(&(*shell)->ll_token);
 	if ((*shell)->execution)
 		ft_free_s_exec(&(*shell)->execution);
 	free(*shell);
@@ -48,7 +48,31 @@ t_shell	*ft_init_shell(char **env)
 		shell = NULL;
 		return (NULL);
 	}
+	shell->execution = ft_create_exec();
+	if (!shell->execution)
+	{
+		ft_free_env_list(&shell->env);
+		free(shell);
+		shell = NULL;
+		return (NULL);
+	}
 	return (shell);
+}
+
+void	ft_reset(t_shell *shell)
+{
+	ft_free_string(&shell->line);
+	if (shell->execution != NULL)
+	{
+		if (shell->execution->pipe != NULL)
+			ft_free_s_exec(&shell->execution->pipe);
+		ft_free_array(&shell->execution->word);
+		ft_free_string(&shell->execution->infile);
+		ft_free_string(&shell->execution->outfile);
+		ft_free_array(&shell->execution->heredoc);
+		ft_bzero(shell->execution, sizeof(shell->execution));
+	}
+	shell->token_flag = 1;
 }
 
 int	ft_minishell(char **env)
@@ -61,9 +85,7 @@ int	ft_minishell(char **env)
 	while (1)
 	{
 		// printf("EXIT %d\n", shell.exit_status);
-		ft_bzero(&shell->ll_token, sizeof(shell->ll_token));
-		ft_bzero(&shell->execution, sizeof(shell->execution));
-		ft_free_string(&shell->line);
+		ft_reset(shell);
 		shell->line = readline("minishell$ ");
 		if (!shell->line)
 		{
