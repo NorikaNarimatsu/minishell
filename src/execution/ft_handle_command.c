@@ -22,7 +22,7 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell)
 	envp = ft_env_to_array(env);
 	if (is_builtin(path))
 	{
-		shell->exit_status = ft_execute_builtin(shell, exec, &env);
+		shell->exit_status = ft_execute_builtin(exec, &env);
 		free(envp);
 		exit(shell->exit_status);
 	}

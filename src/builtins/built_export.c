@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_export.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 16:31:41 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/22 16:48:44 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_export.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/04 16:31:41 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/24 21:06:19 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,23 @@ int	validate_and_extract_key(char *input, char **key, char **equal_sign)
 	i = 0;
 	*equal_sign = ft_strchr(input, '=');
 	if (*equal_sign)
-		*key = strndup(input, *equal_sign - input);
+		*key = strndup(input, *equal_sign - input);			// illegal function!
 	else
 		*key = ft_strdup(input);
 	if (!*key)
-	{
-		ft_putstr_fd("Memory allocation error\n", STDERR_FILENO);
-		exit(EXIT_FAILURE);
-	}
-	if (!is_valid_identifier(*key))
+		return (MALERR);
+	// if (!*key)
+	// {
+	// 	ft_putstr_fd("Memory allocation error\n", STDERR_FILENO);
+	// 	exit(EXIT_FAILURE);
+	// }
+	if (is_valid_identifier(*key) == false)
 	{
 		ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
-		free(*key);
-		return (EXIT_FAILURE);
+		ft_free_string(key);
+		return (1);
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 int	handle_export(t_env **env_list, char *input)
@@ -67,22 +69,21 @@ int	handle_export(t_env **env_list, char *input)
 	int		status;
 
 	status = validate_and_extract_key(input, &key, &equal_sign);
-	if (status == EXIT_FAILURE)
+	if (status == MALERR || status == 1)
 		return (status);
 	if (equal_sign)
 	{
-		if (is_exist_identifier(*env_list, key))
+		if (is_exist_identifier(*env_list, key) == true)
 			status = ft_replace_env_value(*env_list, input);
 		else
-			status = add_new_env_node(env_list, input, key);
+			status = add_new_env_node(env_list, input);
 	}
 	else
 	{
-		if (!is_exist_identifier(*env_list, key))
-			status = add_new_env_node(env_list, input, key);
-		else
-			free(key);
+		if (is_exist_identifier(*env_list, key) == false)
+			status = add_new_env_node(env_list, input);
 	}
+	ft_free_string(&key);
 	return (status);
 }
 
@@ -91,12 +92,12 @@ int	ft_export_builtin(char **input, t_env **env)
 	int		i;
 	int		status;
 
-	status = EXIT_SUCCESS;
+	status = 0;
 	i = 1;
 	if (!input[i])
 	{
 		ft_print_sorted_env(*env);
-		return (EXIT_SUCCESS);
+		return (0);
 	}
 	while (input[i])
 	{

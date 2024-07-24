@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 09:37:49 by mdraper           #+#    #+#             */
-/*   Updated: 2024/07/22 14:33:10 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   heredoc.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/07/24 21:15:17 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,16 @@ void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
 		line = readline("> ");
 		if (ft_strcmp(line, heredoc[delimitor_index]) == 0)
 		{
-			free(line);
-			break ;
+			ft_free_string(&line);
+			line = NULL;
+			return ;
 		}
 		else if (delimitor_index == i)
 		{
-			write(fd_write, line, strlen(line));
+			write(fd_write, line, ft_strlen(line));
 			write(fd_write, "\n", 1);
 		}
-		free(line);
+		ft_free_string(&line);
 	}
 }
 
@@ -42,7 +43,7 @@ int	heredoc_pipe(t_exec *exec)
 	int	delimitor_index;
 
 	if (pipe(fd) == -1)
-		return (ft_putstr_fd("pipe error\n", 2), -1);
+		return (perror("Error creating pipe"), PIPERR);
 	exec->fd_heredoc = fd[0];
 	delimitor_index = 0;
 	while (exec->heredoc[delimitor_index])
@@ -63,8 +64,8 @@ int	ft_heredoc(t_shell *shell)
 	{
 		if (exec->heredoc && exec->heredoc[0])
 		{
-			if (heredoc_pipe(exec) == -1)
-				return (-1);
+			if (heredoc_pipe(exec) == PIPERR)
+				return (PIPERR);
 		}
 		exec = exec->pipe;
 	}

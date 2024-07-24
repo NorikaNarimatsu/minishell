@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_echo.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 15:46:42 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 21:27:27 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_echo.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/04 15:46:42 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/24 19:29:55 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	ft_echo_builtin(char **input)
 	idx = 1;
 	if (!input[1])
 	{
-		ft_putstr_fd("\n", 1);
-		return (EXIT_SUCCESS);
+		write(1, "\n", 1);
+		return (0);
 	}
 	while (input[idx] && is_n_flag_string(input[idx]))
 	{
@@ -67,5 +67,5 @@ int	ft_echo_builtin(char **input)
 		idx++;
 	}
 	echo_print_args(input, idx, n_flag);
-	return (EXIT_SUCCESS);
+	return (0);
 }

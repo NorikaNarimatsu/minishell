@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_pwd.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 15:49:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 18:05:52 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_pwd.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/05 15:49:52 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/24 20:18:55 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd_builtin(char **input, t_env *env)
+int	ft_pwd_builtin(t_env *env)
 {
 	t_env	*current;
 
-	(void) input;
 	current = env;
 	while (current)
 	{
 		if (ft_strcmp(current->key, "PWD") == 0)
 		{
 			ft_putendl_fd(current->value, 1);
-			return (EXIT_SUCCESS);
+			return (0);
 		}
 		current = current->next;
 	}
-	return (EXIT_FAILURE);
+	return (1);
 }

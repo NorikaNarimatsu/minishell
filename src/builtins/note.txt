@@ -1,6 +1,0 @@
-cc -Wall -Wextra -Werror -o builtins built_cd.c built_echo.c built_env.c built_pwd.c built_unset.c built_export.c built_exit.c  ft_init_env.c libft.c main.c utils.c
-
-cd_check_change
-// 	if (path[0] != '/' && strncmp(path, "./", 2) != 0
-// 		&& strncmp(path, "../", 3) != 0 && strcmp(path, "-") != 0)
-// 		return (ft_putstr_fd("cd: only absolute/relative path or '-'\n", 2), 1);

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 16:01:11 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 21:08:31 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ enum e_token
 
 enum e_errno
 {
-	MALERR = -1,		// malloc error
-	SYNERR = -2,		// syntax error
-	CNFERR = -3,		// command not found
+	MALERR = -1,
+	SYNERR = -2,
+	PIPERR = -3,
+	DUPERR = -4,
+	CHDERR = -5,
+	CWDERR = -6
 };
 
-typedef struct s_syn
+typedef struct 
 {
 	int	squote;
 	int	dquote;
@@ -113,8 +116,6 @@ typedef struct s_shell
 	t_exec	*execution;
 }	t_shell;
 
-
-
 /*		Norika						*/
 
 /*	BUILTIN-----------------------*/
@@ -124,12 +125,12 @@ int		ft_echo_builtin(char **input);
 int		ft_env_builtin(char **input, t_env *env);
 int		ft_export_builtin(char **input, t_env **env);
 int		ft_unset_builtin(char **input, t_env **env);
-int		ft_pwd_builtin(char **input, t_env *env);
+int		ft_pwd_builtin(t_env *env);
 int		ft_cd_builtin(char **input, t_env **env);
 int		ft_exit_builtin(char **input);
 t_env	*find_min_unflagged(t_env *env_list);
 void	ft_validate_access(char *path, char *filename, t_shell *shell);
-int		add_new_env_node(t_env **env_list, char *input, char *key);
+int		add_new_env_node(t_env **env_list, char *input);
 int		ft_replace_env_value(t_env *env_list, char *input);
 int		validate_and_extract_key(char *input, char **key, char **equal_sign);
 
@@ -157,12 +158,12 @@ void	ft_print_env(t_env *env);
 /*		interpretation				*/
 int		ft_interpret(t_shell *shell);
 void	ft_setup_pipes(int *fd, int num_cmnds);
-int		ft_execute_builtin(t_shell *shell, t_exec *exec, t_env **env);
+int		ft_execute_builtin(t_exec *exec, t_env **env);
 
 /*		ft_redirect				*/
 int		ft_open_io(t_exec *exec);
-void	ft_redirect_io(t_exec *exec);
-void	ft_restore_io(int saved_stdin, int saved_stdout);
+int		ft_redirect_io(t_exec *exec);
+int		ft_restore_io(int saved_stdin, int saved_stdout);
 
 /*		ft_handle_cmnd				*/
 void	ft_handle_cmnd(t_shell *shell, t_exec *exec, int *fd, int i);

@@ -1,98 +1,26 @@
-Syntax error in TOKENIZATION will continue to execution.
-Because of that the error message (like Permission denied) will be printed twice.
-
-TOKENIZATION norm and what to do when error?
-
-> > This will work, but it is a syntax error!
-< < This will work, but it is a syntax error!
-
 
 strncpy or strlcpy have to be created!
 strndup (ftpos and ft_substr)
-
-
-minishell$ echo hello > f1 > f2
-Permission denied
-f1: Permission denied
-f1r4s9%
-DONT EXIT THE PROGRAM!!
-
-
-the function: cat
-should work as in bash!!! They test it in the eval
 
 
 running minishell in minishell.
 Also take care of signals here!
 
 
-
 # case 1: NEED TO BE IMPLEMENTED
 exit status after syntax error
-
-# case 2: SYNTAX ERROR
-nnarimat@f1r7s3:~/Core_Norika/Rank3/minishell$ echo bonjour | |
-bash: syntax error near unexpected token `|'
-
-nnarimat@f1r7s3:~/Core_Norika/Rank3/minishell$ echo bonjour |;
-bash: syntax error near unexpected token `;'
-
-minishell$ echo >
-syntax error near unexpected token `newline'
-Permission denied
-No such file or directory
-(A lot of error messages)
-
-nnarimat@f1r7s3:~/Documents$ export "" et unset ""
-bash: export: `': not a valid identifier
-bash: export: `': not a valid identifier
-Fixed!!!
-
-
-# case 3: parsing error
-nnarimat@f1r7s3:~/Core_Norika/Rank3/minishell$  echo bonjour > test\ 1
-Bash create test 1 file, but ours is test\
-
-
-Wrong in execution:
-echo >> newf0 norika > newf1 | > newf2
-
 
 
 The $? expansion seems not working,
 If I check the following print in main function, the exit status is okay/
 Could you check, please ?
 
-printf("EXIT STATUS is %d\n", shell.exit_status);
+NORIKAAAAA CHECK STATIC FUNCTIONS AND HEADER
 
-———————————— builtins
-Test  26: ❌ export A-
-mini exit code = 0
-bash exit code = 1
-Test  30: ❌ export HELLO-=123
-mini exit code = 0
-bash exit code = 1
-Test  31: ❌ export =
-mini exit code = 0
-bash exit code = 1
-Test  32: ❌ export 123
-mini exit code = 0
-bash exit code = 1
-Test  40: ❌ cd $PWD hi
-mini exit code = 0
-bash exit code = 1
-Test  41: ❌ cd 123123
-mini exit code = 0
-bash exit code = 1
-Test  51: ❌ exit 42 world
-mini exit code = 0
-bash exit code = 1
+Fix:
+minishell$ cd -
+/home/mdraper
+minishell$ cd -
+/goinfre/mdraper
 
 
-———————————— pipes
-Test   3: ❌ cat minishell.h | grep ");"$
-mini exit code = 0
-bash exit code = 1
-Test   4: ❌ export GHOST=123 | env | grep GHOST
-mini exit code = 0
-bash exit code = 1

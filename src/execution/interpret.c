@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   interpret.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 16:42:57 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/24 15:47:34 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   interpret.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/10 16:42:57 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/24 21:10:44 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ static int	ft_execute_single(t_shell *shell)
 	pid_t	pid;
 	int		status;
 
-	if (ft_open_io(shell->execution) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	ft_redirect_io(shell->execution);
-	if (is_builtin(shell->execution->word[0]))
-		return (ft_execute_builtin(shell, shell->execution, &shell->env));
+	if (ft_open_io(shell->execution) == 1)
+		return (1);
+	if (ft_redirect_io(shell->execution) == DUPERR)
+		return (DUPERR);
+	if (is_builtin(shell->execution->word[0]) == true)
+		return (ft_execute_builtin(shell->execution, &shell->env));	// WE CHECKED TILL HERE!
 	else
 	{
 		pid = fork();
@@ -119,14 +120,19 @@ int	ft_interpret(t_shell *shell)
 
 	shell->n_cmd = ft_count_command(shell->execution);
 	shell->saved_stdin = dup(STDIN_FILENO);
+	if (shell->saved_stdin == -1)
+		return (perror("dup"), DUPERR);
 	shell->saved_stdout = dup(STDOUT_FILENO);
-	if (!shell->execution->word[0])
-		return (0);
+	if (shell->saved_stdout == -1)
+		return (perror("dup"), DUPERR);
+	if (ft_ms_count_words(shell->execution->word) == 0 && shell->n_cmd == 1)
+		return (shell->exit_status);
 	if (shell->n_cmd == 1)
 		status = ft_execute_single(shell);
 	else
 		status = ft_execute_pipe(shell, shell->execution);
-	ft_restore_io(shell->saved_stdin, shell->saved_stdout);
+	if (ft_restore_io(shell->saved_stdin, shell->saved_stdout) == DUPERR)
+		return (DUPERR);
 	shell->exit_status = status;
 	return (status);
 }

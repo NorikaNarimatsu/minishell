@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_exit.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 11:38:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/24 15:45:02 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_exit.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/10 11:38:52 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/24 20:50:26 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h" // TODO? UPDATE SHLVL when you exit
+#include "minishell.h"
+
+// TODO? UPDATE SHLVL when you exit
 
 int	ft_exit_builtin(char **input)
 {
@@ -38,8 +40,8 @@ int	ft_exit_builtin(char **input)
 	printf("exit\n");
 	if (input[1])
 	{
-		if ((p[0] != '-' && p[0] != '+' && !isdigit(p[0]))
-			|| ((p[0] == '-' || p[0] == '+') && !isdigit(p[1])))
+		if ((p[0] != '-' && p[0] != '+' && !ft_isdigit(p[0]))
+			|| ((p[0] == '-' || p[0] == '+') && !ft_isdigit(p[1])))
 		{
 			ft_putstr_fd("exit: numeric argument required\n", 2);
 			exit_status = 2;
@@ -48,7 +50,7 @@ int	ft_exit_builtin(char **input)
 		{
 			while (p[i] != '\0')
 			{
-				if (!isdigit(p[i]) && p[i] != '-' && p[i] != '+')
+				if (!ft_isdigit(p[i]) && p[i] != '-' && p[i] != '+')
 				{
 					ft_putstr_fd("exit: numeric argument required\n", 2);
 					exit_status = 2;
@@ -60,7 +62,7 @@ int	ft_exit_builtin(char **input)
 				exit_status = ft_atoi(input[1]);
 		}
 		if (input[2])
-			return (ft_putstr_fd("exit: too many argument\n", 2), EXIT_FAILURE);
+			return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
 	}
 	exit(exit_status);
 }

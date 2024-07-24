@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 15:54:02 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 20:54:37 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static void	ft_reset(t_shell *shell)
 	}
 	shell->token_flag = 1;
 	shell->n_cmd = 0;
+	shell->saved_stdin = 0;
+	shell->saved_stdout = 0;
 }
 
 int	ft_minishell(char **env)
@@ -88,18 +90,20 @@ int	ft_minishell(char **env)
 		add_history(shell->line);
 		// printf("----- EXPANSION -----\n");
 		if (ft_expansion(shell) == MALERR)
-			return (ft_free_minishell(&shell), MALERR); // free_everything function;
+			return (ft_free_minishell(&shell), EXIT_FAILURE);
 		// printf("----- SYNTAX -----\n");
-		if (ft_syntax(shell->line, shell) == SYNERR)	// Can be MALLOC error or SYNTAX error!
+		if (ft_syntax(shell->line, shell) == SYNERR)
 			continue ;
 		// printf("----- TOKENIZATION -----\n");
 		if (ft_tokenization(shell) == MALERR)
-			return (ft_free_minishell(&shell), MALERR); // free_everything function;
+			return (ft_free_minishell(&shell), EXIT_FAILURE);
 		// printf("----- HEREDOC -----\n");
-		if (ft_heredoc(shell) == -1)
-			break ;
+		if (ft_heredoc(shell) == PIPERR)
+			return (ft_free_minishell(&shell), EXIT_FAILURE);
 		// printf("----- EXECUTION -----\n");
 		shell->exit_status = ft_interpret(shell);
+		if (shell->exit_status < 0)		// OPTIMIZE THIS PART!!!
+			exit(EXIT_FAILURE);
 	}
 	return (ft_free_minishell(&shell), 0);
 }

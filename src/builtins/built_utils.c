@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/04 13:26:14 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 15:58:51 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 20:30:39 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	is_valid_directory(char *path)
 	struct stat	path_stat;
 	int			is_valid;
 
-	if (stat(path, &path_stat) != 0)
+	if (stat(path, &path_stat) == -1)
 		return (0);
 	is_valid = S_ISDIR(path_stat.st_mode);
 	return (is_valid);

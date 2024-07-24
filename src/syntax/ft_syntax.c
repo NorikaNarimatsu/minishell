@@ -83,13 +83,13 @@ int	ft_syntax(char *line, t_shell *shell)
 	if (!syn)
 		return (ft_free_minishell(&shell), MALERR);
 	if (ft_first_check(line) == SYNERR)
-		return (ft_free_syn(&syn), SYNERR);
+		return (ft_free_syn(&syn), shell->exit_status = 2, SYNERR);
 	while (line[i])
 	{
 		if (ft_isinvalid(line[i]))
 		{
 			if (ft_find_character(line[i], syn) == SYNERR)
-				return (ft_free_syn(&syn), SYNERR);
+				return (ft_free_syn(&syn), shell->exit_status = 2, SYNERR);
 		}
 		else if (!ft_isspace(line[i]) && syn->dquote == 0 && syn->squote == 0)
 			ft_bzero(syn, sizeof(t_syn));
@@ -98,6 +98,6 @@ int	ft_syntax(char *line, t_shell *shell)
 		i++;
 	}
 	if (ft_final_check(syn) == SYNERR)
-		return (ft_free_syn(&syn), SYNERR);
+		return (ft_free_syn(&syn), shell->exit_status = 2, SYNERR);
 	return (ft_free_syn(&syn), 0);
 }

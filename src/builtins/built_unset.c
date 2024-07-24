@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_unset.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/08 15:23:32 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 19:15:45 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_unset.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/08 15:23:32 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/24 20:13:11 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ int	ft_unset_builtin(char **input, t_env **env)
 	int		i;
 	int		exit_status;
 
-	exit_status = EXIT_SUCCESS;
+	exit_status = 0;
 	i = 1;
 	while (input[i])
 	{
-		if (!is_valid_identifier(input[i]))
-		{
-			ft_putstr_fd("unset: not a valid identifier\n", 2);
-			exit_status = EXIT_FAILURE;
-		}
-		else
-			unset_env_var(env, input[i]);
+		// if (is_valid_identifier(input[i]) == false)	// check if this is needed!
+		// {
+		// 	ft_putstr_fd("unset: not a valid identifier\n", 2);
+		// 	exit_status = 1;
+		// }
+		// else
+		unset_env_var(env, input[i]);
 		i++;
 	}
 	return (exit_status);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env_init.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 12:44:31 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/24 15:46:31 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   env_init.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/06/06 12:44:31 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/24 21:14:08 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ t_env	*ft_create_env_node(char *env_str)
 	new_node = (t_env *)ft_calloc(sizeof(t_env), 1);
 	if (!new_node)
 		return (NULL);
-	new_node->env = strdup(env_str);
+	new_node->env = ft_strdup(env_str);
 	if (!new_node->env)
-		return (free(new_node), NULL);
+		return (ft_free_env_node(&new_node), NULL);
 	equal_sign = ft_strchr(env_str, '=');
 	if (equal_sign != NULL)
 	{
-		new_node->key = strndup(env_str, equal_sign - env_str);
+		new_node->key = strndup(env_str, equal_sign - env_str);	// ILLIGAL FUNCTION!
 		new_node->value = ft_strdup(equal_sign + 1);
 	}
 	else
