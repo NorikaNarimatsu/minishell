@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/24 14:52:48 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/24 14:57:30 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 16:05:28 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	ft_transfer_input(t_token **token, t_exec *exec)
 	if (!exec->infile)
 		return (MALERR);
 	result = access(exec->infile, F_OK | R_OK);
-	ft_print_exec_list(exec);
 	if (result == -1)
 	{
 		exec->flag = result;

@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/16 09:13:04 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/24 15:51:27 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 16:13:04 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ void	ft_syn_squote(t_syn *syntax)
 
 int	ft_syn_input(t_syn *syntax)
 {
+	if (syntax->input == 0)
+		syntax->flag = 0;
 	syntax->input++;
-	if (syntax->input == 3 || (syntax->output == 2 && syntax->flag == 1))
+	if (syntax->input == 3 || (syntax->input == 2 && syntax->flag == 1))
 		return (ft_putstr_fd("syntax error near unexpected token `<'\n", 2), \
 				SYNERR);
 	else if (syntax->output >= 1)
@@ -54,6 +56,8 @@ int	ft_syn_input(t_syn *syntax)
 
 int	ft_syn_output(t_syn *syntax)
 {
+	if (syntax->output == 0)
+		syntax->flag = 0;
 	syntax->output++;
 	if (syntax->output == 3 || (syntax->output == 2 && syntax->flag == 1))
 		return (ft_putstr_fd("syntax error near unexpected token `>'\n", 2), \

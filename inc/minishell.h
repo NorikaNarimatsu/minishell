@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 15:37:50 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 16:01:11 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ typedef struct s_shell
 	int		n_cmd;
 	int		token_flag;
 	int		exit_status;
+	int		saved_stdin;
+	int		saved_stdout;
 	t_env	*env;
 	char	*line;
 	t_exec	*execution;
@@ -158,7 +160,7 @@ void	ft_setup_pipes(int *fd, int num_cmnds);
 int		ft_execute_builtin(t_shell *shell, t_exec *exec, t_env **env);
 
 /*		ft_redirect				*/
-void	ft_open_io(t_exec *exec);
+int		ft_open_io(t_exec *exec);
 void	ft_redirect_io(t_exec *exec);
 void	ft_restore_io(int saved_stdin, int saved_stdout);
 
@@ -170,8 +172,7 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell);
 char	*ft_search_path(char *filename, t_env *env);
 
 /*		exec_utils				*/
-void	ft_fatal_error(char *message);
-void	error_exit(char *location, char *message, int status);
+void	ft_error_exit(char *message, int exitcode);
 int		ft_count_command(t_exec *exec);
 char	**ft_env_to_array(t_env *env_list);
 

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:44:31 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 21:22:52 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:46:31 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_reset_env_flags(t_env *env_list)
 		env_list = env_list->next;
 	}
 }
+// askmartijn
 
 t_env	*ft_create_env_node(char *env_str)
 {
@@ -62,7 +63,7 @@ t_env	*ft_create_env_node(char *env_str)
 	equal_sign = ft_strchr(env_str, '=');
 	if (equal_sign != NULL)
 	{
-		new_node->key = strndup(env_str, equal_sign - env_str); // askmartijn
+		new_node->key = strndup(env_str, equal_sign - env_str);
 		new_node->value = ft_strdup(equal_sign + 1);
 	}
 	else

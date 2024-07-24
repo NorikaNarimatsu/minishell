@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 16:28:58 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/22 16:42:06 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:47:50 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_search_path(char *filename, t_env *env)
 		bzero(path, PATH_MAX);
 		end = ft_strchr(value, ':');
 		if (end)
-			strncpy(path, value, end - value); // strlcpy does not work!
+			strncpy(path, value, end - value);
 		else
 			ft_strlcpy(path, value, PATH_MAX);
 		ft_strlcat(path, "/", PATH_MAX);

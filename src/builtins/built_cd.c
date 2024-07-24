@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:36:11 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/22 17:32:21 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:43:42 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,17 @@ int	cd_check_change(char *path, t_env **env)
 	char	*oldpwd;
 
 	if (!path || ft_strlen(path) == 0)
-		return (ft_putstr_fd("cd: missing argument\n", 2), EXIT_FAILURE);
+		return (ft_putstr_fd("cd: missing argument\n", 2), 1);
 	if (ft_strcmp(path, "-") == 0)
 	{
 		oldpwd = ft_find_env_value(*env, "OLDPWD");
 		if (!oldpwd)
-			return (ft_putstr_fd("cd: OLDPWD not set\n", 2), EXIT_FAILURE);
+			return (ft_putstr_fd("cd: OLDPWD not set\n", 2), 1);
 		path = oldpwd;
 		printf("%s\n", path);
 	}
 	if (is_valid_directory(path) == 0)
-		return (ft_putstr_fd("cd: No such file or directory\n", 2), EXIT_FAILURE);
+		return (ft_putstr_fd("cd: No such file or directory\n", 2), 1);
 	if (chdir(path) != 0)
 	{
 		perror("cd");

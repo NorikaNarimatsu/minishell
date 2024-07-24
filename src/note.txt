@@ -8,6 +8,7 @@ TOKENIZATION norm and what to do when error?
 
 
 strncpy or strlcpy have to be created!
+strndup (ftpos and ft_substr)
 
 
 minishell$ echo hello > f1 > f2

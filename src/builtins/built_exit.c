@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 11:38:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/22 17:22:03 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:45:02 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int	ft_exit_builtin(char **input)
 				exit_status = ft_atoi(input[1]);
 		}
 		if (input[2])
-		{
-			ft_putstr_fd("exit: too many arguments\n", 2);
-			return (EXIT_FAILURE);
-		}
+			return (ft_putstr_fd("exit: too many argument\n", 2), EXIT_FAILURE);
 	}
 	exit(exit_status);
 }

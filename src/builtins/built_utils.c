@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 13:26:14 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/20 19:07:54 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_utils.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/04 13:26:14 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/24 15:58:51 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	ft_print_env(t_env *env)
-// {
-// 	t_env	*head;
+void	ft_print_env(t_env *env)
+{
+	t_env	*head;
 
-// 	head = env;
-// 	while (env)
-// 	{
-// 		printf("env: %s\n", env->env);
-// 		printf("key: %s [%p]\n", env->key, env);
-// 		printf("value: %s\n\n", env->value);
-// 		env = env->next;
-// 	}
-// 	env = head;
-// }
+	head = env;
+	while (env)
+	{
+		printf("env: %s\n", env->env);
+		printf("key: %s [%p]\n", env->key, env);
+		printf("value: %s\n\n", env->value);
+		env = env->next;
+	}
+	env = head;
+}
 
 bool	is_valid_identifier(char *input)
 {
