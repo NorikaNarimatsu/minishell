@@ -3,13 +3,23 @@ Because of that the error message (like Permission denied) will be printed twice
 
 TOKENIZATION norm and what to do when error?
 
+> > This will work, but it is a syntax error!
+< < This will work, but it is a syntax error!
 
-t_token	*ll_token;
-This doesnt need to be in the head struct.
+
+strncpy or strlcpy have to be created!
+
+
+minishell$ echo hello > f1 > f2
+Permission denied
+f1: Permission denied
+f1r4s9%
+DONT EXIT THE PROGRAM!!
 
 
 the function: cat
 should work as in bash!!! They test it in the eval
+
 
 running minishell in minishell.
 Also take care of signals here!

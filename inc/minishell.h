@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 09:10:48 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 15:37:50 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_syn
 	int	input;
 	int	output;
 	int	pipe;
+	int	flag;
 }	t_syn;
 
 typedef struct s_token
@@ -102,12 +103,12 @@ typedef struct s_env
 
 typedef struct s_shell
 {
+	int		n_cmd;
+	int		token_flag;
+	int		exit_status;
 	t_env	*env;
 	char	*line;
-	int		token_flag;
 	t_exec	*execution;
-	int		exit_status;
-	int		n_cmd;
 }	t_shell;
 
 
@@ -208,9 +209,17 @@ int		ft_syntax(char *line, t_shell *shell);
 
 /*	TOKENIZATION--------------------*/
 /*		ft_execution				*/
+int		ft_transfer_word(t_token *token, t_exec *exec);
 int		ft_transfer_for_exec(t_token *token, t_exec *exec);
 
-/*		ft_free_error					*/
+/*		ft_exetransfer				*/
+int		ft_transfer_pipe(t_token *token, t_exec *exec);
+int		ft_transfer_append(t_token **token, t_exec *exec);
+int		ft_transfer_heredoc(t_token **token, t_exec *exec);
+int		ft_transfer_input(t_token **token, t_exec *exec);
+int		ft_transfer_output(t_token **token, t_exec *exec);
+
+/*		ft_free_error				*/
 void	ft_free_string(char **str);
 void	ft_free_array(char ***str);
 void	ft_free_t_token(t_token	**ll_token);
@@ -231,7 +240,6 @@ int		ft_lendquote(char *str);
 
 /*		ft_make_and_fill_list		*/
 t_token	*ft_create_token(void);
-t_exec	*ft_create_exec(void);
 int		ft_create_token_list(t_token *token);
 int		ft_create_new_and_fill_type(t_token *token, enum e_token type);
 int		ft_fill_word(char *str, t_token *token, int (*strlen_func)(char *));

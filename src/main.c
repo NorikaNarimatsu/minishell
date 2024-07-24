@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 09:08:00 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 15:54:02 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	ft_free_minishell(t_shell **shell)
 		ft_free_string(&(*shell)->line);
 	if ((*shell)->env)
 		ft_free_env_list(&(*shell)->env);
-	// if ((*shell)->ll_token)
-	// 	ft_free_t_token(&(*shell)->ll_token);
 	if ((*shell)->execution)
 		ft_free_s_exec(&(*shell)->execution);
 	free(*shell);
@@ -43,23 +41,14 @@ t_shell	*ft_init_shell(char **env)
 		return (NULL);
 	shell->env = ft_init_env(env);
 	if (!shell->env)
-	{
-		free(shell);
-		shell = NULL;
-		return (NULL);
-	}
-	shell->execution = ft_create_exec();
+		return (ft_free_minishell(&shell), NULL);
+	shell->execution = ft_calloc(1, sizeof(t_exec));
 	if (!shell->execution)
-	{
-		ft_free_env_list(&shell->env);
-		free(shell);
-		shell = NULL;
-		return (NULL);
-	}
+		return (ft_free_minishell(&shell), NULL);
 	return (shell);
 }
 
-void	ft_reset(t_shell *shell)
+static void	ft_reset(t_shell *shell)
 {
 	ft_free_string(&shell->line);
 	if (shell->execution != NULL)
@@ -70,9 +59,12 @@ void	ft_reset(t_shell *shell)
 		ft_free_string(&shell->execution->infile);
 		ft_free_string(&shell->execution->outfile);
 		ft_free_array(&shell->execution->heredoc);
-		ft_bzero(shell->execution, sizeof(shell->execution));
+		shell->execution->fd_infile = 8;
+		shell->execution->is_end_append = 1;
+		ft_bzero(shell->execution, sizeof(t_exec));
 	}
 	shell->token_flag = 1;
+	shell->n_cmd = 0;
 }
 
 int	ft_minishell(char **env)
@@ -98,10 +90,11 @@ int	ft_minishell(char **env)
 		if (ft_expansion(shell) == MALERR)
 			return (ft_free_minishell(&shell), MALERR); // free_everything function;
 		// printf("----- SYNTAX -----\n");
-		if (ft_syntax(shell->line, shell) == SYNERR)		// free_everything function;
+		if (ft_syntax(shell->line, shell) == SYNERR)	// Can be MALLOC error or SYNTAX error!
 			continue ;
 		// printf("----- TOKENIZATION -----\n");
-		ft_tokenization(shell);		// what is malloc error?
+		if (ft_tokenization(shell) == MALERR)
+			return (ft_free_minishell(&shell), MALERR); // free_everything function;
 		// printf("----- HEREDOC -----\n");
 		if (ft_heredoc(shell) == -1)
 			break ;

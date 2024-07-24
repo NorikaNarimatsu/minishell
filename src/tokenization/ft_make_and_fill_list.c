@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 15:09:13 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/10 18:00:25 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/24 13:36:04 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ t_token	*ft_create_token(void)
 	if (!token)
 		return (NULL);
 	return (token);
-}
-
-t_exec	*ft_create_exec(void)
-{
-	t_exec	*execution;
-
-	execution = ft_calloc(1, sizeof(t_exec));
-	if (!execution)
-		return (NULL);
-	return (execution);
 }
 
 int	ft_create_token_list(t_token *token)
