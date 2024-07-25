@@ -19,11 +19,11 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell)
 	struct stat	statbuf;
 
 	path = exec->word[0];
-	envp = ft_env_to_array(env);
-	if (is_builtin(path))
+	if (is_builtin(path) == true)
 	{
 		shell->exit_status = ft_execute_builtin(exec, &env);
-		free(envp);
+		if (shell->exit_status < 0)
+			exit(EXIT_FAILURE);
 		exit(shell->exit_status);
 	}
 	else
@@ -44,9 +44,12 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell)
 			else
 				ft_error_exit(" No such file or directory\n", 127);
 		}
+		envp = ft_env_to_array(env);
+		if (!envp)
+			exit(EXIT_FAILURE);
 		if (execve(path, exec->word, envp) == -1)
 		{
-			free(envp);
+			ft_free_array(&envp);
 			ft_error_exit("execve error\n", EXIT_FAILURE);
 		}
 	}

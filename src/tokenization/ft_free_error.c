@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/06 14:08:28 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/24 08:49:36 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/25 20:03:49 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_free_string(char **str)
 {
-	if (!str | !*str)
+	if (!str || !*str)
 		return ;
 	free(*str);
 	*str = NULL;

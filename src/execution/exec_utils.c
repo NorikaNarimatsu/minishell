@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/13 16:29:44 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/24 15:37:33 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   exec_utils.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/13 16:29:44 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/07/25 18:29:05 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**ft_env_to_array(t_env *env_list)
 	}
 	env_array = calloc(sizeof(char *), (count + 1));
 	if (!env_array)
-		ft_error_exit("Malloc error\n", EXIT_FAILURE);
+		return (NULL);
 	temp = env_list;
 	i = 0;
 	while (i < count)

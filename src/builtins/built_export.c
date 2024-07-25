@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/04 16:31:41 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 21:06:19 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/25 18:55:11 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ int	validate_and_extract_key(char *input, char **key, char **equal_sign)
 		*key = ft_strdup(input);
 	if (!*key)
 		return (MALERR);
-	// if (!*key)
-	// {
-	// 	ft_putstr_fd("Memory allocation error\n", STDERR_FILENO);
-	// 	exit(EXIT_FAILURE);
-	// }
 	if (is_valid_identifier(*key) == false)
 	{
 		ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
@@ -90,8 +85,10 @@ int	handle_export(t_env **env_list, char *input)
 int	ft_export_builtin(char **input, t_env **env)
 {
 	int		i;
+	int		temp;
 	int		status;
 
+	temp = 0;
 	status = 0;
 	i = 1;
 	if (!input[i])
@@ -101,8 +98,11 @@ int	ft_export_builtin(char **input, t_env **env)
 	}
 	while (input[i])
 	{
-		if (handle_export(env, input[i]) == EXIT_FAILURE)
-			status = EXIT_FAILURE;
+		temp = handle_export(env, input[i]);
+		if (temp == MALERR)
+			return (MALERR);
+		else if (temp == 1)
+			status = 1;
 		i++;
 	}
 	return (status);

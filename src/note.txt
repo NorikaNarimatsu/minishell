@@ -11,11 +11,11 @@ Also take care of signals here!
 exit status after syntax error
 
 
-The $? expansion seems not working,
-If I check the following print in main function, the exit status is okay/
-Could you check, please ?
 
 NORIKAAAAA CHECK STATIC FUNCTIONS AND HEADER
+
+running minishell in minishell. -> increase shell level, 
+and decrease shelevel when exit
 
 Fix:
 minishell$ cd -
@@ -23,4 +23,10 @@ minishell$ cd -
 minishell$ cd -
 /goinfre/mdraper
 
+Fix: norm
+
+Free function, close fd in main
+error when malloc fails
+
+and signal
 

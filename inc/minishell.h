@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 21:08:31 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/25 21:30:57 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ enum e_errno
 	PIPERR = -3,
 	DUPERR = -4,
 	CHDERR = -5,
-	CWDERR = -6
+	CWDERR = -6,
+	FRKERR = -7
 };
 
 typedef struct 
@@ -157,16 +158,17 @@ void	ft_print_env(t_env *env);
 /*	EXECUTION-----------------------*/
 /*		interpretation				*/
 int		ft_interpret(t_shell *shell);
-void	ft_setup_pipes(int *fd, int num_cmnds);
+int		ft_setup_pipes(int *fd, int num_cmnds);
 int		ft_execute_builtin(t_exec *exec, t_env **env);
 
 /*		ft_redirect				*/
 int		ft_open_io(t_exec *exec);
 int		ft_redirect_io(t_exec *exec);
+int		ft_redirect_pipe(t_shell *shell, t_exec *exec, int *fd, int i);
 int		ft_restore_io(int saved_stdin, int saved_stdout);
 
 /*		ft_handle_cmnd				*/
-void	ft_handle_cmnd(t_shell *shell, t_exec *exec, int *fd, int i);
+// void	ft_handle_cmnd(t_shell *shell, t_exec *exec, int *fd, int i);
 void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell);
 
 /*		ft_path				*/

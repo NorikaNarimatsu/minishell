@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/17 11:56:22 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 19:26:02 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/25 21:31:14 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,26 @@ int	ft_redirect_io(t_exec *exec)
 		if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
 			return (perror("dup2 outfile"), DUPERR);
 		close(exec->fd_outfile);
+	}
+	return (0);
+}
+
+int	ft_redirect_pipe(t_shell *shell, t_exec *exec, int *fd, int i)
+{
+	if (i > 0 && !exec->infile)
+	{
+		if (dup2(fd[2 * (i - 1)], STDIN_FILENO) == -1)
+			return (perror("dup2 stdin pipe"), DUPERR);
+	}
+	if (i < shell->n_cmd - 1 && !exec->outfile)
+	{
+		if (dup2(fd[2 * i + 1], STDOUT_FILENO) == -1)
+			return (perror("dup2 stdout pipe"), DUPERR);
+	}
+	if (exec->fd_infile == -1 && i == 0)
+	{
+		if (dup2(shell->saved_stdin, STDIN_FILENO) == -1)
+			return (perror("dup2 stdin pipe"), DUPERR);
 	}
 	return (0);
 }
