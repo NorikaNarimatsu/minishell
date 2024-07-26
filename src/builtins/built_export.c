@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/04 16:31:41 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/25 18:55:11 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 12:04:41 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ void	ft_print_sorted_env(t_env *env_list)
 
 int	validate_and_extract_key(char *input, char **key, char **equal_sign)
 {
-	int		i;
-
-	i = 0;
 	*equal_sign = ft_strchr(input, '=');
 	if (*equal_sign)
 		*key = strndup(input, *equal_sign - input);			// illegal function!

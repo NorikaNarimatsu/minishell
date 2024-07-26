@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/25 21:30:57 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 16:19:15 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ void	ft_validate_access(char *path, char *filename, t_shell *shell);
 int		add_new_env_node(t_env **env_list, char *input);
 int		ft_replace_env_value(t_env *env_list, char *input);
 int		validate_and_extract_key(char *input, char **key, char **equal_sign);
+int		ft_replace_shlvl(t_env **env_list);
+int	ft_update_env_value(t_env *env_list, char *key, char *value);
 
 /*		built_utils				*/
 
@@ -160,12 +162,21 @@ void	ft_print_env(t_env *env);
 int		ft_interpret(t_shell *shell);
 int		ft_setup_pipes(int *fd, int num_cmnds);
 int		ft_execute_builtin(t_exec *exec, t_env **env);
+int		ft_execute_single(t_shell *shell);
+int	ft_execute_pipe(t_shell *shell, t_exec *exec);
+
+
+/*		shlvl				*/
+int		ft_reset_shlvl(t_env **env_list);
+int		ft_replace_shlvl(t_env **env_list);
+
 
 /*		ft_redirect				*/
 int		ft_open_io(t_exec *exec);
 int		ft_redirect_io(t_exec *exec);
 int		ft_redirect_pipe(t_shell *shell, t_exec *exec, int *fd, int i);
 int		ft_restore_io(int saved_stdin, int saved_stdout);
+void	ft_manage_redirect(t_shell *shell, t_exec *exec, int *fd, int i);
 
 /*		ft_handle_cmnd				*/
 // void	ft_handle_cmnd(t_shell *shell, t_exec *exec, int *fd, int i);
@@ -173,6 +184,8 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell);
 
 /*		ft_path				*/
 char	*ft_search_path(char *filename, t_env *env);
+char	*ft_path_error(t_exec *exec, t_env *env, char *path);
+
 
 /*		exec_utils				*/
 void	ft_error_exit(char *message, int exitcode);
@@ -228,6 +241,8 @@ void	ft_free_string(char **str);
 void	ft_free_array(char ***str);
 void	ft_free_t_token(t_token	**ll_token);
 void	ft_free_s_exec(t_exec **exec);
+void	ft_free_fd(int **fd);
+void	ft_free_pid(pid_t **pid);
 
 /*		ft_is						*/
 int		ft_isinvalid(char c);

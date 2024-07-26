@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/17 11:56:22 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/25 21:31:14 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 16:04:07 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,17 @@ int	ft_restore_io(int saved_stdin, int saved_stdout)
 	close(saved_stdin);
 	close(saved_stdout);
 	return (0);
+}
+
+void	ft_manage_redirect(t_shell *shell, t_exec *exec, int *fd, int i)
+{
+	if (ft_open_io(exec) == 1)
+		exit(EXIT_FAILURE);
+	if (ft_redirect_io(exec) == DUPERR)
+		exit(EXIT_FAILURE);
+	if (ft_redirect_pipe(shell, exec, fd, i) == DUPERR)
+		exit(EXIT_FAILURE);
+	i = 0;
+	while (i < 2 * (shell->n_cmd - 1))
+		close(fd[i++]);
 }

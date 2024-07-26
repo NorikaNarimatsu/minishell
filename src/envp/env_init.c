@@ -6,38 +6,11 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/06 12:44:31 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 21:14:08 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 16:55:02 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_free_env_node(t_env **node)
-{
-	if (node && *node)
-	{
-		free((*node)->env);
-		(*node)->env = NULL;
-		free((*node)->key);
-		(*node)->key = NULL;
-		free((*node)->value);
-		(*node)->value = NULL;
-		free(*node);
-		*node = NULL;
-	}
-}
-
-void	ft_free_env_list(t_env **current)
-{
-	t_env	*next_node;
-
-	while (*current)
-	{
-		next_node = (*current)->next;
-		ft_free_env_node(current);
-		*current = next_node;
-	}
-}
 
 void	ft_reset_env_flags(t_env *env_list)
 {
@@ -47,7 +20,6 @@ void	ft_reset_env_flags(t_env *env_list)
 		env_list = env_list->next;
 	}
 }
-// askmartijn
 
 t_env	*ft_create_env_node(char *env_str)
 {
@@ -91,10 +63,7 @@ t_env	*ft_init_env(char **env)
 	{
 		new_node = ft_create_env_node(env[i]);
 		if (!new_node)
-		{
-			ft_free_env_list(&head);
-			return (NULL);
-		}
+			return (ft_free_env_list(&head), NULL);
 		if (head == NULL)
 			head = new_node;
 		else
@@ -102,5 +71,7 @@ t_env	*ft_init_env(char **env)
 		current = new_node;
 		i++;
 	}
+	if (ft_replace_shlvl(&head) == MALERR)
+		return (NULL);
 	return (head);
 }

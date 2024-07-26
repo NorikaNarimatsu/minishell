@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/08 17:36:11 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 20:45:18 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 13:11:19 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_update_env_value(t_env *env_list, char *key, char *value)
+int	ft_update_env_value(t_env *env_list, char *key, char *value)
 {
 	while (env_list)
 	{

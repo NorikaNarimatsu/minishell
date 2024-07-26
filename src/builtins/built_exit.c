@@ -6,27 +6,11 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 11:38:52 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 20:50:26 by mdraper       ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "minishell.h" // TODO? UPDATE SHLVL when you exit
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_exit.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/10 11:38:52 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/07/22 16:58:32 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:20:10 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// TODO? UPDATE SHLVL when you exit
 
 int	ft_exit_builtin(char **input)
 {

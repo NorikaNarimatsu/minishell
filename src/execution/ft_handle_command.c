@@ -16,10 +16,8 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell)
 {
 	char		*path;
 	char		**envp;
-	struct stat	statbuf;
 
-	path = exec->word[0];
-	if (is_builtin(path) == true)
+	if (is_builtin(exec->word[0]) == true)
 	{
 		shell->exit_status = ft_execute_builtin(exec, &env);
 		if (shell->exit_status < 0)
@@ -28,22 +26,7 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell)
 	}
 	else
 	{
-		if (ft_strchr(path, '/') == NULL)
-			path = ft_search_path(path, env);
-		if (stat(path, &statbuf) == 0)
-		{
-			if (S_ISDIR(statbuf.st_mode))
-				ft_error_exit(" Is a directory\n", 126);
-			else if (access(path, X_OK) != 0)
-				ft_error_exit(" Permission denied\n", 126);
-		}
-		else
-		{
-			if (ft_strchr(exec->word[0], '/') == NULL)
-				ft_error_exit(" command not found\n", 127);
-			else
-				ft_error_exit(" No such file or directory\n", 127);
-		}
+		path = ft_path_error(exec, env, exec->word[0]);
 		envp = ft_env_to_array(env);
 		if (!envp)
 			exit(EXIT_FAILURE);

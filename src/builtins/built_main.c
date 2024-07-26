@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/05 14:49:00 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 20:53:29 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 16:20:58 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_execute_builtin(t_exec *exec, t_env **env)
 		return (ft_pwd_builtin(*env));
 	else if (ft_strcmp(exec->word[0], "cd") == 0)
 		return (ft_cd_builtin(exec->word, env));
-	else if (ft_strcmp(exec->word[0], "exit") == 0)
+	else if (ft_strcmp(exec->word[0], "exit") == 0)		// really no need for decrease?
 		return (ft_exit_builtin(exec->word));
 	return (0);
 }

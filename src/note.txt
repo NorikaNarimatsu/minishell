@@ -17,6 +17,18 @@ NORIKAAAAA CHECK STATIC FUNCTIONS AND HEADER
 running minishell in minishell. -> increase shell level, 
 and decrease shelevel when exit
 
+mdraper@PCvanMartijn:~/codam/rank03/v07$ export | grep SHLVL
+declare -x SHLVL="2"
+mdraper@PCvanMartijn:~/codam/rank03/v07$ bash
+mdraper@PCvanMartijn:~/codam/rank03/v07$ export | grep SHLVL
+declare -x SHLVL="3"
+mdraper@PCvanMartijn:~/codam/rank03/v07$ unset SHLVL
+mdraper@PCvanMartijn:~/codam/rank03/v07$ export | grep SHLVL
+mdraper@PCvanMartijn:~/codam/rank03/v07$ bash
+mdraper@PCvanMartijn:~/codam/rank03/v07$ export | grep SHLVL
+declare -x SHLVL="1"
+mdraper@PCvanMartijn:~/codam/rank03/v07$ 
+
 Fix:
 minishell$ cd -
 /home/mdraper

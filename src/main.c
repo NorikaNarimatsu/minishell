@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 20:54:37 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 16:42:52 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_free_minishell(t_shell **shell)
 	*shell = NULL;
 }
 
-t_shell	*ft_init_shell(char **env)
+t_shell	* ft_init_shell(char **env)
 {
 	t_shell	*shell;
 

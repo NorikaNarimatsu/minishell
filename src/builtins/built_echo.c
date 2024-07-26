@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/04 15:46:42 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 19:29:55 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 16:44:53 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_n_flag_string(char *str)
+static bool	is_n_flag_string(char *str)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ bool	is_n_flag_string(char *str)
 		return (false);
 }
 
-void	echo_print_args(char **input, int idx, bool n_flag)
+static void	echo_print_args(char **input, int idx, bool n_flag)
 {
 	int	i;
 
