@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/08 17:36:11 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 13:11:19 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 23:17:43 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	ft_cd_builtin(char **input, t_env **env)
 	char	*path;
 	char	*home_path;
 
-	if (input[2])
+	if (input[1] && input[2])
 	{
 		ft_putstr_fd("cd: too many arguments\n", 2);
 		return (1);
