@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/08 15:23:32 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 20:13:11 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 22:06:27 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,18 @@ int	ft_unset_builtin(char **input, t_env **env)
 	i = 1;
 	while (input[i])
 	{
-		// if (is_valid_identifier(input[i]) == false)	// check if this is needed!
-		// {
-		// 	ft_putstr_fd("unset: not a valid identifier\n", 2);
-		// 	exit_status = 1;
-		// }
-		// else
 		unset_env_var(env, input[i]);
 		i++;
 	}
 	return (exit_status);
 }
+
+/*
+// check if this is needed!
+		// if (is_valid_identifier(input[i]) == false)	
+		// {
+		// 	ft_putstr_fd("unset: not a valid identifier\n", 2);
+		// 	exit_status = 1;
+		// }
+		// else
+*/

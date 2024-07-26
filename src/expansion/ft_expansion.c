@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/24 15:32:10 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 22:10:22 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	ft_expansion(t_shell *shell)
 		if (!exp->exp_line)
 			return (ft_free_expansion(&exp), MALERR);
 	}
+	ft_free_string(&shell->line);
 	shell->line = ft_strdup(exp->exp_line);
 	if (!shell->line)
 		return (ft_free_expansion(&exp), MALERR);

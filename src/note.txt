@@ -42,3 +42,6 @@ error when malloc fails
 
 and signal
 
+echo $1test -> expension should only fail $1 test should still be printed!
+
+ft_unset_builtin -> check exit status #Norika

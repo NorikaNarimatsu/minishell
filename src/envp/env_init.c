@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/06 12:44:31 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 16:55:02 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 22:07:12 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_env	*ft_create_env_node(char *env_str)
 	equal_sign = ft_strchr(env_str, '=');
 	if (equal_sign != NULL)
 	{
-		new_node->key = strndup(env_str, equal_sign - env_str);	// ILLIGAL FUNCTION!
+		new_node->key = strndup(env_str, equal_sign - env_str); // ILLIGAL !
 		new_node->value = ft_strdup(equal_sign + 1);
 	}
 	else

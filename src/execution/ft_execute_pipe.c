@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_pipe.c                                          :+:    :+:            */
+/*   ft_execute_pipe.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:16:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/26 16:17:01 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 22:09:59 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 	{
 		pid[i] = fork();
 		if (pid[i] == -1)
-			return (perror("fork"), ft_free_fd(&fd), \
-				ft_free_pid(&pid), FRKERR);
+			return (perror("fork"), ft_free_fd(&fd), ft_free_pid(&pid), FRKERR);
 		else if (pid[i] == 0)
 		{
 			ft_manage_redirect(shell, exec, fd, i);
@@ -69,7 +68,7 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 		if (i == shell->n_cmd - 1)
 		{
 			shell->exit_status = WEXITSTATUS(status);
-			// if (WIFEXITED(status) != 0)			// SIGNAL HANDLING | MAYBE SOMETHING 
+			// if (WIFEXITED(status) != 0) // SIGNAL HANDLING | MAYBE SOMETHING 
 			// else if (WIFSIGNALED(status))
 			// 	shell->exit_status += 128;
 		}

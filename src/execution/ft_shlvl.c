@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:02:26 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/26 16:50:45 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 21:26:05 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_reset_shlvl(t_env **env_list)
 	ft_free_string(&shlvl_value);
 	return (ft_free_string(&shlvl_value), ft_free_string(&shlvl_whole), status);
 }
-	
+
 int	ft_replace_shlvl(t_env **env_list)
 {
 	int		shlvl;

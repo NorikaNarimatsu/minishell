@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 16:19:15 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 21:37:52 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ enum e_errno
 	FRKERR = -7
 };
 
-typedef struct 
+typedef struct s_syn
 {
 	int	squote;
 	int	dquote;
@@ -135,11 +135,9 @@ int		add_new_env_node(t_env **env_list, char *input);
 int		ft_replace_env_value(t_env *env_list, char *input);
 int		validate_and_extract_key(char *input, char **key, char **equal_sign);
 int		ft_replace_shlvl(t_env **env_list);
-int	ft_update_env_value(t_env *env_list, char *key, char *value);
+int		ft_update_env_value(t_env *env_list, char *key, char *value);
 
 /*		built_utils				*/
-
-
 t_env	*ft_init_env(char **env);
 t_env	*ft_create_env_node(char *env_str);
 
@@ -163,13 +161,11 @@ int		ft_interpret(t_shell *shell);
 int		ft_setup_pipes(int *fd, int num_cmnds);
 int		ft_execute_builtin(t_exec *exec, t_env **env);
 int		ft_execute_single(t_shell *shell);
-int	ft_execute_pipe(t_shell *shell, t_exec *exec);
-
+int		ft_execute_pipe(t_shell *shell, t_exec *exec);
 
 /*		shlvl				*/
 int		ft_reset_shlvl(t_env **env_list);
 int		ft_replace_shlvl(t_env **env_list);
-
 
 /*		ft_redirect				*/
 int		ft_open_io(t_exec *exec);
@@ -185,7 +181,6 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell);
 /*		ft_path				*/
 char	*ft_search_path(char *filename, t_env *env);
 char	*ft_path_error(t_exec *exec, t_env *env, char *path);
-
 
 /*		exec_utils				*/
 void	ft_error_exit(char *message, int exitcode);
@@ -277,8 +272,6 @@ int		ft_double_quote(char *str, t_token *token, int flag);
 
 /*		ft_tokenization				*/
 int		ft_tokenization(t_shell *shell);
-
-
 
 void	ft_free_minishell(t_shell **shell);
 

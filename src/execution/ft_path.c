@@ -6,11 +6,27 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/13 16:28:58 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 16:14:51 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 22:16:33 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+char	*ft_access_path(char *path)
+{
+	char	*dup;
+
+	if (access(path, X_OK) == 0)
+	{
+		dup = ft_strdup(path);
+		if (dup == NULL)
+		{
+			ft_putstr_fd("strdup error", 2); //ask martijn 
+			exit(EXIT_FAILURE);
+			return (NULL);
+		}
+		return (dup);
+	}
+}
 
 char	*ft_search_path(char *filename, t_env *env)
 {
@@ -25,21 +41,12 @@ char	*ft_search_path(char *filename, t_env *env)
 		bzero(path, PATH_MAX);
 		end = ft_strchr(value, ':');
 		if (end)
-			strncpy(path, value, end - value);
+			ft_strncpy(path, value, end - value);
 		else
 			ft_strlcpy(path, value, PATH_MAX);
 		ft_strlcat(path, "/", PATH_MAX);
 		ft_strlcat(path, filename, PATH_MAX);
-		if (access(path, X_OK) == 0)
-		{
-			dup = ft_strdup(path);
-			if (dup == NULL)
-			{
-				ft_putstr_fd("strdup error", 2);
-				exit(EXIT_FAILURE);
-			}
-			return (dup);
-		}
+		dup = ft_access_path(path);
 		if (end == NULL)
 			return (NULL);
 		value = end + 1;

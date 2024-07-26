@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 16:42:57 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 16:49:28 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 21:27:30 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_interpret(t_shell *shell)
 	if (shell->n_cmd == 1)
 		status = ft_execute_single(shell);
 	else
-		status = ft_execute_pipe(shell, shell->execution);		// we are checking here
+		status = ft_execute_pipe(shell, shell->execution);
 	if (ft_restore_io(shell->saved_stdin, shell->saved_stdout) == DUPERR)
 		return (DUPERR);
 	shell->exit_status = status;

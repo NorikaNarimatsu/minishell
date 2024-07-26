@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 16:42:52 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 23:09:24 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ int	ft_minishell(char **env)
 			break ;
 		}
 		add_history(shell->line);
+		// printf("----- SYNTAX -----\n");
+		if (ft_syntax(shell->line, shell) == SYNERR)
+			continue ;
 		// printf("----- EXPANSION -----\n");
 		if (ft_expansion(shell) == MALERR)
 			return (ft_free_minishell(&shell), EXIT_FAILURE);

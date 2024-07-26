@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:17:33 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/26 16:18:44 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/26 22:12:06 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_execute_single(t_shell *shell)
 		{
 			waitpid(pid, &status, 0);
 			shell->exit_status = WEXITSTATUS(status);
-			// if (WIFEXITED(status) != 0)			// SIGNAL HANDLING | MAYBE SOMETHING 
+			// if (WIFEXITED(status) != 0) // SIGNAL HANDLING | MAYBE SOMETHING 
 			// else if (WIFSIGNALED(status))
 			// 	shell->exit_status += 128;
 		}
