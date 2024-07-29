@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/25 18:25:09 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/29 16:19:35 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
 	while (1)
 	{
 		line = readline("> ");
+		if (!line)
+			break ;
 		if (ft_strcmp(line, heredoc[delimitor_index]) == 0)
 		{
 			ft_free_string(&line);
@@ -35,6 +37,7 @@ void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
 		}
 		ft_free_string(&line);
 	}
+	ft_free_string(&line);
 }
 
 int	heredoc_pipe(t_exec *exec)

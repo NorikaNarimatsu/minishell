@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:02:26 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/26 21:26:05 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/29 15:01:33 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_replace_shlvl(t_env **env_list)
 	{
 		if (ft_strcmp(current->key, "SHLVL") == 0)
 		{
-			shlvl = ft_atoi(current->value);
+			shlvl = ft_atoi(current->value);			// What if SHLVL is INTMAX!?!? Check for int max: bash: warning: shell level (2147483646) too high, resetting to 1
 			shlvl++;
 			shlvl_str = ft_itoa(shlvl);
 			if (!shlvl_str)

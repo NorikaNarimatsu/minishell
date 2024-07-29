@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 23:09:24 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/29 17:59:43 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ I only need the line and exit status at the end. So maybe I have to rewrite it a
 */
 
 #include "minishell.h"
+int SIGNAL_NR = 0;
 
 void	ft_free_minishell(t_shell **shell)
 {
@@ -36,6 +37,7 @@ t_shell	* ft_init_shell(char **env)
 {
 	t_shell	*shell;
 
+	SIGNAL_NR = 0;
 	shell = ft_calloc(1, sizeof(t_shell));
 	if (!shell)
 		return (NULL);
@@ -108,11 +110,69 @@ int	ft_minishell(char **env)
 		if (shell->exit_status < 0)		// OPTIMIZE THIS PART!!!
 			exit(EXIT_FAILURE);
 	}
-	return (ft_free_minishell(&shell), 0);
+	return (ft_free_minishell(&shell), 0);			// rl_clear_history() needed!?!?!
 }
+
+void	ft_ms_signal_handler(int sig, siginfo_t *info, void *context)
+{
+	(void)context;
+	(void)info;
+	if (SIGNAL_NR == 0 && sig == SIGINT)
+	{
+		printf("\n");				// Printing newline after "^C"
+		rl_replace_line("", 0);		// WHAT IS THIS FUNCTION ACTUALLY DOING???
+		rl_on_new_line();			// This function is showing minishell$ on a newline, but without an extra new_line.
+		rl_redisplay();				// This is showing "minishell$ " again.
+	}
+	else if (SIGNAL_NR == 1 && sig == SIGINT)
+	{
+		printf("\nIn another process we call CTRL+C\nExit status should be: 130, but the return value is OK\n");
+		SIGNAL_NR = 0;
+	}
+}
+
+// void	ft_signal_ctrl_backslash(int sig, siginfo_t *info, void *context)
+// {
+// 	(void)sig;
+// 	(void)info;
+// 	(void)context;
+// 	if (SIGNAL_NR == 0)
+// 		signal(SIGQUIT, SIG_IGN);
+// 	else if (SIGNAL_NR == 1)
+// 		signal(SIGQUIT, SIG_DFL);
+// 	if (SIGNAL_NR == 1 && SIG_DFL)
+// 	{
+// 		printf("Quit\n");
+// 		rl_replace_line("", 0);
+// 		rl_on_new_line();
+// 		// rl_redisplay();
+// 		// printf("I recieve signal: CTRL+\\ now! [%d]\n do nothing!\n", sig);
+// 		SIGNAL_NR = 0;
+// 	}
+// }
 
 int	main(int argc, char **argv, char **env)
 {
+	struct sigaction	sa_int;
+	// struct sigaction	sa_quit;
+	pid_t				pid;
+
+	pid = getpid();
+	printf("pid= %d\n", pid);
+	sa_int.sa_sigaction = ft_ms_signal_handler;
+	sa_int.sa_flags = SA_RESTART | SA_SIGINFO;
+	sigemptyset(&sa_int.sa_mask);
+	if (sigaction(SIGINT, &sa_int, NULL) == -1)
+		ft_minitalk_errors(6);
+	// signal(SIGQUIT, SIG_IGN);
+	// sa_quit.sa_sigaction = ft_signal_ctrl_backslash;
+	// sa_quit.sa_flags = SA_RESTART | SA_SIGINFO;
+	// sigemptyset(&sa_quit.sa_mask);
+	// if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
+	// 	ft_minitalk_errors(6);
+	// else if (sigaction(SIG_IGN, &sa_quit, NULL) == -1)
+	// 	ft_minitalk_errors(6);
+	
 	(void) argc;
 	(void) argv;
 	if (argc != 1)
@@ -120,6 +180,7 @@ int	main(int argc, char **argv, char **env)
 		printf("Wrong input!\n");	// TODO: Optimazation!
 		return (1);
 	}
+	
 	/*
 	Here we should handle the signals
 	//running program:

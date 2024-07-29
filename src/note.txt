@@ -29,6 +29,10 @@ mdraper@PCvanMartijn:~/codam/rank03/v07$ export | grep SHLVL
 declare -x SHLVL="1"
 mdraper@PCvanMartijn:~/codam/rank03/v07$ 
 
+
+Fix:
+cat << EOF
+
 Fix:
 minishell$ cd -
 /home/mdraper

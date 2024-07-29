@@ -6,11 +6,12 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:17:33 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/26 22:12:06 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/29 15:18:35 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+extern int	SIGNAL_NR;
 
 int	ft_execute_single(t_shell *shell)
 {
@@ -25,6 +26,7 @@ int	ft_execute_single(t_shell *shell)
 		return (ft_execute_builtin(shell->execution, &shell->env));
 	else
 	{
+		SIGNAL_NR = 1;
 		pid = fork();
 		if (pid == -1)
 			return (perror("fork"), FRKERR);

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 21:37:52 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/29 15:18:40 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <string.h>
 # include <error.h>
 # include <stdbool.h>
+# include <signal.h>
 
 # define PATH_MAX	4096
 
@@ -134,7 +135,6 @@ void	ft_validate_access(char *path, char *filename, t_shell *shell);
 int		add_new_env_node(t_env **env_list, char *input);
 int		ft_replace_env_value(t_env *env_list, char *input);
 int		validate_and_extract_key(char *input, char **key, char **equal_sign);
-int		ft_replace_shlvl(t_env **env_list);
 int		ft_update_env_value(t_env *env_list, char *key, char *value);
 
 /*		built_utils				*/

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 11:38:52 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 22:04:52 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/29 14:55:37 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_exit_builtin(char **input)
 		if (input[2])
 			return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
 	}
-	exit(exit_status);
+	exit(exit_status);					// EXIT!?!??!?!
 }
 
 /*

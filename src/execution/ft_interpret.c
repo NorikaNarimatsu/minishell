@@ -6,11 +6,12 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 16:42:57 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 21:27:30 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/29 15:18:27 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+extern int	SIGNAL_NR;
 
 int	ft_interpret(t_shell *shell)
 {
