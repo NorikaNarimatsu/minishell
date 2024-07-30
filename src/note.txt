@@ -7,11 +7,6 @@ running minishell in minishell.
 Also take care of signals here!
 
 
-# case 1: NEED TO BE IMPLEMENTED
-exit status after syntax error
-
-
-
 NORIKAAAAA CHECK STATIC FUNCTIONS AND HEADER
 
 running minishell in minishell. -> increase shell level, 
@@ -33,19 +28,15 @@ mdraper@PCvanMartijn:~/codam/rank03/v07$
 Fix:
 cat << EOF
 
-Fix:
-minishell$ cd -
-/home/mdraper
-minishell$ cd -
-/goinfre/mdraper
+Fix: Check whenever file get opened if it also get closed (when error)!
 
 Fix: norm
 
 Free function, close fd in main
 error when malloc fails
 
-and signal
+Fix signal: When sending signal minishell inside minishell. 
+			It is doing double stuff... not nice
 
-echo $1test -> expension should only fail $1 test should still be printed!
 
 ft_unset_builtin -> check exit status #Norika

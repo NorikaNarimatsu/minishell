@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/26 22:10:22 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/30 17:00:29 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ static int	ft_get_key(const char *line, t_expan *exp)
 	len = 1;
 	if (line[0] == '\0')
 		return (exp->len += 0, 0);
-	while (line[len] && (ft_isalnum(line[len]) || line[len] == '_'))
+	while (line[len] && !ft_isdigit(line[1]) \
+		&& (ft_isalnum(line[len]) || line[len] == '_'))
 		len++;
-	if (len == 1 && (line[len] == '$' || line[len] == '?'))
+	if (len == 1 && (line[1] == '$' || line[1] == '?' || ft_isdigit(line[1])))
 	{
 		exp->key = ft_substr(line, 1, len);
 		if (!exp->key)

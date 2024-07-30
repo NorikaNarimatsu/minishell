@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/29 15:18:40 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/30 15:55:20 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ enum e_errno
 	CHDERR = -5,
 	CWDERR = -6,
 	FRKERR = -7
+};
+
+enum e_mode
+{
+	INTERACTIVE,
+	HEREDOC,
+	EXECUTION
 };
 
 typedef struct s_syn
@@ -108,15 +115,19 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	int		n_cmd;
-	int		token_flag;
-	int		exit_status;
-	int		saved_stdin;
-	int		saved_stdout;
-	t_env	*env;
-	char	*line;
-	t_exec	*execution;
+	int					n_cmd;
+	int					token_flag;
+	int					exit_status;
+	int					saved_stdin;
+	int					saved_stdout;
+	t_env				*env;
+	char				*line;
+	t_exec				*execution;
+	struct sigaction	sa_int;
+	struct sigaction	sa_quit;
 }	t_shell;
+
+extern int	SIGNAL_NR;
 
 /*		Norika						*/
 
@@ -273,6 +284,16 @@ int		ft_double_quote(char *str, t_token *token, int flag);
 /*		ft_tokenization				*/
 int		ft_tokenization(t_shell *shell);
 
+
+/*	SIGNALS-------------------------*/
+/*		ft_signals					*/
+int		ft_ms_signal(t_shell *shell, int mode);
+
+/*	MAIN----------------------------*/
+/*		ft_init_and_error			*/
+void	ft_reset(t_shell *shell);
 void	ft_free_minishell(t_shell **shell);
+t_shell	*ft_init_shell(char **env);
+int		ft_ms_exit(t_shell **shell, int error_code);
 
 #endif

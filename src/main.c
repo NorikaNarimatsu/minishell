@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/29 17:59:43 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/30 18:31:22 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,174 +17,48 @@ I only need the line and exit status at the end. So maybe I have to rewrite it a
 */
 
 #include "minishell.h"
+
 int SIGNAL_NR = 0;
 
-void	ft_free_minishell(t_shell **shell)
+int	ft_minishell(t_shell *shell)
 {
-	if (!shell || !*shell)
-		return ;
-	if ((*shell)->line)
-		ft_free_string(&(*shell)->line);
-	if ((*shell)->env)
-		ft_free_env_list(&(*shell)->env);
-	if ((*shell)->execution)
-		ft_free_s_exec(&(*shell)->execution);
-	free(*shell);
-	*shell = NULL;
-}
-
-t_shell	* ft_init_shell(char **env)
-{
-	t_shell	*shell;
-
-	SIGNAL_NR = 0;
-	shell = ft_calloc(1, sizeof(t_shell));
-	if (!shell)
-		return (NULL);
-	shell->env = ft_init_env(env);
-	if (!shell->env)
-		return (ft_free_minishell(&shell), NULL);
-	shell->execution = ft_calloc(1, sizeof(t_exec));
-	if (!shell->execution)
-		return (ft_free_minishell(&shell), NULL);
-	return (shell);
-}
-
-static void	ft_reset(t_shell *shell)
-{
-	ft_free_string(&shell->line);
-	if (shell->execution != NULL)
-	{
-		if (shell->execution->pipe != NULL)
-			ft_free_s_exec(&shell->execution->pipe);
-		ft_free_array(&shell->execution->word);
-		ft_free_string(&shell->execution->infile);
-		ft_free_string(&shell->execution->outfile);
-		ft_free_array(&shell->execution->heredoc);
-		shell->execution->fd_infile = 8;
-		shell->execution->is_end_append = 1;
-		ft_bzero(shell->execution, sizeof(t_exec));
-	}
-	shell->token_flag = 1;
-	shell->n_cmd = 0;
-	shell->saved_stdin = 0;
-	shell->saved_stdout = 0;
-}
-
-int	ft_minishell(char **env)
-{
-	t_shell	*shell;
-
-	shell = ft_init_shell(env);
-	if (!shell)
-		return (EXIT_FAILURE);
 	while (1)
 	{
-		// printf("EXIT %d\n", shell.exit_status);
 		ft_reset(shell);
 		shell->line = readline("minishell$ ");
 		if (!shell->line)
-		{
-			//the actual function of exit (free anything that was allocated)
-			printf("exit\n");
 			break ;
-		}
 		add_history(shell->line);
-		// printf("----- SYNTAX -----\n");
 		if (ft_syntax(shell->line, shell) == SYNERR)
 			continue ;
-		// printf("----- EXPANSION -----\n");
+		ft_ms_signal(shell, INTERACTIVE);
 		if (ft_expansion(shell) == MALERR)
-			return (ft_free_minishell(&shell), EXIT_FAILURE);
-		// printf("----- SYNTAX -----\n");
+			return (ft_ms_exit(&shell, MALERR));
 		if (ft_syntax(shell->line, shell) == SYNERR)
 			continue ;
-		// printf("----- TOKENIZATION -----\n");
 		if (ft_tokenization(shell) == MALERR)
-			return (ft_free_minishell(&shell), EXIT_FAILURE);
-		// printf("----- HEREDOC -----\n");
+			return (ft_ms_exit(&shell, MALERR));
 		if (ft_heredoc(shell) == PIPERR)
-			return (ft_free_minishell(&shell), EXIT_FAILURE);
-		// printf("----- EXECUTION -----\n");
+			return (ft_ms_exit(&shell, PIPERR));
 		shell->exit_status = ft_interpret(shell);
-		if (shell->exit_status < 0)		// OPTIMIZE THIS PART!!!
-			exit(EXIT_FAILURE);
+		if (shell->exit_status < 0)
+			return (ft_ms_exit(&shell, shell->exit_status));
 	}
-	return (ft_free_minishell(&shell), 0);			// rl_clear_history() needed!?!?!
+	return (ft_ms_exit(&shell, 0));
 }
-
-void	ft_ms_signal_handler(int sig, siginfo_t *info, void *context)
-{
-	(void)context;
-	(void)info;
-	if (SIGNAL_NR == 0 && sig == SIGINT)
-	{
-		printf("\n");				// Printing newline after "^C"
-		rl_replace_line("", 0);		// WHAT IS THIS FUNCTION ACTUALLY DOING???
-		rl_on_new_line();			// This function is showing minishell$ on a newline, but without an extra new_line.
-		rl_redisplay();				// This is showing "minishell$ " again.
-	}
-	else if (SIGNAL_NR == 1 && sig == SIGINT)
-	{
-		printf("\nIn another process we call CTRL+C\nExit status should be: 130, but the return value is OK\n");
-		SIGNAL_NR = 0;
-	}
-}
-
-// void	ft_signal_ctrl_backslash(int sig, siginfo_t *info, void *context)
-// {
-// 	(void)sig;
-// 	(void)info;
-// 	(void)context;
-// 	if (SIGNAL_NR == 0)
-// 		signal(SIGQUIT, SIG_IGN);
-// 	else if (SIGNAL_NR == 1)
-// 		signal(SIGQUIT, SIG_DFL);
-// 	if (SIGNAL_NR == 1 && SIG_DFL)
-// 	{
-// 		printf("Quit\n");
-// 		rl_replace_line("", 0);
-// 		rl_on_new_line();
-// 		// rl_redisplay();
-// 		// printf("I recieve signal: CTRL+\\ now! [%d]\n do nothing!\n", sig);
-// 		SIGNAL_NR = 0;
-// 	}
-// }
 
 int	main(int argc, char **argv, char **env)
 {
-	struct sigaction	sa_int;
-	// struct sigaction	sa_quit;
-	pid_t				pid;
+	t_shell	*shell;
 
-	pid = getpid();
-	printf("pid= %d\n", pid);
-	sa_int.sa_sigaction = ft_ms_signal_handler;
-	sa_int.sa_flags = SA_RESTART | SA_SIGINFO;
-	sigemptyset(&sa_int.sa_mask);
-	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-		ft_minitalk_errors(6);
-	// signal(SIGQUIT, SIG_IGN);
-	// sa_quit.sa_sigaction = ft_signal_ctrl_backslash;
-	// sa_quit.sa_flags = SA_RESTART | SA_SIGINFO;
-	// sigemptyset(&sa_quit.sa_mask);
-	// if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-	// 	ft_minitalk_errors(6);
-	// else if (sigaction(SIG_IGN, &sa_quit, NULL) == -1)
-	// 	ft_minitalk_errors(6);
-	
-	(void) argc;
 	(void) argv;
 	if (argc != 1)
 	{
-		printf("Wrong input!\n");	// TODO: Optimazation!
+		ft_putstr_fd("minishell: too many arguments\n", 2);
 		return (1);
 	}
-	
-	/*
-	Here we should handle the signals
-	//running program:
-	//child program:
-	*/
-	return (ft_minishell(env));
+	shell = ft_init_shell(env);
+	if (!shell)
+		return (ft_ms_exit(&shell, MALERR));
+	return (ft_minishell(shell));
 }

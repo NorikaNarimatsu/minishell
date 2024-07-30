@@ -6,12 +6,11 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:16:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/29 16:20:32 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/30 16:02:46 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-extern int	SIGNAL_NR;
 
 int	ft_setup_pipes(int *fd, int num_cmnds)
 {
@@ -47,7 +46,7 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 	i = 0;
 	while (exec)
 	{
-		SIGNAL_NR = 1;
+		ft_ms_signal(shell, EXECUTION);
 		pid[i] = fork();
 		if (pid[i] == -1)
 			return (perror("fork"), ft_free_fd(&fd), ft_free_pid(&pid), FRKERR);
@@ -69,10 +68,10 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 		waitpid(pid[i], &status, 0);
 		if (i == shell->n_cmd - 1)
 		{
-			shell->exit_status = WEXITSTATUS(status);
-			// if (WIFEXITED(status) != 0) // SIGNAL HANDLING | MAYBE SOMETHING 
-			// else if (WIFSIGNALED(status))
-			// 	shell->exit_status += 128;
+			if (WIFEXITED(status) != 0)
+				shell->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				shell->exit_status = WTERMSIG(status) + 128;
 		}
 		i++;
 	}

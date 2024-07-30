@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/29 16:19:35 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/30 14:47:43 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@ void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
 	{
 		line = readline("> ");
 		if (!line)
-			break ;
-		if (ft_strcmp(line, heredoc[delimitor_index]) == 0)
 		{
-			ft_free_string(&line);
-			line = NULL;
-			return ;
+			printf("warning: here-document delimited by end-of-file\n");
+			break ;
 		}
+		if (ft_strcmp(line, heredoc[delimitor_index]) == 0)
+			break ;
 		else if (delimitor_index == i)
 		{
 			write(fd_write, line, ft_strlen(line));
@@ -67,6 +66,7 @@ int	ft_heredoc(t_shell *shell)
 	{
 		if (exec->heredoc && exec->heredoc[0])
 		{
+			ft_ms_signal(shell, HEREDOC);
 			if (heredoc_pipe(exec) == PIPERR)
 				return (PIPERR);
 		}

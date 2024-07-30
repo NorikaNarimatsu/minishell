@@ -6,12 +6,11 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:17:33 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/29 15:18:35 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/30 13:24:04 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-extern int	SIGNAL_NR;
 
 int	ft_execute_single(t_shell *shell)
 {
@@ -26,7 +25,7 @@ int	ft_execute_single(t_shell *shell)
 		return (ft_execute_builtin(shell->execution, &shell->env));
 	else
 	{
-		SIGNAL_NR = 1;
+		ft_ms_signal(shell, EXECUTION);
 		pid = fork();
 		if (pid == -1)
 			return (perror("fork"), FRKERR);
@@ -42,10 +41,10 @@ int	ft_execute_single(t_shell *shell)
 		else
 		{
 			waitpid(pid, &status, 0);
-			shell->exit_status = WEXITSTATUS(status);
-			// if (WIFEXITED(status) != 0) // SIGNAL HANDLING | MAYBE SOMETHING 
-			// else if (WIFSIGNALED(status))
-			// 	shell->exit_status += 128;
+			if (WIFEXITED(status) != 0)
+				shell->exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				shell->exit_status = WTERMSIG(status) + 128;
 		}
 	}
 	return (shell->exit_status);
