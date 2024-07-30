@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/30 15:55:20 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/30 20:58:58 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ enum e_mode
 {
 	INTERACTIVE,
 	HEREDOC,
-	EXECUTION
+	EXECUTION,
+	MINISHELL
 };
 
 typedef struct s_syn

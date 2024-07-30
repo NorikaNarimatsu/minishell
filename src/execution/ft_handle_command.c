@@ -33,7 +33,8 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell)
 		if (execve(path, exec->word, envp) == -1)
 		{
 			ft_free_array(&envp);
-			ft_error_exit("execve error\n", EXIT_FAILURE);
+			perror("execve");
+			exit(EXIT_FAILURE);
 		}
 	}
 }

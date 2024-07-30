@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 15:41:12 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/30 15:49:30 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/30 20:57:05 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_shell	*ft_init_shell(char **env)
 	shell->execution = ft_calloc(1, sizeof(t_exec));
 	if (!shell->execution)
 		return (ft_free_minishell(&shell), NULL);
+	ft_ms_signal(shell, INTERACTIVE);
 	return (shell);
 }
 

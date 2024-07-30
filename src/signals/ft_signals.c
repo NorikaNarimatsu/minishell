@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 10:41:32 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/30 18:47:45 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/07/30 20:58:47 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ int	ft_ms_signal(t_shell *shell, int mode)
 	{
 		shell->sa_int.sa_handler = ft_sigint_execution;
 		shell->sa_quit.sa_handler = ft_sigquit_execution;
+	}
+	else if (mode == MINISHELL)
+	{
+		shell->sa_int.sa_handler = SIG_IGN;
+		shell->sa_quit.sa_handler = SIG_IGN;
 	}
 	if (sigaction(SIGINT, &shell->sa_int, NULL) == -1)
 		exit(EXIT_FAILURE);
