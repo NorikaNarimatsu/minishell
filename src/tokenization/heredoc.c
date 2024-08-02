@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/30 14:47:43 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 09:37:49 by mdraper           #+#    #+#             */
+/*   Updated: 2024/08/02 20:03:31 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
 		}
 		if (ft_strcmp(line, heredoc[delimitor_index]) == 0)
 			break ;
-		else if (delimitor_index == i)
+		// WE NEED TO EXPAND HERE!!
+		if (delimitor_index == i)
 		{
 			write(fd_write, line, ft_strlen(line));
 			write(fd_write, "\n", 1);
@@ -62,6 +63,7 @@ int	ft_heredoc(t_shell *shell)
 	t_exec	*exec;
 
 	exec = shell->execution;
+	shell->execution->fd_heredoc = -1;
 	while (exec)
 	{
 		if (exec->heredoc && exec->heredoc[0])

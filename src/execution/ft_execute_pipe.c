@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_execute_pipe.c                                  :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/26 16:16:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/30 16:02:46 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_execute_pipe.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 16:16:36 by mdraper           #+#    #+#             */
+/*   Updated: 2024/08/02 20:23:24 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 	exec = head;
 	i = 0;
 	while (i < 2 * (shell->n_cmd - 1))
-		close(fd[i++]);
+	{
+		if (fd[i] != -1)
+			close(fd[i]);
+		i++;
+	}
 	i = 0;
 	while (i < shell->n_cmd)
 	{

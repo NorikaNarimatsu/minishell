@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   built_export.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/04 16:31:41 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 22:05:20 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   built_export.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/04 16:31:41 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/08/02 19:46:35 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	validate_and_extract_key(char *input, char **key, char **equal_sign)
 {
 	*equal_sign = ft_strchr(input, '=');
 	if (*equal_sign)
-		*key = strndup(input, *equal_sign - input); // illegal function!
+		*key = strndup(input, *equal_sign - input); //illegal
 	else
 		*key = ft_strdup(input);
 	if (!*key)
@@ -60,9 +60,11 @@ int	handle_export(t_env **env_list, char *input)
 	char	*key;
 	int		status;
 
+	if (input[0] == '#')
+		return (ft_print_sorted_env(*env_list), 0);
 	status = validate_and_extract_key(input, &key, &equal_sign);
 	if (status == MALERR || status == 1)
-		return (status);
+		return (ft_free_string(&key), status);
 	if (equal_sign)
 	{
 		if (is_exist_identifier(*env_list, key) == true)
@@ -75,8 +77,7 @@ int	handle_export(t_env **env_list, char *input)
 		if (is_exist_identifier(*env_list, key) == false)
 			status = add_new_env_node(env_list, input);
 	}
-	ft_free_string(&key);
-	return (status);
+	return (ft_free_string(&key), status);
 }
 
 int	ft_export_builtin(char **input, t_env **env)

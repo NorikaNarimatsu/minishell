@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_redirect.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/17 11:56:22 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 21:26:22 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_redirect.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 11:56:22 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/08/02 19:48:48 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,15 @@ int	ft_redirect_pipe(t_shell *shell, t_exec *exec, int *fd, int i)
 	{
 		if (dup2(fd[2 * (i - 1)], STDIN_FILENO) == -1)
 			return (perror("dup2 stdin pipe"), DUPERR);
+		close(fd[2 * (i - 1)]);
+		fd[2 * (i - 1)] = -1;
 	}
 	if (i < shell->n_cmd - 1 && !exec->outfile)
 	{
 		if (dup2(fd[2 * i + 1], STDOUT_FILENO) == -1)
 			return (perror("dup2 stdout pipe"), DUPERR);
-	}
-	if (exec->fd_infile == -1 && i == 0)
-	{
-		if (dup2(shell->saved_stdin, STDIN_FILENO) == -1)
-			return (perror("dup2 stdin pipe"), DUPERR);
+		close(fd[2 * i + 1]);
+		fd[2 * i + 1] = -1;
 	}
 	return (0);
 }
@@ -105,5 +104,9 @@ void	ft_manage_redirect(t_shell *shell, t_exec *exec, int *fd, int i)
 		exit(EXIT_FAILURE);
 	i = 0;
 	while (i < 2 * (shell->n_cmd - 1))
-		close(fd[i++]);
+	{
+		close(fd[i]);
+		fd[i] = -1;
+		i++;
+	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_path.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/13 16:28:58 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/29 14:53:37 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_path.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/13 16:28:58 by nnarimat          #+#    #+#             */
+/*   Updated: 2024/08/02 19:55:50 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_search_path(char *filename, t_env *env)
 		bzero(path, PATH_MAX);
 		end = ft_strchr(value, ':');
 		if (end)
-			strncpy(path, value, end - value);	// STRNCPY!? 
+			strncpy(path, value, end - value);	// illegal!?
 		else
 			ft_strlcpy(path, value, PATH_MAX);
 		ft_strlcat(path, "/", PATH_MAX);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_signals.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/30 10:41:32 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/30 20:58:47 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_signals.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/30 10:41:32 by mdraper           #+#    #+#             */
+/*   Updated: 2024/08/02 20:21:37 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_ms_signal(t_shell *shell, int mode)
 		exit(EXIT_FAILURE);
 	if (SIGNAL_NR > 0)
 	{
-		shell->exit_status = SIGNAL_NR + 128;
+		shell->exit_status = shell->exit_status; //SIGNAL_NR + 128;
 		SIGNAL_NR = 0;
 	}
 	return (0);
