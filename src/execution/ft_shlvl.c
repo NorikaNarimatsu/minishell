@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_shlvl.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 16:02:26 by mdraper           #+#    #+#             */
-/*   Updated: 2024/08/02 20:08:51 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_shlvl.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/26 16:02:26 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/08/03 23:00:56 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_reset_shlvl(t_env **env_list)
+static int	ft_reset_shlvl(t_env **env_list)
 {
 	char	*shlvl_value;
 	char	*shlvl_whole;
@@ -28,7 +28,7 @@ int	ft_reset_shlvl(t_env **env_list)
 	return (ft_free_string(&shlvl_value), ft_free_string(&shlvl_whole), status);
 }
 
-int	update_shlvl(char *value)
+static int	update_shlvl(char *value)
 {
 	int	shlvl;
 

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/13 16:28:58 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 22:17:47 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 23:04:16 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*try_path(const char *path)
 	return (NULL);
 }
 
-char	*ft_search_path(char *filename, t_env *env)
+static char	*ft_search_path(char *filename, t_env *env)
 {
 	char	path[PATH_MAX];
 	char	*value;
@@ -86,21 +86,4 @@ char	*ft_path_error(t_exec *exec, t_env *env, char *path)
 			ft_error_exit(" No such file or directory\n", 127);
 	}
 	return (path);
-}
-
-void	ft_validate_access(char *path, char *filename, t_shell *shell)
-{
-	(void) filename;
-	if (path == NULL)
-	{
-		ft_putstr_fd("minishell: command not found\n", 2);
-		shell->exit_status = 127;
-		exit(shell->exit_status);
-	}
-	if (access(path, F_OK) < 0)
-	{
-		ft_putstr_fd("minishell: command not found\n", 2);
-		shell->exit_status = 127;
-		exit(shell->exit_status);
-	}
 }

@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 15:30:26 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 22:36:51 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
+static void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
 {
 	char	*line;
 	int		i;
@@ -40,7 +40,7 @@ void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
 	ft_free_string(&line);
 }
 
-int	heredoc_pipe(t_exec *exec)
+static int	heredoc_pipe(t_exec *exec)
 {
 	int	fd[2];
 	int	delimitor_index;

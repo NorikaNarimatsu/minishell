@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_redirect.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 11:56:22 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/08/02 19:48:48 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_redirect.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/17 11:56:22 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/08/03 23:01:43 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_redirect_io(t_exec *exec)
 	return (0);
 }
 
-int	ft_redirect_pipe(t_shell *shell, t_exec *exec, int *fd, int i)
+static int	ft_redirect_pipe(t_shell *shell, t_exec *exec, int *fd, int i)
 {
 	if (i > 0 && !exec->infile)
 	{

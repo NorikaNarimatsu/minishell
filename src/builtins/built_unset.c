@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/08 15:23:32 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 22:06:27 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 22:49:56 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_env_var(t_env **env_list, char *key)
+static void	unset_env_var(t_env **env_list, char *key)
 {
 	t_env	*current;
 	t_env	*previous;

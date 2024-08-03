@@ -6,10 +6,6 @@ Expand in HEREDOC
 CHeck if you need to expand in export
 
 
-running minishell in minishell.
-Also take care of signals here!
-
-
 NORIKAAAAA CHECK STATIC FUNCTIONS AND HEADER
 
 cd ~ maybe?

@@ -6,26 +6,11 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/04 13:26:14 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/24 20:30:39 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 22:51:10 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_print_env(t_env *env)
-{
-	t_env	*head;
-
-	head = env;
-	while (env)
-	{
-		printf("env: %s\n", env->env);
-		printf("key: %s [%p]\n", env->key, env);
-		printf("value: %s\n\n", env->value);
-		env = env->next;
-	}
-	env = head;
-}
 
 bool	is_valid_identifier(char *input)
 {

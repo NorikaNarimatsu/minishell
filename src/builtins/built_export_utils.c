@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/04 16:31:41 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 18:07:28 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 22:44:58 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	add_new_env_node(t_env **env_list, char *input)
 	return (0);
 }
 
-int	ft_create_set_env_value(t_env *env, char *value, char *input)
+static int	ft_create_set_env_value(t_env *env, char *value, char *input)
 {
 	ft_free_string(&env->value);
 	env->value = ft_strdup(value);

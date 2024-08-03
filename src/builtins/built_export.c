@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/04 16:31:41 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 18:07:17 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 22:47:54 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_sorted_env(t_env *env_list)
+static void	ft_print_sorted_env(t_env *env_list)
 {
 	t_env	*min_node;
 
@@ -36,7 +36,7 @@ void	ft_print_sorted_env(t_env *env_list)
 	}
 }
 
-int	validate_and_extract_key(char *input, char **key, char **equal_sign)
+static int	validate_and_extract_key(char *input, char **key, char **equal_sign)
 {
 	*equal_sign = ft_strchr(input, '=');
 	if (*equal_sign)
@@ -54,7 +54,7 @@ int	validate_and_extract_key(char *input, char **key, char **equal_sign)
 	return (0);
 }
 
-int	handle_export(t_env **env_list, char *input)
+static int	handle_export(t_env **env_list, char *input)
 {
 	char	*equal_sign;
 	char	*key;

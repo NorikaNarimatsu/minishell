@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:16:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 21:53:50 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 23:07:12 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_setup_pipes(int *fd, int num_cmnds)
+static int	ft_setup_pipes(int *fd, int num_cmnds)
 {
 	int	i;
 
@@ -61,33 +61,27 @@ static int	ft_fork_execute(t_shell *shell, t_exec *exec, int *fd, pid_t *pid)
 	return (0);
 }
 
-void	ft_close_fds(int *fd, t_shell *shell)
-{
-	int	i;
-
-	i = 0;
-	while (i < 2 * (shell->n_cmd - 1))
-	{
-		if (fd[i] != -1)
-			close(fd[i]);
-		i++;
-	}
-}
-
 int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 {
 	t_exec	*head;
 	int		*fd;
 	pid_t	*pid;
 	int		status;
+	int		i;
 
+	i = 0;
 	head = exec;
 	status = ft_init_pipes_and_pid(shell, &fd, &pid);
 	if (status != 0)
 		return (status);
 	status = ft_fork_execute(shell, exec, fd, pid);
 	exec = head;
-	ft_close_fds(fd, shell);
+	while (i < 2 * (shell->n_cmd - 1))
+	{
+		if (fd[i] != -1)
+			close(fd[i]);
+		i++;
+	}
 	ft_signal_exit_status(shell, pid);
 	return (ft_free_fd(&fd), ft_free_pid(&pid), shell->exit_status);
 }
