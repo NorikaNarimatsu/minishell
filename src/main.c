@@ -6,19 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/30 18:31:22 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 12:16:35 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-Still to do:
-I don't really need expanding inside the struct.
-I only need the line and exit status at the end. So maybe I have to rewrite it a bit?
-*/
-
 #include "minishell.h"
 
-int SIGNAL_NR = 0;
+int G_SIG = 0;
 
 int	ft_minishell(t_shell *shell)
 {

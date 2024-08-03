@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_execute_single.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 16:17:33 by mdraper           #+#    #+#             */
-/*   Updated: 2024/08/02 19:46:58 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_execute_single.c                                :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/26 16:17:33 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/08/03 11:52:52 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_execute_single(t_shell *shell)
 {
 	pid_t	pid;
-	int		status;
+	// int		status;
 
 	if (ft_open_io(shell->execution) == 1)
 		return (1);
@@ -25,12 +25,12 @@ int	ft_execute_single(t_shell *shell)
 		return (ft_execute_builtin(shell->execution, &shell->env));
 	else
 	{
-		ft_ms_signal(shell, EXECUTION);
 		pid = fork();
 		if (pid == -1)
 			return (perror("fork"), FRKERR);
 		else if (pid == 0)
 		{
+			ft_ms_signal(shell, EXECUTION);
 			if (shell->execution->fd_infile == -1
 				&& shell->execution->fd_heredoc == -1)
 			{
@@ -40,13 +40,7 @@ int	ft_execute_single(t_shell *shell)
 			ft_execute_command(shell->execution, shell->env, shell);
 		}
 		else
-		{
-			waitpid(pid, &status, 0);
-			if (WIFEXITED(status) != 0)
-				shell->exit_status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				shell->exit_status = WTERMSIG(status) + 128;
-		}
+			ft_signal_exit_status(shell, &pid);
 	}
 	return (shell->exit_status);
 }

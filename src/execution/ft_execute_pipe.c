@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_execute_pipe.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 16:16:36 by mdraper           #+#    #+#             */
-/*   Updated: 2024/08/02 20:23:24 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_execute_pipe.c                                  :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/26 16:16:36 by mdraper       #+#    #+#                 */
+/*   Updated: 2024/08/03 11:52:23 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 	t_exec	*head;
 	int		*fd;
 	pid_t	*pid;
-	int		status;
+	// int		status;
+	// int		status2;
 	int		i;
 
 	head = exec;
@@ -46,12 +47,12 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 	i = 0;
 	while (exec)
 	{
-		ft_ms_signal(shell, EXECUTION);
 		pid[i] = fork();
 		if (pid[i] == -1)
 			return (perror("fork"), ft_free_fd(&fd), ft_free_pid(&pid), FRKERR);
 		else if (pid[i] == 0)
 		{
+			ft_ms_signal(shell, EXECUTION);
 			ft_manage_redirect(shell, exec, fd, i);
 			ft_execute_command(exec, shell->env, shell);
 		}
@@ -66,18 +67,6 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 			close(fd[i]);
 		i++;
 	}
-	i = 0;
-	while (i < shell->n_cmd)
-	{
-		waitpid(pid[i], &status, 0);
-		if (i == shell->n_cmd - 1)
-		{
-			if (WIFEXITED(status) != 0)
-				shell->exit_status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				shell->exit_status = WTERMSIG(status) + 128;
-		}
-		i++;
-	}
+	ft_signal_exit_status(shell, pid);
 	return (ft_free_fd(&fd), ft_free_pid(&pid), shell->exit_status);
 }
