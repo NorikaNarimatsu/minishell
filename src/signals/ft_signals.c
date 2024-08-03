@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 10:41:32 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 15:25:07 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 15:56:54 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ void	ft_signal_exit_status(t_shell *shell, pid_t	*pid)
 {
 	int	i;
 	int	exit_status;
-	int	signal_recieved;
+	// int	signal_recieved;
 
 	i = 0;
-	signal_recieved = 0;
+	// signal_recieved = 0;
 	while (i < shell->n_cmd)
 	{
 		ft_ms_signal(shell, IGNORE);
@@ -101,12 +101,12 @@ void	ft_signal_exit_status(t_shell *shell, pid_t	*pid)
 			else if (WIFSIGNALED(exit_status))
 				shell->exit_status = WTERMSIG(exit_status) + 128;
 		}
-		if (WIFSIGNALED(exit_status))
-			signal_recieved = 1;
+		// if (WIFSIGNALED(exit_status))
+		// 	signal_recieved = 1;
 		i++;
 	}
-	if (signal_recieved)
-		printf("\n");
+	// if (signal_recieved)
+	// 	printf("\n");
 	G_SIG = 0;
 	ft_ms_signal(shell, EXECUTION);
 }

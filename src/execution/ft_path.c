@@ -1,48 +1,66 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_path.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/13 16:28:58 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/08/02 19:55:50 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_path.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/13 16:28:58 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/08/03 17:52:51 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	build_path(char *path, const char *value, const char *filename)
+{
+	char	*end;
+
+	end = ft_strchr(value, ':');
+	bzero(path, PATH_MAX);
+	if (end)
+		ft_strlcpy(path, value, end - value + 1);
+	else
+		ft_strlcpy(path, value, PATH_MAX);
+	ft_strlcat(path, "/", PATH_MAX);
+	ft_strlcat(path, filename, PATH_MAX);
+}
+
+static char	*try_path(const char *path)
+{
+	char	*dup;
+
+	if (access(path, X_OK) == 0)
+	{
+		dup = ft_strdup(path);
+		if (!dup)
+		{
+			perror("strdup error"); // NO! Wrong
+			exit(EXIT_FAILURE); // No exit
+		}
+		return (dup);
+	}
+	return (NULL);
+}
+
 char	*ft_search_path(char *filename, t_env *env)
 {
 	char	path[PATH_MAX];
 	char	*value;
-	char	*end;
-	char	*dup;
+	char	*result;
 
 	value = ft_find_env_value(env, "PATH");
+	result = NULL;
 	while (*value)
 	{
-		bzero(path, PATH_MAX);
-		end = ft_strchr(value, ':');
-		if (end)
-			strncpy(path, value, end - value);	// illegal!?
-		else
-			ft_strlcpy(path, value, PATH_MAX);
-		ft_strlcat(path, "/", PATH_MAX);
-		ft_strlcat(path, filename, PATH_MAX);
-		if (access(path, X_OK) == 0)
-		{
-			dup = ft_strdup(path);
-			if (dup == NULL)
-			{
-				ft_putstr_fd("strdup error", 2);			// NO! Wrong
-				exit(EXIT_FAILURE);							// No exit
-			}
-			return (dup);
-		}
-		if (end == NULL)
-			return (NULL);
-		value = end + 1;
+		build_path(path, value, filename);
+		result = try_path(path);
+		if (result)
+			return (result);
+		value = ft_strchr(value, ':');
+		if (!value)
+			break ;
+		value++;
 	}
 	return (NULL);
 }

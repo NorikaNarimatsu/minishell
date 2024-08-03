@@ -1,6 +1,5 @@
 
-strncpy or strlcpy have to be created!
-strndup (ftpos and ft_substr)
+
 
 
 Expand in HEREDOC
@@ -13,24 +12,7 @@ Also take care of signals here!
 
 NORIKAAAAA CHECK STATIC FUNCTIONS AND HEADER
 
-running minishell in minishell. -> increase shell level, 
-and decrease shelevel when exit
-
-mdraper@PCvanMartijn:~/codam/rank03/v07$ export | grep SHLVL
-declare -x SHLVL="2"
-mdraper@PCvanMartijn:~/codam/rank03/v07$ bash
-mdraper@PCvanMartijn:~/codam/rank03/v07$ export | grep SHLVL
-declare -x SHLVL="3"
-mdraper@PCvanMartijn:~/codam/rank03/v07$ unset SHLVL
-mdraper@PCvanMartijn:~/codam/rank03/v07$ export | grep SHLVL
-mdraper@PCvanMartijn:~/codam/rank03/v07$ bash
-mdraper@PCvanMartijn:~/codam/rank03/v07$ export | grep SHLVL
-declare -x SHLVL="1"
-mdraper@PCvanMartijn:~/codam/rank03/v07$ 
-
-
-Fix:
-cat << EOF
+cd ~ maybe?
 
 Fix: Check whenever file get opened if it also get closed (when error)!
 

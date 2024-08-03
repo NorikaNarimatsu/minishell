@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_export.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 16:31:41 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/08/02 19:46:35 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_export.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/04 16:31:41 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/08/03 16:49:36 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	validate_and_extract_key(char *input, char **key, char **equal_sign)
 {
 	*equal_sign = ft_strchr(input, '=');
 	if (*equal_sign)
-		*key = strndup(input, *equal_sign - input); //illegal
+		*key = ft_substr(input, 0, ft_pos(input, '=')  - 1); //Check Malloc!!!
+		// *key = strndup(input, *equal_sign - input); //illegal
 	else
 		*key = ft_strdup(input);
 	if (!*key)
