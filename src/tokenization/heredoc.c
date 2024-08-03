@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 10:30:47 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 15:30:26 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,15 @@ void	heredoc_loop(char **heredoc, int delimitor_index, int fd_write)
 
 	line = NULL;
 	i = ft_ms_count_words(heredoc) - 1;
-	G_SIG = 0;
-	rl_done = 0;
 	while (1)
 	{
-		if (G_SIG == 2)
-			break ;
 		line = readline("> ");
-		printf("line is done=%d\n", rl_done);
-		if (G_SIG == 2)
-			break ;
 		if (!line)
 		{
 			printf("warning: here-document delimited by end-of-file\n");
 			break ;
 		}
-		// printf("\nG_SIG = %d\n", G_SIG);
-		if (ft_strcmp(line, heredoc[delimitor_index]) == 0 || G_SIG == 2)
+		if (ft_strcmp(line, heredoc[delimitor_index]) == 0)
 			break ;
 		// WE NEED TO EXPAND HERE!!
 		if (delimitor_index == i)

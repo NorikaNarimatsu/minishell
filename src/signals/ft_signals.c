@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 10:41:32 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 12:15:16 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 15:25:07 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ static void	ft_sigint_interactive(int sig)
 	rl_redisplay();
 }
 
-// static void	ft_sigint_heredoc(int sig)
-// {
-// 	G_SIG = sig;
-// 	rl_done = 1;
-// 	// printf("\n");
-// 	// rl_replace_line("", 0);
-// 	// rl_on_new_line();
-// 	// rl_redisplay();
-// }
+static void	ft_sigint_heredoc(int sig)
+{
+	G_SIG = sig;
+	// rl_done = 1;
+	printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
 
 static void	ft_sigint_execution(int sig)
 {
@@ -55,7 +55,9 @@ int	ft_ms_signal(t_shell *shell, int mode)
 	}
 	if (mode == HEREDOC)
 	{
-		shell->sa_int.sa_handler = SIG_DFL;
+		shell->sa_int.sa_handler = ft_sigint_heredoc;
+		shell->sa_int.sa_flags = 0;
+		sigemptyset(&shell->sa_int.sa_mask);
 		shell->sa_quit.sa_handler = SIG_IGN;
 	}
 	else if (mode == EXECUTION)

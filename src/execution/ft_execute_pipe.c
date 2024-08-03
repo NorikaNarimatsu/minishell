@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:16:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 11:52:23 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 15:29:22 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 	t_exec	*head;
 	int		*fd;
 	pid_t	*pid;
-	// int		status;
-	// int		status2;
 	int		i;
 
 	head = exec;
