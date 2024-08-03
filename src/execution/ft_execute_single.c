@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:17:33 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 17:33:30 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 21:53:57 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_setup_execution(t_shell *shell)
 	if (ft_redirect_io(shell->execution) == DUPERR)
 		return (DUPERR);
 	if (is_builtin(shell->execution->word[0]) == true)
-		return (ft_execute_builtin(shell->execution, &shell->env));
+		return (ft_execute_builtin(shell->execution, &shell->env, shell));
 	return (0);
 }
 
@@ -39,7 +39,7 @@ int	ft_execute_single(t_shell *shell)
 		else if (pid == 0)
 		{
 			ft_ms_signal(shell, EXECUTION);
-			if (shell->execution->fd_infile == -1 
+			if (shell->execution->fd_infile == -1 \
 				&& shell->execution->fd_heredoc == -1)
 			{
 				if (dup2(shell->saved_stdin, STDIN_FILENO) < 0)

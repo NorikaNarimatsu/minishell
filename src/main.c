@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 12:16:35 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 18:06:40 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int G_SIG = 0;
+int	g_sig = 0;
 
 int	ft_minishell(t_shell *shell)
 {

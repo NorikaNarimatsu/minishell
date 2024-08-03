@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/04 16:31:41 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 16:50:14 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 18:07:28 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ int	ft_replace_env_value(t_env *env_list, char *input)
 	int		status;
 
 	equal_sign = ft_strchr(input, '=');
-	key = ft_substr(input, 0, ft_pos(input, '=')  - 1); //Check Malloc!!!
-	// key = strndup(input, equal_sign - input); // illegal function
+	key = ft_substr(input, 0, ft_pos(input, '=') - 1);
 	if (!key)
 		return (MALERR);
 	new_value = ft_strdup(equal_sign + 1);

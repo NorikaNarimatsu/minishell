@@ -19,7 +19,7 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell)
 
 	if (is_builtin(exec->word[0]) == true)
 	{
-		shell->exit_status = ft_execute_builtin(exec, &env);
+		shell->exit_status = ft_execute_builtin(exec, &env, shell);
 		if (shell->exit_status < 0)
 			exit(EXIT_FAILURE);
 		exit(shell->exit_status);

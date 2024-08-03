@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:16:36 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 17:24:37 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 21:53:50 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	ft_init_pipes_and_pid(t_shell *shell, int **fd, pid_t **pid)
 	return (0);
 }
 
-static int	ft_fork_and_execute(t_shell *shell, t_exec *exec, int *fd, pid_t *pid)
+static int	ft_fork_execute(t_shell *shell, t_exec *exec, int *fd, pid_t *pid)
 {
 	int	i;
 
@@ -85,7 +85,7 @@ int	ft_execute_pipe(t_shell *shell, t_exec *exec)
 	status = ft_init_pipes_and_pid(shell, &fd, &pid);
 	if (status != 0)
 		return (status);
-	status = ft_fork_and_execute(shell, exec, fd, pid);
+	status = ft_fork_execute(shell, exec, fd, pid);
 	exec = head;
 	ft_close_fds(fd, shell);
 	ft_signal_exit_status(shell, pid);

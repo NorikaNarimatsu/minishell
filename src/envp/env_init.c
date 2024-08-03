@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/06 12:44:31 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 16:53:19 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 22:03:16 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,19 @@ t_env	*ft_create_env_node(char *env_str)
 		return (NULL);
 	new_node->env = ft_strdup(env_str);
 	if (!new_node->env)
-		return (ft_free_env_node(&new_node), NULL);
+		return (ft_free_env_list(&new_node), NULL);
 	equal_sign = ft_strchr(env_str, '=');
 	if (equal_sign != NULL)
 	{
-		new_node->key = ft_substr(env_str, 0, ft_pos(env_str, '=')  - 1); //Check Malloc!!! // new_node->key = strndup(env_str, equal_sign - env_str); // ILLIGAL !
 		new_node->value = ft_strdup(equal_sign + 1);
+		if (!new_node->value)
+			return (ft_free_env_list(&new_node), NULL);
+		new_node->key = ft_substr(env_str, 0, ft_pos(env_str, '=') - 1);
 	}
 	else
-	{
 		new_node->key = ft_strdup(env_str);
-		new_node->value = NULL;
-	}
-	if (!new_node->key || (equal_sign && !new_node->value))
-		return (ft_free_env_node(&new_node), NULL);
-	new_node->next = NULL;
+	if (!new_node->key)
+		return (ft_free_env_list(&new_node), NULL);
 	return (new_node);
 }
 

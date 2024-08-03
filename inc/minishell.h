@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 11:44:56 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 22:02:38 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,8 @@ typedef struct s_shell
 	struct sigaction	sa_quit;
 }	t_shell;
 
-extern int	G_SIG;
+extern int	g_sig;
 
-void	ft_signal_exit_status(t_shell *shell, pid_t	*pid);
 /*		Norika						*/
 
 /*	BUILTIN-----------------------*/
@@ -142,7 +141,7 @@ int		ft_export_builtin(char **input, t_env **env);
 int		ft_unset_builtin(char **input, t_env **env);
 int		ft_pwd_builtin(t_env *env);
 int		ft_cd_builtin(char **input, t_env **env);
-int		ft_exit_builtin(char **input);
+int		ft_exit_builtin(char **input, t_shell *shell);
 t_env	*find_min_unflagged(t_env *env_list);
 void	ft_validate_access(char *path, char *filename, t_shell *shell);
 int		add_new_env_node(t_env **env_list, char *input);
@@ -154,6 +153,7 @@ int		ft_update_env_value(t_env *env_list, char *key, char *value);
 t_env	*ft_init_env(char **env);
 t_env	*ft_create_env_node(char *env_str);
 
+int		ft_check_valid_longlong(const char *str);
 void	ft_print_sorted_env(t_env *env);
 char	*ft_find_env_value(t_env *env_list, char *key);
 int		ft_replace_env_value(t_env *env_list, char *input);
@@ -172,7 +172,7 @@ void	ft_print_env(t_env *env);
 /*		interpretation				*/
 int		ft_interpret(t_shell *shell);
 int		ft_setup_pipes(int *fd, int num_cmnds);
-int		ft_execute_builtin(t_exec *exec, t_env **env);
+int		ft_execute_builtin(t_exec *exec, t_env **env, t_shell *shell);
 int		ft_execute_single(t_shell *shell);
 int		ft_execute_pipe(t_shell *shell, t_exec *exec);
 
@@ -286,10 +286,10 @@ int		ft_double_quote(char *str, t_token *token, int flag);
 /*		ft_tokenization				*/
 int		ft_tokenization(t_shell *shell);
 
-
 /*	SIGNALS-------------------------*/
 /*		ft_signals					*/
 int		ft_ms_signal(t_shell *shell, int mode);
+void	ft_signal_exit_status(t_shell *shell, pid_t	*pid);
 
 /*	MAIN----------------------------*/
 /*		ft_init_and_error			*/

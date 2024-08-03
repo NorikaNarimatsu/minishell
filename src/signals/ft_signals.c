@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 10:41:32 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 15:56:54 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 19:38:45 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_sigint_interactive(int sig)
 {
-	G_SIG = sig;
+	g_sig = sig;
 	printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -23,7 +23,7 @@ static void	ft_sigint_interactive(int sig)
 
 static void	ft_sigint_heredoc(int sig)
 {
-	G_SIG = sig;
+	g_sig = sig;
 	// rl_done = 1;
 	printf("\n");
 	rl_replace_line("", 0);
@@ -33,14 +33,14 @@ static void	ft_sigint_heredoc(int sig)
 
 static void	ft_sigint_execution(int sig)
 {
-	G_SIG = sig;
-	printf("sig=%d\n", G_SIG);
+	g_sig = sig;
+	printf("sig=%d\n", g_sig);
 	printf("\n");
 }
 
 static void	ft_sigquit_execution(int sig)
 {
-	G_SIG = sig;
+	g_sig = sig;
 	printf("\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -74,10 +74,10 @@ int	ft_ms_signal(t_shell *shell, int mode)
 		exit(EXIT_FAILURE);				// UPDATE THIS!!
 	else if (sigaction(SIGQUIT, &shell->sa_quit, NULL) == -1)
 		exit(EXIT_FAILURE);				// UPDATE THIS!!
-	if (G_SIG > 0)
+	if (g_sig > 0)
 	{
-		shell->exit_status = G_SIG + 128;
-		G_SIG = 0;
+		shell->exit_status = g_sig + 128;
+		g_sig = 0;
 	}
 	return (0);
 }
@@ -86,10 +86,10 @@ void	ft_signal_exit_status(t_shell *shell, pid_t	*pid)
 {
 	int	i;
 	int	exit_status;
-	// int	signal_recieved;
+	int	signal_recieved;
 
 	i = 0;
-	// signal_recieved = 0;
+	signal_recieved = 0;
 	while (i < shell->n_cmd)
 	{
 		ft_ms_signal(shell, IGNORE);
@@ -101,12 +101,12 @@ void	ft_signal_exit_status(t_shell *shell, pid_t	*pid)
 			else if (WIFSIGNALED(exit_status))
 				shell->exit_status = WTERMSIG(exit_status) + 128;
 		}
-		// if (WIFSIGNALED(exit_status))
-		// 	signal_recieved = 1;
+		if (WIFSIGNALED(exit_status))
+			signal_recieved = 1;
 		i++;
 	}
-	// if (signal_recieved)
-	// 	printf("\n");
-	G_SIG = 0;
+	if (signal_recieved)
+		printf("\n");
+	g_sig = 0;
 	ft_ms_signal(shell, EXECUTION);
 }

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/13 16:28:58 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 17:52:51 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 22:17:47 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static char	*try_path(const char *path)
 		dup = ft_strdup(path);
 		if (!dup)
 		{
-			perror("strdup error"); // NO! Wrong
-			exit(EXIT_FAILURE); // No exit
+			perror("ft_strdup");
+			exit(EXIT_FAILURE);
 		}
 		return (dup);
 	}

@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/26 16:00:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/26 21:25:56 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/03 22:18:41 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,9 @@ void	ft_free_env_node(t_env **node)
 {
 	if (node && *node)
 	{
-		free((*node)->env);
-		(*node)->env = NULL;
-		free((*node)->key);
-		(*node)->key = NULL;
-		free((*node)->value);
-		(*node)->value = NULL;
+		ft_free_string(&(*node)->env);
+		ft_free_string(&(*node)->key);
+		ft_free_string(&(*node)->value);
 		free(*node);
 		*node = NULL;
 	}
