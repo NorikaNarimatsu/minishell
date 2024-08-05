@@ -22,3 +22,18 @@ Fix signal: When sending signal minishell inside minishell.
 
 
 ft_unset_builtin -> check exit status #Norika
+
+
+Check if close failed??
+
+
+minishell$ echo hello""world$USER$USER | cat <<eof
+helloworldmdrapermdraper
+minishell$ cat <<eof
+> $USER
+> $USER$USER$USER$USER
+> eof
+mdraper
+mdraper
+
+

@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/05 21:08:55 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/05 22:33:17 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,10 @@ extern int	g_sig;
 /*		Norika						*/
 
 /*	HEREDOC-----------------------*/
+/*		ft_heredoc				*/
 int		ft_heredoc(t_shell *shell);
+/*		ft_heredoc_expansion	*/
+int		ft_expansion_heredoc(char **line, t_shell *shell);
 
 /*	BUILTIN-----------------------*/
 /*		builtins				*/
@@ -211,7 +214,7 @@ void	ft_free_env_list(t_env **current);
 
 /*	EXPANSION-----------------------*/
 /*		ft_create_error				*/
-t_expan	*ft_create_expansion(t_shell *shell);
+t_expan	*ft_create_expansion(t_shell *shell, bool heredoc);
 void	ft_free_small_expansion(t_expan *exp);
 void	ft_free_expansion(t_expan **exp);
 
@@ -219,9 +222,13 @@ void	ft_free_expansion(t_expan **exp);
 int		ft_get_position(const char *line, t_expan *exp);
 char	*ft_expstring(char **s1, char **s2, char **s3);
 int		ft_strlen_dollar_sign(char *str);
-int		ft_exp_needed(t_shell *shell, t_expan *exp);
+int		ft_exp_needed(char *line, t_expan *exp);
 
 /*		ft_expansion				*/
+int		ft_get_env_edgecases(t_expan *exp);
+int		ft_get_env(t_env *env, t_expan *exp);
+int		ft_get_key(const char *line, t_expan *exp);
+int		ft_get_temp(const char *line, t_expan *exp);
 int		ft_expansion(t_shell *shell);
 
 /*	SYNTAX ERROR--------------------*/
@@ -233,7 +240,6 @@ int		ft_syn_output(t_syn *syntax);
 int		ft_syn_pipe(t_syn *syntax);
 
 /*		ft_syntax					*/
-void	ft_free_syntax(t_syn **syntax);
 int		ft_syntax(char *line, t_shell *shell);
 
 /*	TOKENIZATION--------------------*/
@@ -293,6 +299,7 @@ int		ft_tokenization(t_shell *shell);
 /*	SIGNALS-------------------------*/
 /*		ft_signals					*/
 int		ft_ms_signal(t_shell *shell, int mode);
+/*		ft_signal_exit				*/
 void	ft_signal_exit_status(t_shell *shell, pid_t	*pid);
 
 /*	MAIN----------------------------*/

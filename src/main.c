@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/05 21:20:05 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/05 22:18:52 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,31 @@
 
 int	g_sig = 0;
 
+static int	ft_minishell_parsing(t_shell *shell)
+{
+	int	error;
+
+	error = 0;
+	if (ft_syntax(shell->line, shell) == SYNERR)
+		return (SYNERR);
+	ft_ms_signal(shell, INTERACTIVE);
+	if (ft_expansion(shell) == MALERR)
+		return (MALERR);
+	if (ft_syntax(shell->line, shell) == SYNERR)
+		return (SYNERR);
+	if (ft_tokenization(shell) == MALERR)
+		return (MALERR);
+	error = ft_heredoc(shell);
+	if (error < 0)
+		return (error);
+	return (0);
+}
+
 int	ft_minishell(t_shell *shell)
 {
+	int	error;
+
+	error = 0;
 	while (1)
 	{
 		ft_reset(shell);
@@ -23,17 +46,11 @@ int	ft_minishell(t_shell *shell)
 		if (!shell->line)
 			break ;
 		add_history(shell->line);
-		if (ft_syntax(shell->line, shell) == SYNERR)
+		error = ft_minishell_parsing(shell);
+		if (error == SYNERR)
 			continue ;
-		ft_ms_signal(shell, INTERACTIVE);
-		if (ft_expansion(shell) == MALERR)
-			return (ft_ms_exit(&shell, MALERR));
-		if (ft_syntax(shell->line, shell) == SYNERR)
-			continue ;
-		if (ft_tokenization(shell) == MALERR)
-			return (ft_ms_exit(&shell, MALERR));
-		if (ft_heredoc(shell) == PIPERR)
-			return (ft_ms_exit(&shell, PIPERR));
+		if (error < 0)
+			return (ft_ms_exit(&shell, error));
 		if (g_sig == SIGINT)
 			continue ;
 		shell->exit_status = ft_interpret(shell);

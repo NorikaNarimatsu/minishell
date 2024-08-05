@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/24 15:31:56 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/05 21:32:33 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ int	ft_strlen_dollar_sign(char *str)
 	return (i);
 }
 
-int	ft_exp_needed(t_shell *shell, t_expan *exp)
+int	ft_exp_needed(char *line, t_expan *exp)
 {
 	exp->single_double_quote = 0;
-	if (ft_get_position(shell->line, exp) == (int)ft_strlen(shell->line))
+	if (ft_get_position(line, exp) == (int)ft_strlen(line))
 		return (1);
 	exp->single_double_quote = 0;
 	return (0);

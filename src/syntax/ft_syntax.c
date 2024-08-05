@@ -65,7 +65,7 @@ static int	ft_final_check(t_syn *syn)
 	return (0);
 }
 
-void	ft_free_syn(t_syn **syn)
+static void	ft_free_syn(t_syn **syn)
 {
 	if (!syn || !*syn)
 		return ;

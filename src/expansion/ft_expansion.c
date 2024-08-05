@@ -6,13 +6,13 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/30 17:00:29 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/05 22:31:56 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_get_env_edgecases(t_expan *exp)
+int	ft_get_env_edgecases(t_expan *exp)
 {
 	if (exp->need_to_expand == 1 && ft_strlen_dollar_sign(exp->key) == 0)
 	{
@@ -41,7 +41,7 @@ static int	ft_get_env_edgecases(t_expan *exp)
 	return (0);
 }
 
-static int	ft_get_env(t_env *env, t_expan *exp)
+int	ft_get_env(t_env *env, t_expan *exp)
 {
 	int	value;
 
@@ -64,7 +64,7 @@ static int	ft_get_env(t_env *env, t_expan *exp)
 	return (0);
 }
 
-static int	ft_get_key(const char *line, t_expan *exp)
+int	ft_get_key(const char *line, t_expan *exp)
 {
 	int		len;
 
@@ -91,7 +91,7 @@ static int	ft_get_key(const char *line, t_expan *exp)
 	return (0);
 }
 
-static int	ft_get_temp(const char *line, t_expan *exp)
+int	ft_get_temp(const char *line, t_expan *exp)
 {
 	int		i;
 
@@ -114,10 +114,10 @@ int	ft_expansion(t_shell *shell)
 	t_expan	*exp;
 	int		pos;
 
-	exp = ft_create_expansion(shell);
+	exp = ft_create_expansion(shell, false);
 	if (!exp)
 		return (MALERR);
-	pos = ft_exp_needed(shell, exp);
+	pos = ft_exp_needed(shell->line, exp);
 	if (pos == 1)
 		return (ft_free_expansion(&exp), pos);
 	while (shell->line[pos])
