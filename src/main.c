@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 18:06:40 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/05 21:20:05 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ft_minishell(t_shell *shell)
 			return (ft_ms_exit(&shell, MALERR));
 		if (ft_heredoc(shell) == PIPERR)
 			return (ft_ms_exit(&shell, PIPERR));
+		if (g_sig == SIGINT)
+			continue ;
 		shell->exit_status = ft_interpret(shell);
 		if (shell->exit_status < 0)
 			return (ft_ms_exit(&shell, shell->exit_status));

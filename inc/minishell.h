@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 23:07:44 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/05 21:08:55 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <signal.h>
 
 # define PATH_MAX	4096
+# define FDMAX		1024
 
 enum e_token
 {
