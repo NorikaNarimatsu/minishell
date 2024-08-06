@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
+/*   ft_heredoc.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/05 22:07:28 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/07 00:15:29 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	heredoc_loop(char **heredoc, int di, int fd_write, t_shell *shell)
 	return (ft_free_string(&line), 0);
 }
 
-static int	heredoc_pipe(t_shell *shell)
+static int	heredoc_pipe(t_shell *shell, t_exec *exec)
 {
 	int	fd[2];
 	int	del_indx;
@@ -58,13 +58,13 @@ static int	heredoc_pipe(t_shell *shell)
 	if (pipe(fd) == -1)
 		return (perror("pipe"), PIPERR);
 	error = 0;
-	shell->execution->fd_heredoc = fd[0];
+	exec->fd_heredoc = fd[0];
 	del_indx = 0;
-	while (shell->execution->heredoc[del_indx])
+	while (exec->heredoc[del_indx])
 	{
 		if (g_sig == SIGINT)
 			return (0);
-		error = heredoc_loop(shell->execution->heredoc, del_indx, fd[1], shell);
+		error = heredoc_loop(exec->heredoc, del_indx, fd[1], shell);
 		if (error < 0)
 			return (error);
 		del_indx++;
@@ -75,24 +75,25 @@ static int	heredoc_pipe(t_shell *shell)
 
 int	ft_heredoc(t_shell *shell)
 {
-	t_exec	*exec;
+	t_exec	*head;
 	int		error;
 
 	error = 0;
-	exec = shell->execution;
-	shell->execution->fd_heredoc = -1;
-	while (exec && g_sig != SIGINT)
+	head = shell->execution;
+	while (shell->execution && g_sig != SIGINT)
 	{
-		if (exec->heredoc && exec->heredoc[0])
+		shell->execution->fd_heredoc = -1;
+		if (shell->execution->heredoc && shell->execution->heredoc[0])
 		{
 			ft_ms_signal(shell, HEREDOC);
 			if (dup2(STDIN_FILENO, FDMAX + 1) == -1)
 				return (perror("dup2 heredoc"), DUPERR);
-			error = heredoc_pipe(shell);
+			error = heredoc_pipe(shell, shell->execution);
 			if (error < 0)
 				return (error);
 		}
-		exec = exec->pipe;
+		shell->execution = shell->execution->pipe;
 	}
+	shell->execution = head;
 	return (0);
 }

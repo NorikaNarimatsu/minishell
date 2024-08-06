@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/05 22:33:17 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/07 00:03:26 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void	ft_free_env_list(t_env **current);
 
 /*	EXPANSION-----------------------*/
 /*		ft_create_error				*/
-t_expan	*ft_create_expansion(t_shell *shell, bool heredoc);
+t_expan	*ft_create_expansion(t_shell *shell);
 void	ft_free_small_expansion(t_expan *exp);
 void	ft_free_expansion(t_expan **exp);
 

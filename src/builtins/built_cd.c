@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/08 17:36:11 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/07/26 23:17:43 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/06 22:48:31 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_update_env_value(t_env *env_list, char *key, char *value)
 			if (!env_list->value)
 				return (MALERR);
 			ft_free_string(&env_list->env);
-			env_list->env = calloc(1, ft_strlen(key) + ft_strlen(value) + 2);
+			env_list->env = ft_calloc(1, ft_strlen(key) + ft_strlen(value) + 2);
 			if (!env_list->env)
 				return (MALERR);
 			ft_strcpy(env_list->env, key);

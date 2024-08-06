@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/17 11:56:22 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/03 23:01:43 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/06 23:37:05 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_redirect_io(t_exec *exec)
 
 static int	ft_redirect_pipe(t_shell *shell, t_exec *exec, int *fd, int i)
 {
-	if (i > 0 && !exec->infile)
+	if (i > 0 && !exec->infile && !exec->heredoc[0])
 	{
 		if (dup2(fd[2 * (i - 1)], STDIN_FILENO) == -1)
 			return (perror("dup2 stdin pipe"), DUPERR);

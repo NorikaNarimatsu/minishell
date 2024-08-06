@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/19 11:41:43 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/05 22:31:56 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/07 00:02:51 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	ft_expansion(t_shell *shell)
 	t_expan	*exp;
 	int		pos;
 
-	exp = ft_create_expansion(shell, false);
+	exp = ft_create_expansion(shell);
 	if (!exp)
 		return (MALERR);
 	pos = ft_exp_needed(shell->line, exp);

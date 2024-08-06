@@ -1,14 +1,7 @@
 
 
-
-
-Expand in HEREDOC
-CHeck if you need to expand in export
-
-
 NORIKAAAAA CHECK STATIC FUNCTIONS AND HEADER
 
-cd ~ maybe?
 
 Fix: Check whenever file get opened if it also get closed (when error)!
 
@@ -17,9 +10,6 @@ Fix: norm
 Free function, close fd in main
 error when malloc fails
 
-Fix signal: When sending signal minishell inside minishell. 
-			It is doing double stuff... not nice
-
 
 ft_unset_builtin -> check exit status #Norika
 
@@ -27,13 +17,7 @@ ft_unset_builtin -> check exit status #Norika
 Check if close failed??
 
 
-minishell$ echo hello""world$USER$USER | cat <<eof
-helloworldmdrapermdraper
-minishell$ cat <<eof
-> $USER
-> $USER$USER$USER$USER
-> eof
-mdraper
-mdraper
+Closing in the complete freeing function!
 
+cd .. 
 
