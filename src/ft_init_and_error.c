@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 15:41:12 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/30 20:57:05 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/07 10:04:51 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ static void	ft_print_err_msg(int index)
 		"Dup error\n",
 		"Chdir (path) error\n",
 		"Getcwd error\n",
-		"Fork error\n"
+		"Fork error\n",
+		"Signal error\n"
 	};
 
 	max_index = sizeof(err_msg) / sizeof(err_msg[0]);

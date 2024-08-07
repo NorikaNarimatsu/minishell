@@ -6,11 +6,20 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/05 22:21:24 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/05 22:22:51 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/07 10:07:35 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_recieved_signal_exit_status(t_shell *shell)
+{
+	if (g_sig > 0)
+	{
+		shell->exit_status = g_sig + 128;
+		g_sig = 0;
+	}
+}
 
 void	ft_signal_exit_status(t_shell *shell, pid_t	*pid)
 {

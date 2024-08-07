@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 10:41:32 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/05 22:22:32 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/07 10:08:07 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,9 @@ int	ft_ms_signal(t_shell *shell, int mode)
 		shell->sa_quit.sa_handler = SIG_IGN;
 	}
 	if (sigaction(SIGINT, &shell->sa_int, NULL) == -1)
-		exit(EXIT_FAILURE);				// UPDATE THIS!!
+		ft_ms_exit(&shell, SIGERR);
 	else if (sigaction(SIGQUIT, &shell->sa_quit, NULL) == -1)
-		exit(EXIT_FAILURE);				// UPDATE THIS!!
-	if (g_sig > 0)
-	{
-		shell->exit_status = g_sig + 128;
-		g_sig = 0;
-	}
+		ft_ms_exit(&shell, SIGERR);
+	ft_recieved_signal_exit_status(shell);
 	return (0);
 }

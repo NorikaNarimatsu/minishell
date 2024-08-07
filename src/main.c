@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/06 22:48:45 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/07 10:55:04 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,6 @@ int	ft_minishell(t_shell *shell)
 		if (!shell->line)
 			break ;
 		add_history(shell->line);
-		// if (ft_syntax(shell->line, shell) == SYNERR)
-		// 	continue ; // return (SYNERR);
-		// ft_ms_signal(shell, INTERACTIVE);
-		// if (ft_expansion(shell) == MALERR)
-		// 	return (MALERR);
-		// if (ft_syntax(shell->line, shell) == SYNERR)
-		// 	continue ; // return (SYNERR);
-		// if (ft_tokenization(shell) == MALERR)
-		// 	return (MALERR);
-		// error = ft_heredoc(shell);
-		// if (error < 0)
-		// 	return (error);
 		error = ft_minishell_parsing(shell);
 		if (error == SYNERR)
 			continue ;

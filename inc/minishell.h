@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/09 13:09:53 by nnarimat      #+#    #+#                 */
-/*   Updated: 2024/08/07 00:03:26 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/07 10:07:58 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ enum e_errno
 	DUPERR = -4,
 	CHDERR = -5,
 	CWDERR = -6,
-	FRKERR = -7
+	FRKERR = -7,
+	SIGERR = -8
 };
 
 enum e_mode
@@ -300,6 +301,7 @@ int		ft_tokenization(t_shell *shell);
 /*		ft_signals					*/
 int		ft_ms_signal(t_shell *shell, int mode);
 /*		ft_signal_exit				*/
+void	ft_recieved_signal_exit_status(t_shell *shell);
 void	ft_signal_exit_status(t_shell *shell, pid_t	*pid);
 
 /*	MAIN----------------------------*/

@@ -6,7 +6,7 @@
 /*   By: mdraper <mdraper@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/24 14:52:48 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/07/26 22:55:59 by mdraper       ########   odam.nl         */
+/*   Updated: 2024/08/07 10:39:35 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	ft_transfer_append(t_token **token, t_exec *exec)
 	(*token) = (*token)->next;
 	if (exec->flag == -1)
 		return (0);
-	if (exec->outfile)
-		ft_free_string(&exec->outfile);
+	ft_free_string(&exec->outfile);
 	exec->outfile = ft_strdup((*token)->word);
 	if (!exec->outfile)
 		return (MALERR);
@@ -68,8 +67,7 @@ int	ft_transfer_input(t_token **token, t_exec *exec)
 	(*token) = (*token)->next;
 	if (exec->flag == -1)
 		return (0);
-	if (exec->infile)
-		ft_free_string(&exec->infile);
+	ft_free_string(&exec->infile);
 	exec->infile = ft_strdup((*token)->word);
 	if (!exec->infile)
 		return (MALERR);
@@ -90,8 +88,7 @@ int	ft_transfer_output(t_token **token, t_exec *exec)
 	(*token) = (*token)->next;
 	if (exec->flag == -1)
 		return (0);
-	if (exec->outfile)
-		ft_free_string(&exec->outfile);
+	ft_free_string(&exec->outfile);
 	exec->outfile = ft_strdup((*token)->word);
 	if (!exec->outfile)
 		return (MALERR);
