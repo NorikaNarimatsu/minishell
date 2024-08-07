@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_execute_single.c                                :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/26 16:17:33 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/03 21:53:57 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_execute_single.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/26 16:17:33 by mdraper           #+#    #+#             */
+/*   Updated: 2024/08/07 18:58:07 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ static int	ft_setup_execution(t_shell *shell)
 		return (1);
 	if (ft_redirect_io(shell->execution) == DUPERR)
 		return (DUPERR);
+	if (shell->execution->fd_heredoc >= 0)
+	{
+		close (shell->execution->fd_heredoc);
+		shell->execution->fd_heredoc = -1;
+	}
 	if (is_builtin(shell->execution->word[0]) == true)
 		return (ft_execute_builtin(shell->execution, &shell->env, shell));
 	return (0);
@@ -40,11 +45,15 @@ int	ft_execute_single(t_shell *shell)
 		{
 			ft_ms_signal(shell, EXECUTION);
 			if (shell->execution->fd_infile == -1 \
-				&& shell->execution->fd_heredoc == -1)
+				&& !shell->execution->heredoc)
 			{
 				if (dup2(shell->saved_stdin, STDIN_FILENO) < 0)
 					ft_error_exit("dup2 stdin error\n", EXIT_FAILURE);
 			}
+			// close(3);
+			// close(4);
+			// printf("CHILD OPEN FDS BEFORE EXE\n");
+			// ft_print_open_fds();
 			ft_execute_command(shell->execution, shell->env, shell);
 		}
 		ft_signal_exit_status(shell, &pid);

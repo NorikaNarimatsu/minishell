@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_heredoc.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/07 10:59:31 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_heredoc.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 09:37:49 by mdraper           #+#    #+#             */
+/*   Updated: 2024/08/07 16:30:19 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,14 @@ static int	heredoc_pipe(t_shell *shell, t_exec *exec)
 	while (exec->heredoc[del_indx])
 	{
 		if (g_sig == SIGINT)
-			return (0);
+		{
+			return (close(fd[0]), close(fd[1]),0);
+		}
 		error = heredoc_loop(exec->heredoc, del_indx, fd[1], shell);
 		if (error < 0)
-			return (error);
+		{
+			return (close(fd[0]), close(fd[1]),error);
+		}
 		del_indx++;
 	}
 	close(fd[1]);
@@ -95,5 +99,6 @@ int	ft_heredoc(t_shell *shell)
 		shell->execution = shell->execution->pipe;
 	}
 	shell->execution = head;
+	close(FDMAX + 1);
 	return (0);
 }
