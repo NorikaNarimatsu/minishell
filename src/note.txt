@@ -21,3 +21,9 @@ Closing in the complete freeing function!
 
 cd .. 
 
+
+strcmmp?
+make re && clear && valgrind --leak-check=full --trace-children=yes ./minishell
+
+echo Norika | > testfile | cat > testfile | ls -la
+

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 12:36:23 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/08/07 18:58:42 by nnarimat         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/05/26 12:36:23 by nnarimat      #+#    #+#                 */
+/*   Updated: 2024/08/07 23:21:46 by mdraper       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	g_sig = 0;
 
-// void	ft_print_open_fds(void)
-// {
-// 	for (int fd = 0; fd < 1024; fd++)
-// 	{
-// 		if (fcntl(fd, F_GETFD) != -1)
-// 			printf("Open FD: %d\n", fd);
-// 	}
-// }
+void	ft_print_open_fds(void)
+{
+	for (int fd = 0; fd < 1024; fd++)
+	{
+		if (fcntl(fd, F_GETFD) != -1)
+			printf("Open FD: %d\n", fd);
+	}
+}
 
 static int	ft_minishell_parsing(t_shell *shell)
 {
