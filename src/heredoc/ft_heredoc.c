@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_heredoc.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nnarimat <nnarimat@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/07/16 09:37:49 by mdraper       #+#    #+#                 */
-/*   Updated: 2024/08/08 00:05:38 by mdraper       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_heredoc.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 09:37:49 by mdraper           #+#    #+#             */
+/*   Updated: 2024/08/08 10:56:19 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	heredoc_pipe(t_shell *shell, t_exec *exec)
 	{
 		if (g_sig == SIGINT)
 		{
-			return (close(fd[0]), close(fd[1]) ,0);
+			return (close(fd[0]), close(fd[1]), 0);
 		}
 		error = heredoc_loop(exec->heredoc, del_indx, fd[1], shell);
 		if (error < 0)

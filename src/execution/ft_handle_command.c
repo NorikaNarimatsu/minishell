@@ -38,4 +38,3 @@ void	ft_execute_command(t_exec *exec, t_env *env, t_shell *shell)
 		}
 	}
 }
-

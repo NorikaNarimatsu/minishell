@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 13:09:53 by nnarimat          #+#    #+#             */
-/*   Updated: 2024/08/07 18:49:01 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/08/08 11:15:26 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,7 @@ typedef struct s_shell
 extern int	g_sig;
 
 /*		Norika						*/
-void	ft_print_open_fds(void);
-
-// void	ft_close_fd(int fd);
+// void	ft_print_open_fds(void);
 
 /*	HEREDOC-----------------------*/
 /*		ft_heredoc				*/
@@ -200,7 +198,7 @@ int		ft_replace_shlvl(t_env **env_list);
 /*		redirect				*/
 int		ft_open_io(t_exec *exec);
 int		ft_redirect_io(t_exec *exec);
-int		ft_restore_io(int saved_stdin, int saved_stdout);
+int		ft_restore_io(t_shell *shell);
 void	ft_manage_redirect(t_shell *shell, t_exec *exec, int *fd, int i);
 
 /*		path				*/
@@ -209,6 +207,7 @@ char	*ft_path_error(t_exec *exec, t_env *env, char *path);
 /*		utils				*/
 void	ft_error_exit(char *message, int exitcode);
 int		ft_count_command(t_exec *exec);
+void	ft_close_fd(int *fd);
 
 /*		free				*/
 void	ft_free_env_node(t_env **env);

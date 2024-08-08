@@ -6,7 +6,7 @@
 /*   By: nnarimat <nnarimat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:17:33 by mdraper           #+#    #+#             */
-/*   Updated: 2024/08/07 18:58:07 by nnarimat         ###   ########.fr       */
+/*   Updated: 2024/08/08 10:59:28 by nnarimat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,6 @@ int	ft_execute_single(t_shell *shell)
 				if (dup2(shell->saved_stdin, STDIN_FILENO) < 0)
 					ft_error_exit("dup2 stdin error\n", EXIT_FAILURE);
 			}
-			// close(3);
-			// close(4);
-			// printf("CHILD OPEN FDS BEFORE EXE\n");
-			// ft_print_open_fds();
 			ft_execute_command(shell->execution, shell->env, shell);
 		}
 		ft_signal_exit_status(shell, &pid);
