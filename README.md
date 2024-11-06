@@ -24,8 +24,15 @@ Minishell is a custom shell that replicates some of the features of Bash. This p
   - `exit` (terminate shell)
 
 
-## Installation
+## Usage
+  - git clone <[repository-url](https://github.com/NorikaNarimatsu/minishell>
+  - cd minishell
+  - make
+  - ./minishell
+   
 
-1. **Clone the Repository**:
-   git clone <repository-url>
-   cd minishell
+## Makefile Commands
+- make: Compiles the minishell executable.
+- make clean: Removes object files.
+- make fclean: Removes object files and the minishell executable.
+- make re: Recompiles the shell from scratch.
